@@ -11,16 +11,17 @@ class ChaseApp extends Component {
   }
 
   render() {
-    const { state, actions } = this.props;
+    const { pocket, actions } = this.props;
+    console.log('[ChaseApp.js] this.props', this.props)
 
     return (
-      <Chase {...actions} />
+      <Chase pocket={pocket} {...actions} />
     )
   }
 }
 
 export default connect(state => ({
-    state: state.pocket
+    pocket: state.pocket,
   }),
   (dispatch) => ({
     actions: bindActionCreators(pocketActions, dispatch)

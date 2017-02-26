@@ -1,35 +1,21 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
-  NativeModules,
   StyleSheet,
-  Text,
   Alert,
+  Text,
   Button,
   View,
   Linking
 } from 'react-native';
 
-import Weey from './Weey.js'
 import { checkPocketApiAuth } from '../PocketAPI';
 
 import { CONSUMER_KEY, REDIRECT_URI } from 'react-native-dotenv'
-console.log('API_KEY, ANOTHER_CONFIG', CONSUMER_KEY, REDIRECT_URI)
-
-async function afterAuthed() {
-  Alert.alert("Authed.")
-  // store.authed = true
-  const result = await checkPocketApiAuth(CONSUMER_KEY, REDIRECT_URI, token)
-  if (result) {
-    // store.accessToken = result.access_token
-    // store.username = result.username
-    Alert.alert(result.username)
-  }
-}
 
 export default class Chase extends Component {
   constructor(props) {
     super(props);
+    this._handleOpenURL = this._handleOpenURL.bind(this)
   }
 
   componentDidMount() {
@@ -44,26 +30,34 @@ export default class Chase extends Component {
     console.log('===========================');
     console.log(event.url);
     console.log('===========================');
+    console.log('handleOpenURL', this);
     if (event.url.match(/authorizationFinished/)) {
-      afterAuthed()
+      Alert.alert("Authed.")
+      this.props.getAccessToken()
     }
   }
 
-  updateRequestToken(rt) {
-    console.log('updateRequestToken', rt)
-    this.setState({ requestToken: rt })
+  onAdd() {
+    add(CONSUMER_KEY, user.access_token, 'http://google.co.jp')
   }
 
   render() {
-    const { goahead } = this.props;
+    const { pocket, goahead, getReqToken, openAuthPage, hello } = this.props;
 
     return (
       <View style={styles.container}>
-        <Weey {...this.state} />
+        <Button onPress={getReqToken} title="Connect to Pocket" />
+        <Button onPress={openAuthPage} title="openAuthPage" />
+        <Text>{ pocket.requestToken }</Text>
+        <Text>{ pocket.accessToken }</Text>
+        <Text>{ pocket.username }</Text>
+        <Text>{ pocket.authed ? '接続済み' : '未接続' }</Text>
         <Button
-          onPress={goahead}
-          title="GO_AHEAD"
+          onPress={this.onAdd}
+          title="Add!"
         />
+        <Button onPress={goahead} title="GO_AHEAD" />
+        <Button onPress={hello} title="HELLO" />
       </View>
     )
   }

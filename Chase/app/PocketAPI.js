@@ -1,52 +1,54 @@
 import { Linking } from 'react-native';
 
-export async function getRequestToken(consumerKey, redirectUri) {
-  const token = await fetch('https://getpocket.com/v3/oauth/request', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      'X-Accept': 'application/json',
-    },
-    body: JSON.stringify({
-      consumer_key: consumerKey,
-      redirect_uri: redirectUri,
-    })
-  }).then((response) => {
-    return response.json()
-  }).then((json) => {
-    return json.code
-  })
-  return token
-}
-
-export async function checkPocketApiAuth(consumerKey, redirectUri, requestToken) {
-  const result = await fetch('https://getpocket.com/v3/oauth/authorize', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      'X-Accept': 'application/json',
-    },
-    body: JSON.stringify({
-      consumer_key: consumerKey,
-      code: requestToken,
-    })
-  }).then((response) => {
-    if (response.ok) {
+export function getRequestToken(consumerKey, redirectUri) {
+  return new Promise((resolve, reject) => {
+    fetch('https://getpocket.com/v3/oauth/request', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'X-Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        consumer_key: consumerKey,
+        redirect_uri: redirectUri,
+      })
+    }).then((response) => {
       return response.json()
-    } else {
-      console.log(response.status)
-      // throw response
-      openAuthorizePage(requestToken, redirectUri)
-    }
-  }).then((json) => {
-    return json
-  }).catch((error) => {
-    console.log("authorize error", error);
-  });
-  return result
+    }).then((json) => {
+      resolve(json.code)
+    }).catch((error) => {
+      console.log(error);
+    });
+  })
 }
 
-export function openAuthorizePage(requestToken, redirectUri) {
+export function checkPocketApiAuth(consumerKey, redirectUri, requestToken) {
+  return new Promise((resolve, reject) => {
+    fetch('https://getpocket.com/v3/oauth/authorize', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'X-Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        consumer_key: consumerKey,
+        code: requestToken,
+      })
+    }).then((response) => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        openAuthorizePage(requestToken, redirectUri)
+      }
+    }).then((result) => {
+      resolve(result)
+    }).catch((error) => {
+      console.log("authorize error", error);
+    })
+  })
+}
+
+function openAuthorizePage(requestToken, redirectUri) {
   const apiUrl = 'https://getpocket.com/auth/authorize'
   const url = `${apiUrl}?request_token=${requestToken}&redirect_uri=${redirectUri}`;
   Linking.canOpenURL(url).then(supported => {
