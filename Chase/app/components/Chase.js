@@ -8,14 +8,13 @@ import {
   Linking
 } from 'react-native';
 
-import { checkPocketApiAuth } from '../PocketAPI';
-
 import { CONSUMER_KEY, REDIRECT_URI } from 'react-native-dotenv'
 
 export default class Chase extends Component {
   constructor(props) {
     super(props);
     this._handleOpenURL = this._handleOpenURL.bind(this)
+    this.onSavePage = this.onSavePage.bind(this)
   }
 
   componentDidMount() {
@@ -32,17 +31,18 @@ export default class Chase extends Component {
     console.log('===========================');
     console.log('handleOpenURL', this);
     if (event.url.match(/authorizationFinished/)) {
-      Alert.alert("Authed.")
+      // Alert.alert("Authed.")
       this.props.getAccessToken()
     }
   }
 
-  onAdd() {
-    add(CONSUMER_KEY, user.access_token, 'http://google.co.jp')
+  onSavePage() {
+    const url = 'https://getpocket.com/developer/docs/authentication'
+    this.props.savePage(url)
   }
 
   render() {
-    const { pocket, goahead, getReqToken, openAuthPage, hello } = this.props;
+    const { pocket, goahead, getReqToken, openAuthPage } = this.props;
 
     return (
       <View style={styles.container}>
@@ -52,12 +52,8 @@ export default class Chase extends Component {
         <Text>{ pocket.accessToken }</Text>
         <Text>{ pocket.username }</Text>
         <Text>{ pocket.authed ? '接続済み' : '未接続' }</Text>
-        <Button
-          onPress={this.onAdd}
-          title="Add!"
-        />
+        <Button onPress={this.onSavePage} title="Add!" />
         <Button onPress={goahead} title="GO_AHEAD" />
-        <Button onPress={hello} title="HELLO" />
       </View>
     )
   }

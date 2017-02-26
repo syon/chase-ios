@@ -1,6 +1,6 @@
 import { CONSUMER_KEY, REDIRECT_URI } from 'react-native-dotenv'
 
-import { getRequestToken, checkPocketApiAuth } from '../PocketAPI';
+import { getRequestToken, checkPocketApiAuth, add } from '../PocketAPI';
 
 export function goahead() {
   return {
@@ -41,8 +41,13 @@ export function getAccessToken() {
   }
 }
 
-export function hello() {
-  return function(dispatch) {
-    dispatch({ type: 'HELLLLLOOOOO' })
+export function savePage(url) {
+  return function(dispatch, getState) {
+    const at = getState().pocket.accessToken
+    const promise = add(CONSUMER_KEY, at, url)
+    promise.then((result) => {
+      console.log(result)
+      dispatch({ type: 'SAVE_PAGE', data: `SAVED! ${url}` })
+    })
   }
 }

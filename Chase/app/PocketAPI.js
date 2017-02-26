@@ -17,8 +17,8 @@ export function getRequestToken(consumerKey, redirectUri) {
     }).then((json) => {
       resolve(json.code)
     }).catch((error) => {
-      console.log(error);
-    });
+      console.log(error)
+    })
   })
 }
 
@@ -57,31 +57,33 @@ function openAuthorizePage(requestToken, redirectUri) {
     } else {
       console.log('Don\'t know how to open URI: ' + url);
     }
-  });
+  })
 }
 
 export function add(consumerKey, accessToken, url) {
-  console.log("Trying ADD...", consumerKey, accessToken, url)
-  fetch('https://getpocket.com/v3/add', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      'X-Accept': 'application/json',
-    },
-    body: JSON.stringify({
-      url: url,
-      consumer_key: consumerKey,
-      access_token: accessToken,
-    })
-  }).then((response) => {
-    if (response.ok) {
-      console.log('★★★ Success Add')
-      response.json().then(function(d){
-        console.log('[Request Token]', d)
+  return new Promise((resolve, reject) => {
+    fetch('https://getpocket.com/v3/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'X-Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        url: url,
+        consumer_key: consumerKey,
+        access_token: accessToken,
       })
-    } else {
-      console.log('★★★ Failure Add')
-      console.log(response.status)
-    }
+    }).then((response) => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        throw response
+      }
+    }).then((result) => {
+      console.log('aaaaaaaa', result)
+      resolve(result)
+    }).catch((error) => {
+      throw error
+    })
   })
 }
