@@ -10,10 +10,6 @@ const initialState = {
 export default function pocket(state = initialState, action = {}) {
   console.log('PocketReducer called.', action)
   switch (action.type) {
-    case 'GO_AHEAD':
-      return Object.assign({}, state, {
-        authed: true,
-      })
     case 'GET_REQUEST_TOKEN':
       return Object.assign({}, state, {
         requestToken: action.requestToken,

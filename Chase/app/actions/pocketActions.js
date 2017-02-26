@@ -1,12 +1,6 @@
 import { CONSUMER_KEY, REDIRECT_URI } from 'react-native-dotenv'
 
-import { getRequestToken, checkPocketApiAuth, add } from '../PocketAPI';
-
-export function goahead() {
-  return {
-    type: 'GO_AHEAD'
-  };
-}
+import { getRequestToken, checkPocketApiAuth, add, get } from '../PocketAPI';
 
 export function getReqToken() {
   return function(dispatch) {
@@ -18,16 +12,12 @@ export function getReqToken() {
 }
 
 export function openAuthPage() {
-  console.log('★★★openAuthPage start★★★')
   return function(dispatch, getState) {
     const rt = getState().pocket.requestToken
     const promise = checkPocketApiAuth(CONSUMER_KEY, REDIRECT_URI, rt)
     promise.then((result) => {
-      // console.log({ accessToken: result.access_token, username: result.username })
-      // dispatch({ type: 'GET_ACCESS_TOKEN', data: result })
-      // console.log('★★★openAuthPage Promise after★★★',result)
+      //
     })
-    console.log('★★★openAuthPage end★★★')
   }
 }
 
@@ -48,6 +38,17 @@ export function savePage(url) {
     promise.then((result) => {
       console.log(result)
       dispatch({ type: 'SAVE_PAGE', data: `SAVED! ${url}` })
+    })
+  }
+}
+
+export function loadPages() {
+  return function(dispatch, getState) {
+    const at = getState().pocket.accessToken
+    const promise = get(CONSUMER_KEY, at)
+    promise.then((result) => {
+      console.log(result)
+      dispatch({ type: 'LOAD_PAGES', data: result })
     })
   }
 }

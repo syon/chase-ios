@@ -69,9 +69,9 @@ export function add(consumerKey, accessToken, url) {
         'X-Accept': 'application/json',
       },
       body: JSON.stringify({
-        url: url,
         consumer_key: consumerKey,
         access_token: accessToken,
+        url: url,
       })
     }).then((response) => {
       if (response.ok) {
@@ -80,7 +80,36 @@ export function add(consumerKey, accessToken, url) {
         throw response
       }
     }).then((result) => {
-      console.log('aaaaaaaa', result)
+      resolve(result)
+    }).catch((error) => {
+      throw error
+    })
+  })
+}
+
+export function get(consumerKey, accessToken) {
+  return new Promise((resolve, reject) => {
+    fetch('https://getpocket.com/v3/get', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'X-Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        consumer_key: consumerKey,
+        access_token: accessToken,
+        state: 'unread',
+        count: 10,
+        sort: 'newest',
+        detailType: 'simple',
+      })
+    }).then((response) => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        throw response
+      }
+    }).then((result) => {
       resolve(result)
     }).catch((error) => {
       throw error

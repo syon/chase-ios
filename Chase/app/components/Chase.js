@@ -42,7 +42,7 @@ export default class Chase extends Component {
   }
 
   render() {
-    const { pocket, goahead, getReqToken, openAuthPage } = this.props;
+    const { pocket, getReqToken, openAuthPage, loadPages } = this.props;
 
     return (
       <View style={styles.container}>
@@ -53,7 +53,7 @@ export default class Chase extends Component {
         <Text>{ pocket.username }</Text>
         <Text>{ pocket.authed ? '接続済み' : '未接続' }</Text>
         <Button onPress={this.onSavePage} title="Add!" />
-        <Button onPress={goahead} title="GO_AHEAD" />
+        <Button onPress={loadPages} title="Load" />
       </View>
     )
   }
