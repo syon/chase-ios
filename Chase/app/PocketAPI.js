@@ -99,7 +99,7 @@ export function get(consumerKey, accessToken) {
         consumer_key: consumerKey,
         access_token: accessToken,
         state: 'unread',
-        count: 10,
+        count: 20,
         sort: 'newest',
         detailType: 'simple',
       })

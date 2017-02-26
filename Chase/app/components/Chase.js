@@ -10,6 +10,8 @@ import {
 
 import { CONSUMER_KEY, REDIRECT_URI } from 'react-native-dotenv'
 
+import ItemList from './ItemList'
+
 export default class Chase extends Component {
   constructor(props) {
     super(props);
@@ -46,14 +48,17 @@ export default class Chase extends Component {
 
     return (
       <View style={styles.container}>
-        <Button onPress={getReqToken} title="Connect to Pocket" />
-        <Button onPress={openAuthPage} title="openAuthPage" />
-        <Text>{ pocket.requestToken }</Text>
-        <Text>{ pocket.accessToken }</Text>
-        <Text>{ pocket.username }</Text>
-        <Text>{ pocket.authed ? '接続済み' : '未接続' }</Text>
-        <Button onPress={this.onSavePage} title="Add!" />
-        <Button onPress={loadPages} title="Load" />
+        <View style={styles.welcome}>
+          <Button onPress={getReqToken} title="Connect to Pocket" />
+          <Button onPress={openAuthPage} title="openAuthPage" />
+          <Text>{ pocket.requestToken }</Text>
+          <Text>{ pocket.accessToken }</Text>
+          <Text>{ pocket.username }</Text>
+          <Text>{ pocket.authed ? '接続済み' : '未接続' }</Text>
+          <Button onPress={this.onSavePage} title="Add!" />
+          <Button onPress={loadPages} title="Load" />
+        </View>
+        <ItemList {...this.props} />
       </View>
     )
   }
@@ -63,12 +68,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'stretch',
     backgroundColor: '#F5FCFF',
   },
   welcome: {
-    fontSize: 20,
-    textAlign: 'center',
     margin: 10,
   },
   instructions: {
