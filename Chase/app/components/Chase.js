@@ -13,8 +13,8 @@ import {
 import Weey from './Weey.js'
 import { checkPocketApiAuth } from '../PocketAPI';
 
-const CONSUMER_KEY = '63654-23d5c830be3ff2d8132e0a1c'
-const REDIRECT_URI = 'pocketapp63654://authorizationFinished'
+import { CONSUMER_KEY, REDIRECT_URI } from 'react-native-dotenv'
+console.log('API_KEY, ANOTHER_CONFIG', CONSUMER_KEY, REDIRECT_URI)
 
 async function afterAuthed() {
   Alert.alert("Authed.")
