@@ -21,7 +21,6 @@ class ChaseApp extends Component {
 
 export default connect(state => ({
     login: state.login,
-    pocket: state.pocket,
     items: state.items,
   }),
   (dispatch) => ({

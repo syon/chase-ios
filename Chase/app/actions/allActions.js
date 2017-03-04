@@ -1,6 +1,6 @@
 import { CONSUMER_KEY, REDIRECT_URI } from 'react-native-dotenv'
 
-import { getRequestToken, checkPocketApiAuth, add, get } from '../PocketAPI';
+import { getRequestToken, checkPocketApiAuth, openAuthorizePage, add, get } from '../PocketAPI';
 
 export function loginFromStorage() {
   return function(dispatch, getState) {
@@ -20,36 +20,42 @@ export function loginFromStorage() {
   }
 }
 
-export function getReqToken() {
+export function connectToPocket() {
   return function(dispatch) {
     const promise = getRequestToken(CONSUMER_KEY, REDIRECT_URI)
     promise.then((token) => {
-      dispatch({ type: 'GET_REQUEST_TOKEN', requestToken: token });
+      dispatch({ type: 'GOT_REQUEST_TOKEN', requestToken: token })
+      openAuthorizePage(token, REDIRECT_URI)
     })
   }
 }
 
-export function openAuthPage() {
+export function doAfterRedirect(eventUrl) {
+  console.log('doAfterRedirect', eventUrl)
   return function(dispatch, getState) {
-    const rt = getState().pocket.requestToken
-    const promise = checkPocketApiAuth(CONSUMER_KEY, REDIRECT_URI, rt)
-    promise.then((result) => {
-      //
-    })
+    if (eventUrl.match(/authorizationFinished/)) {
+      const rt = getState().login.requestToken
+      const promise = checkPocketApiAuth(CONSUMER_KEY, REDIRECT_URI, rt)
+      promise.then((result) => {
+        const loginData = { username: result.username, accessToken: result.access_token }
+        updateLoginData(loginData)
+        dispatch({ type: 'LOGIN_SUCCESS', data: loginData })
+      })
+    } else {
+      console.log('doAfterRedirect', 'Unexpected', eventUrl)
+    }
   }
 }
 
-// アクセストークンの取得。アプリ認可後のリダイレクト経由で呼ばれる。
-// リクエストトークンを持っておりアプリが認可されていることを
-// 前提に呼び出してアクセストークンを得る
-export function getAccessToken() {
-  return function(dispatch, getState) {
-    const rt = getState().pocket.requestToken
-    const promise = checkPocketApiAuth(CONSUMER_KEY, REDIRECT_URI, rt)
-    promise.then((result) => {
-      dispatch({ type: 'LOGIN_SUCCESS', data: result })
-    })
-  }
+function updateLoginData(loginData) {
+  global.storage.save({
+    key: 'loginState',
+    rawData: { 
+      username: loginData.username,
+      accessToken: loginData.accessToken,
+    },
+    expires: null
+  })
 }
 
 export function savePage(url) {

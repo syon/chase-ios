@@ -29,9 +29,7 @@ export default class Chase extends Component {
   }
 
   _handleOpenURL(event) {
-    if (event.url.match(/authorizationFinished/)) {
-      this.props.actions.getAccessToken()
-    }
+    this.props.actions.doAfterRedirect(event.url)
   }
 
   onSavePage() {
@@ -54,15 +52,13 @@ export default class Chase extends Component {
   }
 
   render() {
-    const { login, pocket, actions } = this.props;
+    const { login, actions } = this.props;
     const listData = this.makeItemList()
 
     return (
       <View style={styles.container}>
         <View style={styles.welcome}>
-          <Button onPress={actions.getReqToken} title="Connect to Pocket" />
-          <Button onPress={actions.openAuthPage} title="openAuthPage" />
-          <Text>{ pocket.requestToken }</Text>
+          <Button onPress={actions.connectToPocket} title="Connect to Pocket" />
           <Text>{ login.accessToken }</Text>
           <Text>{ login.username }</Text>
           <Button onPress={this.onSavePage} title="Add!" />

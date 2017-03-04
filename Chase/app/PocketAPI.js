@@ -35,27 +35,28 @@ export function checkPocketApiAuth(consumerKey, redirectUri, requestToken) {
         code: requestToken,
       })
     }).then((response) => {
+      console.log('Pocket API Response', response)
       if (response.ok) {
         return response.json()
       } else {
-        openAuthorizePage(requestToken, redirectUri)
+        reject(response)
       }
     }).then((result) => {
       resolve(result)
     }).catch((error) => {
-      console.log("authorize error", error);
+      console.log("authorize error", error)
     })
   })
 }
 
-function openAuthorizePage(requestToken, redirectUri) {
+export function openAuthorizePage(requestToken, redirectUri) {
   const apiUrl = 'https://getpocket.com/auth/authorize'
   const url = `${apiUrl}?request_token=${requestToken}&redirect_uri=${redirectUri}`;
   Linking.canOpenURL(url).then(supported => {
     if (supported) {
-      Linking.openURL(url);
+      Linking.openURL(url)
     } else {
-      console.log('Don\'t know how to open URI: ' + url);
+      console.log('Don\'t know how to open URI: ' + url)
     }
   })
 }
