@@ -5,7 +5,8 @@ import {
   Text,
   Button,
   View,
-  Linking
+  Linking,
+  TabBarIOS
 } from 'react-native';
 
 import { CONSUMER_KEY, REDIRECT_URI } from 'react-native-dotenv'
@@ -17,6 +18,9 @@ export default class Chase extends Component {
     super(props);
     this.onSavePage = this.onSavePage.bind(this)
     this.makeItemList = this.makeItemList.bind(this)
+    this.state = {
+      selectedTab: 'main'
+    }
   }
 
   onSavePage() {
@@ -44,14 +48,28 @@ export default class Chase extends Component {
 
     return (
       <View style={styles.container}>
-        <View style={styles.welcome}>
-          <Button onPress={actions.disconnectFromPocket} title="Disconnect" />
-          <Text>{ login.accessToken }</Text>
-          <Text>{ login.username }</Text>
-          <Button onPress={this.onSavePage} title="Add!" />
-          <Button onPress={actions.loadPages} title="Load" />
-        </View>
-        <ItemList {...this.props} listData={listData} />
+        <TabBarIOS>
+          <TabBarIOS.Item
+            title="Main"
+            selected={this.state.selectedTab === 'main'}
+            onPress={() => { this.setState({ selectedTab: 'main' }) }}
+          >
+            <ItemList {...this.props} listData={listData} />
+          </TabBarIOS.Item>
+          <TabBarIOS.Item
+            title="Config"
+            selected={this.state.selectedTab === 'config'}
+            onPress={() => { this.setState({ selectedTab: 'config' }) }}
+          >
+            <View style={styles.welcome}>
+              <Button onPress={actions.disconnectFromPocket} title="Disconnect" />
+              <Text>{ login.accessToken }</Text>
+              <Text>{ login.username }</Text>
+              <Button onPress={this.onSavePage} title="Add!" />
+              <Button onPress={actions.loadPages} title="Load" />
+            </View>
+          </TabBarIOS.Item>
+        </TabBarIOS>
       </View>
     )
   }
