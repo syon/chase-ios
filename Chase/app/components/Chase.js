@@ -17,6 +17,7 @@ export default class Chase extends Component {
     super(props);
     this._handleOpenURL = this._handleOpenURL.bind(this)
     this.onSavePage = this.onSavePage.bind(this)
+    this.makeItemList = this.makeItemList.bind(this)
   }
 
   componentDidMount() {
@@ -43,8 +44,23 @@ export default class Chase extends Component {
     this.props.savePage(url)
   }
 
+  makeItemList() {
+    console.log('makeItemList() -- this --', this)
+    if (!this.props) { return [] }
+    const { items } = this.props
+    let itemList = []
+    Object.keys(items.itemList).forEach(function(key) {
+      const m = items.itemList[key]
+      const title = m.resolved_title ? m.resolved_title : m.given_title
+      const url = m.resolved_url ? m.resolved_url : m.given_url
+      itemList.push({ title, url })
+    })
+    return itemList
+  }
+
   render() {
     const { pocket, getReqToken, openAuthPage, loadPages } = this.props;
+    const listData = this.makeItemList()
 
     return (
       <View style={styles.container}>
@@ -58,7 +74,7 @@ export default class Chase extends Component {
           <Button onPress={this.onSavePage} title="Add!" />
           <Button onPress={loadPages} title="Load" />
         </View>
-        <ItemList {...this.props} />
+        <ItemList {...this.props} listData={listData} />
       </View>
     )
   }

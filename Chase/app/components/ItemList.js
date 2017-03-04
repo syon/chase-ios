@@ -1,27 +1,31 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, ScrollView, Text } from 'react-native'
+import { View, ListView, StyleSheet, ScrollView, Text } from 'react-native'
 
 export default class Chase extends Component {
-  render() {
-    const { items } = this.props;
+  constructor() {
+    super()
+    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
+    this.state = {
+      dataSource: ds.cloneWithRows([]),
+    }
+  }
 
-    let itemList = []
-    Object.keys(items.itemList).forEach(function(key) {
-      const m = items.itemList[key]
-      const title = m.resolved_title ? m.resolved_title : m.given_title
-      const url = m.resolved_url ? m.resolved_url : m.given_url
-      itemList.push(
-        <View key={key} style={styles.item}>
-          <Text>{ title }</Text>
-          <Text>{ url }</Text>
-        </View>
-      )
-    })
-
+  renderItem(item) {
     return (
-      <ScrollView style={styles.itemList}>
-        { itemList }
-      </ScrollView>
+      <View>
+        <Text>{ item.title }</Text>
+        <Text>{ item.url }</Text>
+      </View>
+    )
+  }
+
+  render() {
+    return (
+      <ListView
+        dataSource={this.state.dataSource.cloneWithRows(this.props.listData)}
+        renderRow={this.renderItem}
+        style={styles.itemList}
+      />
     )
   }
 }
