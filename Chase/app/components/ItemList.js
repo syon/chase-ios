@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, ListView, StyleSheet, ScrollView, Text } from 'react-native'
+import { View, ListView, Image, StyleSheet, Text } from 'react-native'
 
 export default class Chase extends Component {
   constructor() {
@@ -12,9 +12,12 @@ export default class Chase extends Component {
 
   renderItem(item) {
     return (
-      <View>
+      <View style={styles.item}>
+        <Image
+          style={styles.thumbnail}
+          source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
+        />
         <Text>{ item.title }</Text>
-        <Text>{ item.url }</Text>
       </View>
     )
   }
@@ -36,6 +39,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFCCAA',
   },
   item: {
+    flexDirection: 'row',
+    height: 50,
+  },
+  thumbnail: {
+    width: 50,
     height: 50,
   }
 });
