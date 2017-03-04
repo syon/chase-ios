@@ -9,7 +9,8 @@ export function loginFromStorage() {
     }).then(ret => {
       dispatch({ type: 'LOGIN_SUCCESS', data: ret })
     }).catch(err => {
-      console.warn('[Error Message from Storage]', err.message);
+      dispatch({ type: 'NEEDS_AUTH' })
+      console.warn('[Error Message from Storage]', err);
       switch (err.name) {
         case 'NotFoundError':
           break

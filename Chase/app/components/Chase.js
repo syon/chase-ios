@@ -15,21 +15,8 @@ import ItemList from './ItemList'
 export default class Chase extends Component {
   constructor(props) {
     super(props);
-    this._handleOpenURL = this._handleOpenURL.bind(this)
     this.onSavePage = this.onSavePage.bind(this)
     this.makeItemList = this.makeItemList.bind(this)
-  }
-
-  componentDidMount() {
-    Linking.addEventListener('url', this._handleOpenURL);
-  }
-
-  componentWillUnmount() {
-    Linking.removeEventListener('url', this._handleOpenURL);
-  }
-
-  _handleOpenURL(event) {
-    this.props.actions.doAfterRedirect(event.url)
   }
 
   onSavePage() {
@@ -58,7 +45,6 @@ export default class Chase extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.welcome}>
-          <Button onPress={actions.connectToPocket} title="Connect to Pocket" />
           <Button onPress={actions.disconnectFromPocket} title="Disconnect" />
           <Text>{ login.accessToken }</Text>
           <Text>{ login.username }</Text>
