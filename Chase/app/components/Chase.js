@@ -29,13 +29,8 @@ export default class Chase extends Component {
   }
 
   _handleOpenURL(event) {
-    console.log('===========================');
-    console.log(event.url);
-    console.log('===========================');
-    console.log('handleOpenURL', this);
     if (event.url.match(/authorizationFinished/)) {
-      // Alert.alert("Authed.")
-      this.props.getAccessToken()
+      this.props.actions.getAccessToken()
     }
   }
 
@@ -59,19 +54,19 @@ export default class Chase extends Component {
   }
 
   render() {
-    const { login, pocket, getReqToken, openAuthPage, loadPages } = this.props;
+    const { login, pocket, actions } = this.props;
     const listData = this.makeItemList()
 
     return (
       <View style={styles.container}>
         <View style={styles.welcome}>
-          <Button onPress={getReqToken} title="Connect to Pocket" />
-          <Button onPress={openAuthPage} title="openAuthPage" />
+          <Button onPress={actions.getReqToken} title="Connect to Pocket" />
+          <Button onPress={actions.openAuthPage} title="openAuthPage" />
           <Text>{ pocket.requestToken }</Text>
           <Text>{ login.accessToken }</Text>
           <Text>{ login.username }</Text>
           <Button onPress={this.onSavePage} title="Add!" />
-          <Button onPress={loadPages} title="Load" />
+          <Button onPress={actions.loadPages} title="Load" />
         </View>
         <ItemList {...this.props} listData={listData} />
       </View>

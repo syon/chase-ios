@@ -39,6 +39,9 @@ export function openAuthPage() {
   }
 }
 
+// アクセストークンの取得。アプリ認可後のリダイレクト経由で呼ばれる。
+// リクエストトークンを持っておりアプリが認可されていることを
+// 前提に呼び出してアクセストークンを得る
 export function getAccessToken() {
   return function(dispatch, getState) {
     const rt = getState().pocket.requestToken

@@ -14,7 +14,7 @@ class ChaseApp extends Component {
 
   render() {
     return (
-      <Chase {...this.props} {...this.props.actions} />
+      <Chase {...this.props} />
     )
   }
 }
