@@ -113,7 +113,7 @@ export function get(consumerKey, accessToken) {
     }).then((result) => {
       resolve(result)
     }).catch((error) => {
-      throw error
+      reject(error)
     })
   })
 }

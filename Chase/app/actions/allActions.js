@@ -1,6 +1,6 @@
 import { CONSUMER_KEY, REDIRECT_URI } from 'react-native-dotenv'
 
-import { getRequestToken, checkPocketApiAuth, openAuthorizePage, add, get } from '../PocketAPI';
+import * as PocketAPI from '../PocketAPI'
 
 export function loginFromStorage() {
   return function(dispatch, getState) {
@@ -22,10 +22,10 @@ export function loginFromStorage() {
 
 export function connectToPocket() {
   return function(dispatch) {
-    const promise = getRequestToken(CONSUMER_KEY, REDIRECT_URI)
+    const promise = PocketAPI.getRequestToken(CONSUMER_KEY, REDIRECT_URI)
     promise.then((token) => {
       dispatch({ type: 'GOT_REQUEST_TOKEN', requestToken: token })
-      openAuthorizePage(token, REDIRECT_URI)
+      PocketAPI.openAuthorizePage(token, REDIRECT_URI)
     })
   }
 }
@@ -35,11 +35,13 @@ export function doAfterRedirect(eventUrl) {
   return function(dispatch, getState) {
     if (eventUrl.match(/authorizationFinished/)) {
       const rt = getState().login.requestToken
-      const promise = checkPocketApiAuth(CONSUMER_KEY, REDIRECT_URI, rt)
+      const promise = PocketAPI.checkPocketApiAuth(CONSUMER_KEY, REDIRECT_URI, rt)
       promise.then((result) => {
         const loginData = { username: result.username, accessToken: result.access_token }
         updateLoginData(loginData)
         dispatch({ type: 'LOGIN_SUCCESS', data: loginData })
+      }).catch(result => {
+        console.log('doAfterRedirect', 'Declined', result)
       })
     } else {
       console.log('doAfterRedirect', 'Unexpected', eventUrl)
@@ -61,7 +63,7 @@ function updateLoginData(loginData) {
 export function savePage(url) {
   return function(dispatch, getState) {
     const at = getState().pocket.accessToken
-    const promise = add(CONSUMER_KEY, at, url)
+    const promise = PocketAPI.add(CONSUMER_KEY, at, url)
     promise.then((result) => {
       console.log(result)
       dispatch({ type: 'SAVE_PAGE', data: `SAVED! ${url}` })
@@ -72,10 +74,12 @@ export function savePage(url) {
 export function loadPages() {
   return function(dispatch, getState) {
     const at = getState().login.accessToken
-    const promise = get(CONSUMER_KEY, at)
+    const promise = PocketAPI.get(CONSUMER_KEY, at)
     promise.then((result) => {
       console.log(result)
       dispatch({ type: 'LOAD_PAGES', data: result })
+    }).catch(result => {
+      console.log('Failed to load pages.', result)
     })
   }
 }
