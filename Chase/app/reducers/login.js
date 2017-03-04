@@ -18,6 +18,8 @@ export default function login(state = initialState, action = {}) {
         username: action.data.username,
         accessToken: action.data.accessToken,
       })
+    case 'LOGOUT_DONE':
+      return initialState
     default:
       return state
   }

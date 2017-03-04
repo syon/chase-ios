@@ -4,7 +4,7 @@ import * as PocketAPI from '../PocketAPI'
 
 export function loginFromStorage() {
   return function(dispatch, getState) {
-    storage.load({
+    global.storage.load({
       key: 'loginState',
     }).then(ret => {
       dispatch({ type: 'LOGIN_SUCCESS', data: ret })
@@ -58,6 +58,16 @@ function updateLoginData(loginData) {
     },
     expires: null
   })
+}
+
+export function disconnectFromPocket() {
+  return function(dispatch, getState) {
+    global.storage.remove({
+      key: 'loginState'
+    })
+    updateLoginData({})
+    dispatch({ type: 'LOGOUT_DONE' })
+  }
 }
 
 export function savePage(url) {

@@ -59,6 +59,7 @@ export default class Chase extends Component {
       <View style={styles.container}>
         <View style={styles.welcome}>
           <Button onPress={actions.connectToPocket} title="Connect to Pocket" />
+          <Button onPress={actions.disconnectFromPocket} title="Disconnect" />
           <Text>{ login.accessToken }</Text>
           <Text>{ login.username }</Text>
           <Button onPress={this.onSavePage} title="Add!" />
