@@ -8,10 +8,9 @@ import thunk from 'redux-thunk';
 import * as reducers from '../reducers';
 import ChaseApp from './ChaseApp';
 
-var storage = new Storage({
+global.storage = new Storage({
   storageBackend: AsyncStorage,
 })
-global.storage = storage;
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const reducer = combineReducers(reducers);

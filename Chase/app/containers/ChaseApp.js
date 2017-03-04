@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 
 import Chase from '../components/Chase';
-import * as pocketActions from '../actions/pocketActions';
+import * as allActions from '../actions/allActions';
 
 class ChaseApp extends Component {
   constructor(props) {
@@ -13,10 +13,8 @@ class ChaseApp extends Component {
   }
 
   render() {
-    const { login, pocket, items, actions } = this.props;
-
     return (
-      <Chase login={login} pocket={pocket} items={items} {...actions} />
+      <Chase {...this.props} {...this.props.actions} />
     )
   }
 }
@@ -27,6 +25,6 @@ export default connect(state => ({
     items: state.items,
   }),
   (dispatch) => ({
-    actions: bindActionCreators(pocketActions, dispatch)
+    actions: bindActionCreators(allActions, dispatch)
   })
 )(ChaseApp);

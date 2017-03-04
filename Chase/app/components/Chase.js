@@ -70,7 +70,6 @@ export default class Chase extends Component {
           <Text>{ pocket.requestToken }</Text>
           <Text>{ login.accessToken }</Text>
           <Text>{ login.username }</Text>
-          <Text>{ pocket.authed ? '接続済み' : '未接続' }</Text>
           <Button onPress={this.onSavePage} title="Add!" />
           <Button onPress={loadPages} title="Load" />
         </View>
