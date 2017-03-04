@@ -59,7 +59,7 @@ export default class Chase extends Component {
   }
 
   render() {
-    const { pocket, getReqToken, openAuthPage, loadPages } = this.props;
+    const { login, pocket, getReqToken, openAuthPage, loadPages } = this.props;
     const listData = this.makeItemList()
 
     return (
@@ -68,8 +68,8 @@ export default class Chase extends Component {
           <Button onPress={getReqToken} title="Connect to Pocket" />
           <Button onPress={openAuthPage} title="openAuthPage" />
           <Text>{ pocket.requestToken }</Text>
-          <Text>{ pocket.accessToken }</Text>
-          <Text>{ pocket.username }</Text>
+          <Text>{ login.accessToken }</Text>
+          <Text>{ login.username }</Text>
           <Text>{ pocket.authed ? '接続済み' : '未接続' }</Text>
           <Button onPress={this.onSavePage} title="Add!" />
           <Button onPress={loadPages} title="Load" />

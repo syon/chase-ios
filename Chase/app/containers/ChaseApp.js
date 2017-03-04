@@ -8,19 +8,21 @@ import * as pocketActions from '../actions/pocketActions';
 class ChaseApp extends Component {
   constructor(props) {
     super(props);
+
+    this.props.actions.loginFromStorage()
   }
 
   render() {
-    const { pocket, items, actions } = this.props;
-    console.log('[ChaseApp.js] this.props', this.props)
+    const { login, pocket, items, actions } = this.props;
 
     return (
-      <Chase pocket={pocket} items={items} {...actions} />
+      <Chase login={login} pocket={pocket} items={items} {...actions} />
     )
   }
 }
 
 export default connect(state => ({
+    login: state.login,
     pocket: state.pocket,
     items: state.items,
   }),

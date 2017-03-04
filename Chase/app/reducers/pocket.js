@@ -16,6 +16,17 @@ export default function pocket(state = initialState, action = {}) {
       })
     case 'GET_ACCESS_TOKEN':
       console.log('GET_ACCESS_TOKEN', action)
+      
+      global.storage.save({
+        key: 'loginState',
+        rawData: {
+          username: action.data.username,
+          accessToken: action.data.access_token,
+        },
+        expires: null
+      })
+      console.log('global.storage', global.storage)
+
       return Object.assign({}, state, {
         authed: true,
         accessToken: action.data.access_token,

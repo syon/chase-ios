@@ -1,10 +1,17 @@
 import React, {Component} from 'react';
+import { AsyncStorage } from 'react-native';
+import Storage from 'react-native-storage';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
 import * as reducers from '../reducers';
 import ChaseApp from './ChaseApp';
+
+var storage = new Storage({
+  storageBackend: AsyncStorage,
+})
+global.storage = storage;
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const reducer = combineReducers(reducers);
