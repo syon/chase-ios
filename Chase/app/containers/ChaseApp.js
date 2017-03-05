@@ -23,6 +23,7 @@ class ChaseApp extends Component {
           <NavigatorIOS
             initialRoute={{
               component: Chase,
+              title: '',
               navigationBarHidden: true,
               passProps: { ...this.props },
             }}
