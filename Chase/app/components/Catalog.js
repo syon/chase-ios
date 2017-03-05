@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Text,
   Button,
+  RefreshControl,
 } from 'react-native'
 
 export default class extends Component {
@@ -15,12 +16,18 @@ export default class extends Component {
     super(props)
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
     this.state = {
+      refreshing: false,
       dataSource: ds,
       itemsForDS: [{ title: 'Default item' }]
     }
     this.listupFromStorage = this.listupFromStorage.bind(this)
     this.renderItem = this.renderItem.bind(this)
     this.openWebView = this.openWebView.bind(this)
+  }
+
+  _onRefresh() {
+    this.setState({refreshing: true});
+    this.listupFromStorage()    
   }
 
   renderItem(item) {
@@ -43,6 +50,7 @@ export default class extends Component {
     }).then(catalog => {
       const itemsForDS = this.makeItemsForDS(catalog)
       this.setState({
+        refreshing: false,
         itemsForDS: itemsForDS,
         dataSource: this.state.dataSource.cloneWithRows(itemsForDS)
       })
@@ -77,6 +85,12 @@ export default class extends Component {
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this.renderItem}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this._onRefresh.bind(this)}
+            />
+          }
           style={styles.itemList}
         />
       </View>
