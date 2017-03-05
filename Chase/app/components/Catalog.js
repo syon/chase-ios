@@ -54,10 +54,7 @@ export default class extends Component {
   makeItemsForDS(catalog) {
     let items = []
     Object.keys(catalog).forEach(function(key) {
-      const m = catalog[key]
-      const title = m.resolved_title ? m.resolved_title : m.given_title
-      const url = m.resolved_url ? m.resolved_url : m.given_url
-      items.push({ title, url })
+      items.push(catalog[key])
     })
     return items
   }
