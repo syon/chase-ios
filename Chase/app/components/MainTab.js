@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, ListView, Image, StyleSheet, Text } from 'react-native'
 
-export default class Chase extends Component {
+export default class extends Component {
   constructor() {
     super()
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })

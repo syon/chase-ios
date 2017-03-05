@@ -11,7 +11,7 @@ import {
 
 import { CONSUMER_KEY, REDIRECT_URI } from 'react-native-dotenv'
 
-import ItemList from './ItemList'
+import MainTab from './MainTab'
 
 export default class Chase extends Component {
   constructor(props) {
@@ -54,7 +54,7 @@ export default class Chase extends Component {
             selected={this.state.selectedTab === 'main'}
             onPress={() => { this.setState({ selectedTab: 'main' }) }}
           >
-            <ItemList {...this.props} listData={listData} />
+            <MainTab {...this.props} listData={listData} />
           </TabBarIOS.Item>
           <TabBarIOS.Item
             title="Config"
