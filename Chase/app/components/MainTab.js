@@ -22,6 +22,8 @@ export default class extends Component {
           component: Catalog,
           title: 'Catalog',
           passProps: { ...this.props },
+          rightButtonTitle: 'Update',
+          onRightButtonPress: this.props.actions.loadPages,
         }}
         style={{flex: 1}}
       />

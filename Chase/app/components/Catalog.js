@@ -61,14 +61,17 @@ export default class extends Component {
 
   openWebView(item) {
     this.props.navigator.push({
-      title: item.title,
+      title: '',
       component: itemWebView,
       passProps: { item }
     })
   }
 
+  componentDidMount() {
+    this.listupFromStorage()
+  }
+
   render() {
-    const { actions } = this.props
     return (
       <View style={styles.wrap}>
         <ListView
@@ -76,10 +79,6 @@ export default class extends Component {
           renderRow={this.renderItem}
           style={styles.itemList}
         />
-        <View style={styles.itemList}>
-          <Button onPress={this.listupFromStorage} title="listupFromStorage" />
-          <Button onPress={actions.loadPages} title="Load to Storage" />
-        </View>
       </View>
     )
   }
