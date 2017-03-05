@@ -17,29 +17,12 @@ import ConfigTab from './ConfigTab'
 export default class Chase extends Component {
   constructor(props) {
     super(props);
-    this.makeItemList = this.makeItemList.bind(this)
     this.state = {
       selectedTab: 'main'
     }
   }
 
-  makeItemList() {
-    if (!this.props) { return [] }
-    const { items } = this.props
-    let itemList = []
-    Object.keys(items.itemList).forEach(function(key) {
-      const m = items.itemList[key]
-      const title = m.resolved_title ? m.resolved_title : m.given_title
-      const url = m.resolved_url ? m.resolved_url : m.given_url
-      itemList.push({ title, url })
-    })
-    console.info('makeItemList()', itemList)
-    return itemList
-  }
-
   render() {
-    const listData = this.makeItemList()
-
     return (
       <View style={styles.container}>
         <TabBarIOS>
@@ -48,7 +31,7 @@ export default class Chase extends Component {
             selected={this.state.selectedTab === 'main'}
             onPress={() => { this.setState({ selectedTab: 'main' }) }}
           >
-            <MainTab {...this.props} listData={listData} />
+            <MainTab {...this.props} />
           </TabBarIOS.Item>
           <TabBarIOS.Item
             title="Config"

@@ -21,7 +21,7 @@ export default class extends Component {
         initialRoute={{
           component: Catalog,
           title: 'Catalog',
-          passProps: { ...this.props, theListData: this.props.listData },
+          passProps: { ...this.props },
         }}
         style={{flex: 1}}
       />

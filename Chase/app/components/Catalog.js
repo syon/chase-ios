@@ -71,7 +71,7 @@ export default class extends Component {
   }
 
   render() {
-    const { actions, theListData } = this.props
+    const { actions } = this.props
     return (
       <View style={styles.wrap}>
         <ListView
