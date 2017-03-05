@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import { View, WebView, ListView, Image, StyleSheet, Text, Button } from 'react-native'
-
-class itemWebView extends Component{
-  render() {
-    return (
-      <WebView source={{uri: 'https://facebook.github.io/react-native/'}} />
-    )
-  }
-}
+import {
+  View,
+  TouchableHighlight,
+  WebView,
+  ListView,
+  Image,
+  StyleSheet,
+  Text,
+  Button,
+} from 'react-native'
 
 export default class extends Component {
   constructor(props) {
@@ -18,18 +19,21 @@ export default class extends Component {
       itemsForDS: [{ title: 'Default item' }]
     }
     this.listupFromStorage = this.listupFromStorage.bind(this)
+    this.renderItem = this.renderItem.bind(this)
     this.openWebView = this.openWebView.bind(this)
   }
 
   renderItem(item) {
     return (
-      <View style={styles.item}>
-        <Image
-          style={styles.thumbnail}
-          source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
-        />
-        <Text>{ item.title }</Text>
-      </View>
+      <TouchableHighlight onPress={() => this.openWebView(item)}>
+        <View style={styles.item}>
+          <Image
+            style={styles.thumbnail}
+            source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
+          />
+          <Text>{ item.title }</Text>
+        </View>
+      </TouchableHighlight>
     )
   }
 
@@ -37,7 +41,6 @@ export default class extends Component {
     global.storage.load({
       key: 'catalog',
     }).then(catalog => {
-      console.info('Loaded Catalog from storage', catalog)
       const itemsForDS = this.makeItemsForDS(catalog)
       this.setState({
         itemsForDS: itemsForDS,
@@ -59,16 +62,15 @@ export default class extends Component {
     return items
   }
 
-  openWebView() {
+  openWebView(item) {
     this.props.navigator.push({
-      title: 'My WebView',
+      title: item.title,
       component: itemWebView,
-      passProps: {}
+      passProps: { item }
     })
   }
 
   render() {
-    console.log('I am Catalog render - this.props is', this.props)
     const { actions, theListData } = this.props
     return (
       <View style={styles.wrap}>
@@ -78,17 +80,18 @@ export default class extends Component {
           style={styles.itemList}
         />
         <View style={styles.itemList}>
-          <Text style={styles.count}>{this.state.count}</Text>
           <Button onPress={this.listupFromStorage} title="listupFromStorage" />
           <Button onPress={actions.loadPages} title="Load to Storage" />
-          <Text>{theListData.length}</Text>
-          <Button onPress={this.openWebView} title="openWebView" />
-          <Image
-            style={styles.thumbnail}
-            source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
-          />
         </View>
       </View>
+    )
+  }
+}
+
+class itemWebView extends Component{
+  render() {
+    return (
+      <WebView source={{uri: this.props.item.url}} />
     )
   }
 }
@@ -109,7 +112,4 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
   },
-  count: {
-    backgroundColor: '#CCCCFF',
-  }
-});
+})
