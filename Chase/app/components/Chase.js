@@ -12,20 +12,15 @@ import {
 import { CONSUMER_KEY, REDIRECT_URI } from 'react-native-dotenv'
 
 import MainTab from './MainTab'
+import ConfigTab from './ConfigTab'
 
 export default class Chase extends Component {
   constructor(props) {
     super(props);
-    this.onSavePage = this.onSavePage.bind(this)
     this.makeItemList = this.makeItemList.bind(this)
     this.state = {
       selectedTab: 'main'
     }
-  }
-
-  onSavePage() {
-    const url = 'https://getpocket.com/developer/docs/authentication'
-    this.props.savePage(url)
   }
 
   makeItemList() {
@@ -43,7 +38,6 @@ export default class Chase extends Component {
   }
 
   render() {
-    const { login, actions } = this.props;
     const listData = this.makeItemList()
 
     return (
@@ -61,13 +55,7 @@ export default class Chase extends Component {
             selected={this.state.selectedTab === 'config'}
             onPress={() => { this.setState({ selectedTab: 'config' }) }}
           >
-            <View style={styles.welcome}>
-              <Button onPress={actions.disconnectFromPocket} title="Disconnect" />
-              <Text>{ login.accessToken }</Text>
-              <Text>{ login.username }</Text>
-              <Button onPress={this.onSavePage} title="Add!" />
-              <Button onPress={actions.loadPages} title="Load" />
-            </View>
+            <ConfigTab {...this.props} />
           </TabBarIOS.Item>
         </TabBarIOS>
       </View>
@@ -90,4 +78,4 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-});
+})
