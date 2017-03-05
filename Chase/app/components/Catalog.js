@@ -59,8 +59,9 @@ export default class extends Component {
       })
       .then(catalog => {
         console.log('ストレージのロードできました→', catalog)
-        console.log('リストを描画します')
         const itemsForDS = this.makeItemsForDS(catalog)
+        console.log('リストをソートしました', itemsForDS)
+        console.log('リストを描画します')
         this.setState({
           refreshing: false,
           itemsForDS: itemsForDS,
@@ -75,6 +76,11 @@ export default class extends Component {
     let items = []
     Object.keys(catalog).forEach(function(key) {
       items.push(catalog[key])
+    })
+    items = items.sort((a,b) => {
+      if (a.sortId < b.sortId) return -1
+      if (a.sortId > b.sortId) return 1
+      return 0
     })
     return items
   }

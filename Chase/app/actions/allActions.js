@@ -109,11 +109,14 @@ export function refreshCatalog() {
 
 function makeCatalog(listFromPocket) {
   let catalog = {}
-  Object.keys(listFromPocket).forEach(function(key) {
+  Object.keys(listFromPocket).forEach((key) => {
     const m = listFromPocket[key]
-    const title = m.resolved_title ? m.resolved_title : m.given_title
-    const url = m.resolved_url ? m.resolved_url : m.given_url
-    catalog[key] = { title, url }
+    catalog[key] = {
+      itemId: m.resolved_id == "0" ? m.item_id : m.resolved_id,
+      title: m.resolved_title ? m.resolved_title : m.given_title,
+      url: m.resolved_url ? m.resolved_url : m.given_url,
+      sortId: m.sort_id
+    }
   })
   return catalog
 }
