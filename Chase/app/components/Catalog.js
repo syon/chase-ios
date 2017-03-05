@@ -45,18 +45,30 @@ export default class extends Component {
   }
 
   listupFromStorage() {
-    global.storage.load({
-      key: 'catalog',
-    }).then(catalog => {
-      const itemsForDS = this.makeItemsForDS(catalog)
-      this.setState({
-        refreshing: false,
-        itemsForDS: itemsForDS,
-        dataSource: this.state.dataSource.cloneWithRows(itemsForDS)
+    this.props.actions.refreshCatalog()
+      .then(() => {
+        console.log('リフレッシュCatalogおわったよ')
       })
-    }).catch(err => {
-      console.warn('[Error Message from Storage]', err);
-    })
+      .then(() => {
+        console.log('ストレージのロード始めます')
+        return global.storage.load({
+          key: 'catalog',
+        }).catch(err => {
+          console.warn('[Error on Storage Loading]', err);
+        })
+      })
+      .then(catalog => {
+        console.log('ストレージのロードできました→', catalog)
+        console.log('リストを描画します')
+        const itemsForDS = this.makeItemsForDS(catalog)
+        this.setState({
+          refreshing: false,
+          itemsForDS: itemsForDS,
+          dataSource: this.state.dataSource.cloneWithRows(itemsForDS)
+        })
+      }).catch(err => {
+        console.warn('[Error Message from Storage]', err);
+      })
   }
 
   makeItemsForDS(catalog) {
@@ -112,7 +124,6 @@ const styles = StyleSheet.create({
   },
   itemList: {
     flex: 1,
-    backgroundColor: '#FFCCAA',
   },
   item: {
     flexDirection: 'row',

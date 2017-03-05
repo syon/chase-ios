@@ -20,7 +20,6 @@ export default class extends Component {
         <Text>{ login.accessToken }</Text>
         <Text>{ login.username }</Text>
         <Button onPress={this.onSavePage} title="Add!" />
-        <Button onPress={actions.loadPages} title="Load" />
       </View>
     )
   }

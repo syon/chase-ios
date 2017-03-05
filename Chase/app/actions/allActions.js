@@ -82,15 +82,38 @@ export function savePage(url) {
   }
 }
 
-export function loadPages() {
+export function refreshCatalog() {
   return function(dispatch, getState) {
-    const at = getState().login.accessToken
-    const promise = PocketAPI.get(CONSUMER_KEY, at)
-    promise.then((result) => {
-      console.log(result)
-      dispatch({ type: 'LOAD_PAGES', data: result })
-    }).catch(result => {
-      console.log('Failed to load pages.', result)
+    return new Promise((resolve, reject) => {
+      const at = getState().login.accessToken
+      const api = PocketAPI.get(CONSUMER_KEY, at)
+      api.then((result) => {
+        console.log('APIからの返事きた', result)
+        const catalog = makeCatalog(result.list)
+        console.log('Catalog保存します...')
+        dispatch({ type: 'LOAD_PAGES', catalog })
+        return global.storage.save({
+          key: 'catalog',
+          rawData: catalog,
+          expires: null
+        })
+      }).then(() => {
+        console.log('Catalog保存できました、リフレッシュCatalogをresolveします')
+        resolve()
+      }).catch(result => {
+        console.log('Failed to load pages.', result)
+      })
     })
   }
+}
+
+function makeCatalog(listFromPocket) {
+  let catalog = {}
+  Object.keys(listFromPocket).forEach(function(key) {
+    const m = listFromPocket[key]
+    const title = m.resolved_title ? m.resolved_title : m.given_title
+    const url = m.resolved_url ? m.resolved_url : m.given_url
+    catalog[key] = { title, url }
+  })
+  return catalog
 }
