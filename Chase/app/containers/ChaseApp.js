@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
+import { NavigatorIOS } from 'react-native';
 
 import Loading from '../components/Loading';
 import Login from '../components/Login';
@@ -18,7 +19,16 @@ class ChaseApp extends Component {
     const { mode } = this.props
     switch (mode) {
       case 'MODE_READY':
-        return <Chase {...this.props} />
+        return (
+          <NavigatorIOS
+            initialRoute={{
+              component: Chase,
+              navigationBarHidden: true,
+              passProps: { ...this.props },
+            }}
+            style={{flex: 1}}
+          />
+        )
       case 'MODE_NEEDS_AUTH':
         return <Login {...this.props} />
       default:
