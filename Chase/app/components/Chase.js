@@ -24,7 +24,6 @@ export default class Chase extends Component {
   }
 
   makeItemList() {
-    console.log('makeItemList() -- this --', this)
     if (!this.props) { return [] }
     const { items } = this.props
     let itemList = []
@@ -34,6 +33,7 @@ export default class Chase extends Component {
       const url = m.resolved_url ? m.resolved_url : m.given_url
       itemList.push({ title, url })
     })
+    console.info('makeItemList()', itemList)
     return itemList
   }
 

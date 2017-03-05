@@ -1,12 +1,30 @@
 import React, { Component } from 'react'
-import { View, ListView, Image, StyleSheet, Text } from 'react-native'
+import {
+  NavigatorIOS,
+  TouchableHighlight,
+  View,
+  ListView,
+  Image,
+  StyleSheet,
+  Text,
+  Button,
+} from 'react-native'
 
 import Catalog from './Catalog'
 
 export default class extends Component {
   render() {
+    console.log('I am MainTab - this.props is', this.props)
     return (
-      <Catalog {...this.props} />
+      <NavigatorIOS
+        ref='nav'
+        initialRoute={{
+          component: Catalog,
+          title: 'Catalog',
+          passProps: { ...this.props, theListData: this.props.listData },
+        }}
+        style={{flex: 1}}
+      />
     )
   }
 }
