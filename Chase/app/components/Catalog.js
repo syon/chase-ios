@@ -31,12 +31,16 @@ export default class extends Component {
   }
 
   renderItem(item) {
+    const thumbsPath = 'https://d2aed4ktvx51jm.cloudfront.net/items/thumbs'
+    const item10Id = `0000000000${item.itemId}`.substr(-10, 10)
+    const itemId3 = item10Id.slice(0, 3)
+    const imgUrl = `${thumbsPath}/${itemId3}/${item10Id}.jpg`
     return (
       <TouchableHighlight onPress={() => this.openWebView(item)}>
         <View style={styles.item}>
           <Image
             style={styles.thumbnail}
-            source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
+            source={{uri: imgUrl}}
           />
           <Text>{ item.title }</Text>
         </View>
