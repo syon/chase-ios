@@ -1411,7 +1411,7 @@ fbjs-scripts@^0.7.0:
     semver "^5.1.0"
     through2 "^2.0.0"
 
-fbjs@^0.8.4, fbjs@^0.8.5:
+fbjs@^0.8.3, fbjs@^0.8.4, fbjs@^0.8.5:
   version "0.8.9"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.9.tgz#180247fbd347dcc9004517b904f865400a0c8f14"
   dependencies:
@@ -2924,6 +2924,12 @@ react-native-dotenv@^0.0.3:
 react-native-storage@^0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/react-native-storage/-/react-native-storage-0.1.5.tgz#91d77560e41cc9e62d587b55a21b3d6ebaba5599"
+
+react-native-wkwebview-reborn@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-wkwebview-reborn/-/react-native-wkwebview-reborn-1.2.0.tgz#423959ec3d3dbac527e4ba645e5e27c77cea36c5"
+  dependencies:
+    fbjs "^0.8.3"
 
 react-native@^0.42.0:
   version "0.42.0"
