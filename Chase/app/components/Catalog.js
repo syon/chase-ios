@@ -10,6 +10,7 @@ import {
   Button,
   RefreshControl,
   ProgressViewIOS,
+  StatusBar,
 } from 'react-native'
 import WKWebView from 'react-native-wkwebview-reborn'
 
@@ -133,11 +134,15 @@ class itemWebView extends Component{
   render() {
     return (
       <View style={{flex: 1}}>
-        <ProgressViewIOS progress={this.state.rate} />
+        <StatusBar hidden={true} />
         <WKWebView
           source={{uri: this.props.item.url}}
           onProgress={(progress) => this.setState({ rate: progress })}
         />
+        <View>
+          <ProgressViewIOS progress={this.state.rate} />
+          <Button onPress={() => {this.props.navigator.pop()}} title="←" />
+        </View>
       </View>
     )
   }

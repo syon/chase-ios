@@ -27,6 +27,8 @@ class ChaseApp extends Component {
               navigationBarHidden: true,
               passProps: { ...this.props },
             }}
+            interactivePopGestureEnabled={true}
+            navigationBarHidden={true}
             style={{flex: 1}}
           />
         )
