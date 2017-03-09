@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {
   View,
-  TouchableHighlight,
+  TouchableOpacity,
   WebView,
   ListView,
   Image,
@@ -38,7 +38,7 @@ export default class extends Component {
     const itemId3 = item10Id.slice(0, 3)
     const imgUrl = `${thumbsPath}/${itemId3}/${item10Id}.jpg`
     return (
-      <TouchableHighlight onPress={() => this.openWebView(item)}>
+      <TouchableOpacity onPress={() => this.openWebView(item)}>
         <View style={styles.item}>
           <Image
             style={styles.thumbnail}
@@ -48,7 +48,7 @@ export default class extends Component {
             <Text style={styles.title}>{ item.title }</Text>
           </View>
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     )
   }
 
@@ -152,19 +152,21 @@ const styles = StyleSheet.create({
   },
   item: {
     flexDirection: 'row',
-    height: 50,
+    height: 60,
     borderBottomWidth: 1,
-    borderBottomColor: '#e9e9e9',
+    borderBottomColor: '#f5f5f5',
   },
   itemBody: {
     flex: 1,
     padding: 7,
   },
   title: {
-    fontSize: 12,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
   },
   thumbnail: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
   },
 })
