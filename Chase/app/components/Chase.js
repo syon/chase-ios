@@ -8,7 +8,7 @@ import {
   Linking,
   TabBarIOS
 } from 'react-native';
-
+import Icon from 'react-native-vector-icons/Ionicons'
 import { CONSUMER_KEY, REDIRECT_URI } from 'react-native-dotenv'
 
 import MainTab from './MainTab'
@@ -26,20 +26,24 @@ export default class Chase extends Component {
     return (
       <View style={styles.container}>
         <TabBarIOS>
-          <TabBarIOS.Item
-            title="Main"
+          <Icon.TabBarItem
+            title="マイリスト"
+            iconName="ios-paper-outline"
+            selectedIconName="ios-paper"
             selected={this.state.selectedTab === 'main'}
             onPress={() => { this.setState({ selectedTab: 'main' }) }}
           >
             <MainTab {...this.props} />
-          </TabBarIOS.Item>
-          <TabBarIOS.Item
-            title="Config"
+          </Icon.TabBarItem>
+          <Icon.TabBarItem
+            title="設定"
+            iconName="ios-options-outline"
+            selectedIconName="ios-options"
             selected={this.state.selectedTab === 'config'}
             onPress={() => { this.setState({ selectedTab: 'config' }) }}
           >
             <ConfigTab {...this.props} />
-          </TabBarIOS.Item>
+          </Icon.TabBarItem>
         </TabBarIOS>
       </View>
     )
