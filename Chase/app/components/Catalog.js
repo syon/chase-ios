@@ -24,8 +24,8 @@ export default class extends Component {
       itemsForDS: [{ title: 'Default item' }]
     }
     this.listupFromStorage = this.listupFromStorage.bind(this)
-    this.renderItem = this.renderItem.bind(this)
-    this.renderHidden = this.renderHidden.bind(this)
+    this.renderRowFront = this.renderRowFront.bind(this)
+    this.renderRowBack = this.renderRowBack.bind(this)
     this.openWebView = this.openWebView.bind(this)
   }
 
@@ -34,7 +34,7 @@ export default class extends Component {
     this.listupFromStorage()    
   }
 
-  renderItem(item) {
+  renderRowFront(item) {
     const thumbsPath = 'https://d2aed4ktvx51jm.cloudfront.net/items/thumbs'
     const item10Id = `0000000000${item.itemId}`.substr(-10, 10)
     const itemId3 = item10Id.slice(0, 3)
@@ -54,7 +54,7 @@ export default class extends Component {
     )
   }
 
-  renderHidden(item) {
+  renderRowBack(item) {
     return (
       <View style={styles.rowBack}>
         <TouchableWithoutFeedback onPress={() => {console.log('★L')}}>
@@ -129,8 +129,8 @@ export default class extends Component {
       <View style={styles.wrap}>
         <SwipeListView
           dataSource={this.state.dataSource}
-          renderRow={this.renderItem}
-          renderHiddenRow={this.renderHidden}
+          renderRow={this.renderRowFront}
+          renderHiddenRow={this.renderRowBack}
           leftOpenValue={75}
           rightOpenValue={-75}
           refreshControl={
