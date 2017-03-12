@@ -27,11 +27,29 @@ export default class Chase extends Component {
       <View style={styles.container}>
         <TabBarIOS>
           <Icon.TabBarItem
-            title="マイリスト"
+            title="未処理"
             iconName="ios-paper-outline"
             selectedIconName="ios-paper"
             selected={this.state.selectedTab === 'main'}
             onPress={() => { this.setState({ selectedTab: 'main' }) }}
+          >
+            <MainTab {...this.props} />
+          </Icon.TabBarItem>
+          <Icon.TabBarItem
+            title="場所"
+            iconName="ios-pin-outline"
+            selectedIconName="ios-pin"
+            selected={this.state.selectedTab === 'loc'}
+            onPress={() => { this.setState({ selectedTab: 'loc' }) }}
+          >
+            <MainTab {...this.props} />
+          </Icon.TabBarItem>
+          <Icon.TabBarItem
+            title="ToDo"
+            iconName="ios-filing-outline"
+            selectedIconName="ios-filing"
+            selected={this.state.selectedTab === 'todo'}
+            onPress={() => { this.setState({ selectedTab: 'todo' }) }}
           >
             <MainTab {...this.props} />
           </Icon.TabBarItem>
