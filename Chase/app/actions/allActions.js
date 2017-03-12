@@ -2,11 +2,14 @@ import { CONSUMER_KEY, REDIRECT_URI } from 'react-native-dotenv'
 
 import * as PocketAPI from '../PocketAPI'
 
+let memAccessToken = null
+
 export function loginFromStorage() {
   return function(dispatch, getState) {
     global.storage.load({
       key: 'loginState',
     }).then(ret => {
+      memAccessToken = ret.accessToken
       dispatch({ type: 'LOGIN_SUCCESS', data: ret })
     }).catch(err => {
       dispatch({ type: 'NEEDS_AUTH' })
@@ -107,16 +110,36 @@ export function refreshCatalog() {
   }
 }
 
+let catalogBySort = {}
+
 function makeCatalog(listFromPocket) {
   let catalog = {}
   Object.keys(listFromPocket).forEach((key) => {
     const m = listFromPocket[key]
+    itemId = m.resolved_id == "0" ? m.item_id : m.resolved_id
     catalog[key] = {
-      itemId: m.resolved_id == "0" ? m.item_id : m.resolved_id,
+      itemId: itemId,
       title: m.resolved_title ? m.resolved_title : m.given_title,
       url: m.resolved_url ? m.resolved_url : m.given_url,
       sortId: m.sort_id
     }
+    catalogBySort[m.sort_id] = itemId
   })
   return catalog
+}
+
+const AS_BTN_TAGS = ['loc:Home', 'loc:Office']
+
+export function addTag(listIdx, asBtnIdx) {
+  return function(dispatch, getState) {
+    const itemId = catalogBySort[listIdx]
+    const tagNm = AS_BTN_TAGS[asBtnIdx]
+    const at = memAccessToken
+    const promise = PocketAPI.tags_add(CONSUMER_KEY, at, itemId, tagNm)
+    promise.then((result) => {
+      console.log(result)
+    }).catch(err => {
+      console.log(err)
+    })
+  }
 }

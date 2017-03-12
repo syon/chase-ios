@@ -30,6 +30,7 @@ export default class extends Component {
     this.listupFromStorage = this.listupFromStorage.bind(this)
     this.renderRowFront = this.renderRowFront.bind(this)
     this.renderRowBack = this.renderRowBack.bind(this)
+    this.onSwipe = this.onSwipe.bind(this)
     this.openWebView = this.openWebView.bind(this)
   }
 
@@ -80,9 +81,11 @@ export default class extends Component {
       options: AS_BTNS,
       cancelButtonIndex: AS_BTNS_CIDX
     },
-    (buttonIndex) => {
+    ((buttonIndex) => {
       console.log('buttonIndex', buttonIndex)
-    })
+      console.log('In ActionSheet idx:',idx)
+      this.props.actions.addTag(idx, buttonIndex)
+    }).bind(this))
     console.log('idx:',idx)
   }
 
