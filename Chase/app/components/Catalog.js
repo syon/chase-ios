@@ -8,11 +8,15 @@ import {
   Text,
   Button,
   RefreshControl,
+  ActionSheetIOS,
 } from 'react-native'
-import { SwipeListView } from 'react-native-swipe-list-view';
+import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 import WKWebView from 'react-native-wkwebview-reborn'
 
 import MyWebView from './MyWebView'
+
+const AS_BTNS = ['家で読む', '職場で読む', 'キャンセル']
+const AS_BTNS_CIDX = 2
 
 export default class extends Component {
   constructor(props) {
@@ -69,6 +73,17 @@ export default class extends Component {
         </TouchableWithoutFeedback>
       </View>
     )
+  }
+
+  onSwipe(_, idx) {
+    ActionSheetIOS.showActionSheetWithOptions({
+      options: AS_BTNS,
+      cancelButtonIndex: AS_BTNS_CIDX
+    },
+    (buttonIndex) => {
+      console.log('buttonIndex', buttonIndex)
+    })
+    console.log('idx:',idx)
   }
 
   listupFromStorage() {
@@ -129,10 +144,17 @@ export default class extends Component {
       <View style={styles.wrap}>
         <SwipeListView
           dataSource={this.state.dataSource}
-          renderRow={this.renderRowFront}
-          renderHiddenRow={this.renderRowBack}
-          leftOpenValue={75}
-          rightOpenValue={-75}
+          renderRow={(data, secId, rowId) => (
+            <SwipeRow
+              leftOpenValue={75}
+              rightOpenValue={-75}
+              disableLeftSwipe={true}
+            >
+              { this.renderRowBack(data) }
+              { this.renderRowFront(data) }
+            </SwipeRow>
+          )}
+          onRowOpen={this.onSwipe}
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
