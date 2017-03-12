@@ -2,18 +2,17 @@ import React, { Component } from 'react'
 import {
   View,
   TouchableWithoutFeedback,
-  WebView,
   ListView,
   Image,
   StyleSheet,
   Text,
   Button,
   RefreshControl,
-  ProgressViewIOS,
-  StatusBar,
 } from 'react-native'
 import { SwipeListView } from 'react-native-swipe-list-view';
 import WKWebView from 'react-native-wkwebview-reborn'
+
+import MyWebView from './MyWebView'
 
 export default class extends Component {
   constructor(props) {
@@ -116,7 +115,7 @@ export default class extends Component {
   openWebView(item) {
     this.props.navigator.push({
       title: '',
-      component: itemWebView,
+      component: MyWebView,
       passProps: { item }
     })
   }
@@ -142,29 +141,6 @@ export default class extends Component {
           }
           style={styles.itemList}
         />
-      </View>
-    )
-  }
-}
-
-class itemWebView extends Component{
-  constructor(props) {
-    super(props);
-    this.state = { rate: 0 }
-  }
-
-  render() {
-    return (
-      <View style={{flex: 1}}>
-        <StatusBar hidden={true} />
-        <WKWebView
-          source={{uri: this.props.item.url}}
-          onProgress={(progress) => this.setState({ rate: progress })}
-        />
-        <View>
-          <ProgressViewIOS progress={this.state.rate} />
-          <Button onPress={() => {this.props.navigator.pop()}} title="←" />
-        </View>
       </View>
     )
   }
