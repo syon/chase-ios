@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {
   View,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
   WebView,
   ListView,
   Image,
@@ -12,6 +12,7 @@ import {
   ProgressViewIOS,
   StatusBar,
 } from 'react-native'
+import { SwipeListView } from 'react-native-swipe-list-view';
 import WKWebView from 'react-native-wkwebview-reborn'
 
 export default class extends Component {
@@ -25,6 +26,7 @@ export default class extends Component {
     }
     this.listupFromStorage = this.listupFromStorage.bind(this)
     this.renderItem = this.renderItem.bind(this)
+    this.renderHidden = this.renderHidden.bind(this)
     this.openWebView = this.openWebView.bind(this)
   }
 
@@ -39,8 +41,8 @@ export default class extends Component {
     const itemId3 = item10Id.slice(0, 3)
     const imgUrl = `${thumbsPath}/${itemId3}/${item10Id}.jpg`
     return (
-      <TouchableOpacity onPress={() => this.openWebView(item)}>
-        <View style={styles.item}>
+      <TouchableWithoutFeedback onPress={() => this.openWebView(item)}>
+        <View style={styles.rowFront}>
           <Image
             style={styles.thumbnail}
             source={{uri: imgUrl}}
@@ -49,7 +51,24 @@ export default class extends Component {
             <Text style={styles.title}>{ item.title }</Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
+    )
+  }
+
+  renderHidden(item) {
+    return (
+      <View style={styles.rowBack}>
+        <TouchableWithoutFeedback onPress={() => {console.log('★L')}}>
+          <View style={styles.rowBackBtnL} >
+            <Text>Left</Text>
+          </View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={() => {console.log('★R')}}>
+          <View style={styles.rowBackBtnR} >
+            <Text>Right</Text>
+          </View>
+        </TouchableWithoutFeedback>
+      </View>
     )
   }
 
@@ -109,9 +128,12 @@ export default class extends Component {
   render() {
     return (
       <View style={styles.wrap}>
-        <ListView
+        <SwipeListView
           dataSource={this.state.dataSource}
           renderRow={this.renderItem}
+          renderHiddenRow={this.renderHidden}
+          leftOpenValue={75}
+          rightOpenValue={-75}
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
@@ -155,15 +177,35 @@ const styles = StyleSheet.create({
   itemList: {
     flex: 1,
   },
-  item: {
+  rowFront: {
     flexDirection: 'row',
     height: 60,
     borderBottomWidth: 1,
     borderBottomColor: '#f5f5f5',
+    backgroundColor: '#fff',
   },
   itemBody: {
     flex: 1,
     padding: 7,
+  },
+  rowBack: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  rowBackBtnL: {
+    paddingLeft: 15,
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    backgroundColor: 'blue',
+  },
+  rowBackBtnR: {
+    paddingRight: 15,
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    backgroundColor: 'red',
   },
   title: {
     fontSize: 16,
