@@ -2,11 +2,9 @@ import React, { Component } from 'react'
 import {
   View,
   TouchableWithoutFeedback,
-  ListView,
   Image,
   StyleSheet,
   Text,
-  Button,
   RefreshControl,
   ActionSheetIOS,
 } from 'react-native'
@@ -21,22 +19,14 @@ const AS_BTNS_CIDX = 2
 export default class extends Component {
   constructor(props) {
     super(props)
-    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
     this.state = {
       refreshing: false,
-      dataSource: ds,
-      itemsForDS: [{ title: 'Default item' }]
+      dataSource: this.props.catalogState.dataSource,
     }
-    this.listupFromStorage = this.listupFromStorage.bind(this)
     this.renderRowFront = this.renderRowFront.bind(this)
     this.renderRowBack = this.renderRowBack.bind(this)
     this.onSwipe = this.onSwipe.bind(this)
     this.openWebView = this.openWebView.bind(this)
-  }
-
-  _onRefresh() {
-    this.setState({refreshing: true});
-    this.listupFromStorage()    
   }
 
   renderRowFront(item) {
@@ -89,47 +79,6 @@ export default class extends Component {
     console.log('idx:',idx)
   }
 
-  listupFromStorage() {
-    this.props.actions.refreshCatalog()
-      .then(() => {
-        console.log('リフレッシュCatalogおわったよ')
-      })
-      .then(() => {
-        console.log('ストレージのロード始めます')
-        return global.storage.load({
-          key: 'catalog',
-        }).catch(err => {
-          console.warn('[Error on Storage Loading]', err);
-        })
-      })
-      .then(catalog => {
-        console.log('ストレージのロードできました→', catalog)
-        const itemsForDS = this.makeItemsForDS(catalog)
-        console.log('リストをソートしました', itemsForDS)
-        console.log('リストを描画します')
-        this.setState({
-          refreshing: false,
-          itemsForDS: itemsForDS,
-          dataSource: this.state.dataSource.cloneWithRows(itemsForDS)
-        })
-      }).catch(err => {
-        console.warn('[Error Message from Storage]', err);
-      })
-  }
-
-  makeItemsForDS(catalog) {
-    let items = []
-    Object.keys(catalog).forEach(function(key) {
-      items.push(catalog[key])
-    })
-    items = items.sort((a,b) => {
-      if (a.sortId < b.sortId) return -1
-      if (a.sortId > b.sortId) return 1
-      return 0
-    })
-    return items
-  }
-
   openWebView(item) {
     this.props.navigator.push({
       title: '',
@@ -138,15 +87,11 @@ export default class extends Component {
     })
   }
 
-  componentDidMount() {
-    this.listupFromStorage()
-  }
-
   render() {
     return (
       <View style={styles.wrap}>
         <SwipeListView
-          dataSource={this.state.dataSource}
+          dataSource={this.props.catalogState.dataSource}
           renderRow={(data, secId, rowId) => (
             <SwipeRow
               leftOpenValue={75}
@@ -161,7 +106,7 @@ export default class extends Component {
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
-              onRefresh={this._onRefresh.bind(this)}
+              onRefresh={this.props.onRefresh.bind(this)}
             />
           }
           style={styles.itemList}
