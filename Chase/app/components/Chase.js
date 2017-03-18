@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Alert,
-  Text,
-  Button,
   View,
-  Linking,
   TabBarIOS
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
