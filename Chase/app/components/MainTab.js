@@ -23,13 +23,6 @@ export default class extends Component {
   listupFromStorage() {
     this.setState({ refreshing: true });
     this.props.actions.refreshCatalog()
-      .then(() => {
-        return global.storage.load({
-          key: 'catalog',
-        }).catch(err => {
-          console.warn('[Error on Storage Loading]', err);
-        })
-      })
       .then(catalog => {
         const itemsForDS = this.makeItemsForDS(catalog);
         this.setState({

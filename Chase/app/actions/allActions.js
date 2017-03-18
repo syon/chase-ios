@@ -95,14 +95,13 @@ export function refreshCatalog() {
         const catalog = makeCatalog(result.list)
         console.log('Catalog保存します...')
         dispatch({ type: 'LOAD_PAGES', catalog })
-        return global.storage.save({
+        global.storage.save({
           key: 'catalog',
           rawData: catalog,
           expires: null
         })
-      }).then(() => {
-        console.log('Catalog保存できました、リフレッシュCatalogをresolveします')
-        resolve()
+        console.log('Catalog保存できました')
+        resolve(catalog)
       }).catch(result => {
         console.log('Failed to load pages.', result)
       })
