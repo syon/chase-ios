@@ -60,6 +60,7 @@ export default class extends Component {
       <Catalog
         {...this.props}
         catalogState={ cs }
+        showSegment={ true }
         onRefresh={ this._onRefresh }
         style={{flex: 1}}
       />

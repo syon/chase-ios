@@ -67,6 +67,7 @@ export default class Chase extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 20,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'stretch',

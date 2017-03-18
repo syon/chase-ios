@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {
   View,
+  SegmentedControlIOS,
   TouchableWithoutFeedback,
   Image,
   StyleSheet,
@@ -94,8 +95,20 @@ export default class extends Component {
   }
 
   render() {
+    const segment = this.props.showSegment ? (
+      <SegmentedControlIOS
+        values={['One', 'Two']}
+        selectedIndex={this.state.selectedIndex}
+        onChange={(event) => {
+          this.setState({selectedIndex: event.nativeEvent.selectedSegmentIndex});
+        }}
+        style={styles.segment}
+      />
+    ) : null;
+
     return (
       <View style={styles.wrap}>
+        { segment }
         <SwipeListView
           dataSource={this.props.catalogState.dataSource}
           renderRow={(data, secId, rowId) => (
@@ -125,6 +138,9 @@ export default class extends Component {
 const styles = StyleSheet.create({
   wrap: {
     flex: 1,
+  },
+  segment: {
+    margin: 10,
   },
   itemList: {
     flex: 1,
