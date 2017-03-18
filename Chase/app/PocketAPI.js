@@ -102,8 +102,30 @@ export function get(consumerKey, accessToken) {
         state: 'unread',
         count: 20,
         sort: 'newest',
-        detailType: 'simple',
+        detailType: 'complete',
       })
+    }).then((response) => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        throw response
+      }
+    }).then((result) => {
+      resolve(result)
+    }).catch((error) => {
+      reject(error)
+    })
+  })
+}
+
+export function tags_add(consumerKey, accessToken, itemId, tag) {
+  return new Promise((resolve, reject) => {
+    let params = new URLSearchParams()
+    params.append('consumer_key', consumerKey)
+    params.append('access_token', accessToken)
+    params.append('actions', `[{"action":"tags_add","item_id":${itemId},"tags":"${tag}"}]`)
+    fetch(`https://getpocket.com/v3/send?${params.toString()}`, {
+      method: 'GET',
     }).then((response) => {
       if (response.ok) {
         return response.json()
