@@ -20,6 +20,7 @@ export default class Chase extends Component {
   }
 
   render() {
+    console.log('Chase.js shelf',this.props.shelf)
     return (
       <View style={styles.container}>
         <TabBarIOS>

@@ -44,6 +44,7 @@ export default connect(state => ({
     mode: state.mode,
     login: state.login,
     items: state.items,
+    shelf: state.shelf,
   }),
   (dispatch) => ({
     actions: bindActionCreators(allActions, dispatch)

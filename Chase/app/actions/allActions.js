@@ -85,18 +85,46 @@ export function savePage(url) {
   }
 }
 
-export function refreshCatalog(tag) {
+export function loadCatalogFromStorage(catalogId) {
+  return function(dispatch, getState) {
+    return new Promise((resolve, reject) => {
+      global.storage.load({
+        key: catalogId,
+      }).then(catalog => {
+        switch(catalogId) {
+          case('catalogMain'):
+            dispatch({ type: 'REFRESH_CATALOG_MAIN', catalog })
+            break
+          case('catalogSceneA'):
+            dispatch({ type: 'REFRESH_CATALOG_SCENE_A', catalog })
+            break
+          case('catalogSceneB'):
+            dispatch({ type: 'REFRESH_CATALOG_SCENE_B', catalog })
+            break
+          case('catalogSceneC'):
+            dispatch({ type: 'REFRESH_CATALOG_SCENE_C', catalog })
+            break
+        }
+      }).catch(err => {
+        console.warn('[Error Message from Storage]', err);
+      })
+    })
+  }
+}
+
+export function refreshCatalog(catalogId) {
   return function(dispatch, getState) {
     return new Promise((resolve, reject) => {
       const at = getState().login.accessToken
-      const api = PocketAPI.get(CONSUMER_KEY, at, tag)
+      const api = PocketAPI.get(CONSUMER_KEY, at)
       api.then((result) => {
         console.log('APIからの返事きた')
         const catalog = makeCatalog(result.list)
         console.log('Catalog保存します...')
         dispatch({ type: 'LOAD_PAGES', catalog })
+        dispatch({ type: 'REFRESH_CATALOG_MAIN', catalog })
         global.storage.save({
-          key: 'catalog',
+          key: catalogId,
           rawData: catalog,
           expires: null
         })

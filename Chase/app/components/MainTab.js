@@ -18,23 +18,36 @@ export default class extends Component {
   }
 
   componentDidMount() {
-    this.listupFromStorage()
+    const promise = this.props.actions.loadCatalogFromStorage('catalogMain')
+    promise.then(() => {
+      this.listupFromStorage()
+    }).catch(err => console.error(err))
   }
 
   listupFromStorage() {
     this.setState({ refreshing: true });
-    this.props.actions.refreshCatalog('')
-      .then(catalog => {
-        const filteredCatalog = this.makeFilteredCatalog(catalog);
-        const itemsForDS = this.makeItemsForDS(catalog);
-        this.setState({
-          refreshing: false,
-          itemsForDS: itemsForDS,
-          dataSource: this.state.dataSource.cloneWithRows(itemsForDS)
-        })
-      }).catch(err => {
-        console.warn('[Error Message from Storage]', err);
-      })
+    // global.storage.load({
+    //   key: 'catalogMain',
+    // }).then(catalog => {
+    //   const filteredCatalog = this.makeFilteredCatalog(catalog);
+    //   const itemsForDS = this.makeItemsForDS(catalog);
+    //   this.setState({
+    //     refreshing: false,
+    //     itemsForDS: itemsForDS,
+    //     dataSource: this.state.dataSource.cloneWithRows(itemsForDS)
+    //   })
+    // }).catch(err => {
+    //   console.warn('[Error Message from Storage]', err);
+    // })
+    const catalog = this.props.shelf.catalogMain
+    console.log('MainTab this.props.shelf is',this.props.shelf);
+    const filteredCatalog = this.makeFilteredCatalog(catalog)
+    const itemsForDS = this.makeItemsForDS(catalog)
+    this.setState({
+      refreshing: false,
+      itemsForDS: itemsForDS,
+      dataSource: this.state.dataSource.cloneWithRows(itemsForDS)
+    })
   }
 
   makeFilteredCatalog(catalog) {
@@ -68,7 +81,10 @@ export default class extends Component {
   }
 
   _onRefresh() {
-    this.listupFromStorage()    
+    const promise = this.props.actions.refreshCatalog('catalogMain')
+    promise.then(() => {
+      this.listupFromStorage()
+    })
   }
 
   render() {
