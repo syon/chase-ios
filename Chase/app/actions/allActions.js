@@ -85,13 +85,13 @@ export function savePage(url) {
   }
 }
 
-export function refreshCatalog() {
+export function refreshCatalog(tag) {
   return function(dispatch, getState) {
     return new Promise((resolve, reject) => {
       const at = getState().login.accessToken
-      const api = PocketAPI.get(CONSUMER_KEY, at)
+      const api = PocketAPI.get(CONSUMER_KEY, at, tag)
       api.then((result) => {
-        console.log('APIからの返事きた', result)
+        console.log('APIからの返事きた')
         const catalog = makeCatalog(result.list)
         console.log('Catalog保存します...')
         dispatch({ type: 'LOAD_PAGES', catalog })
@@ -127,7 +127,7 @@ function makeCatalog(listFromPocket) {
   return catalog
 }
 
-const AS_BTN_TAGS = ['loc:Home', 'loc:Office']
+const AS_BTN_TAGS = ['loc:home', 'loc:office']
 
 export function addTag(listIdx, asBtnIdx) {
   return function(dispatch, getState) {

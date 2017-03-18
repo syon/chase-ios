@@ -22,7 +22,7 @@ export default class extends Component {
 
   listupFromStorage() {
     this.setState({ refreshing: true });
-    this.props.actions.refreshCatalog('')
+    this.props.actions.refreshCatalog('loc:home')
       .then(catalog => {
         const itemsForDS = this.makeItemsForDS(catalog);
         this.setState({

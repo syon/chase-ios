@@ -88,7 +88,7 @@ export function add(consumerKey, accessToken, url) {
   })
 }
 
-export function get(consumerKey, accessToken) {
+export function get(consumerKey, accessToken, tag) {
   return new Promise((resolve, reject) => {
     fetch('https://getpocket.com/v3/get', {
       method: 'POST',
@@ -100,6 +100,7 @@ export function get(consumerKey, accessToken) {
         consumer_key: consumerKey,
         access_token: accessToken,
         state: 'unread',
+        tag: tag,
         count: 20,
         sort: 'newest',
         detailType: 'complete',
@@ -111,6 +112,7 @@ export function get(consumerKey, accessToken) {
         throw response
       }
     }).then((result) => {
+      console.log('================get',result);
       resolve(result)
     }).catch((error) => {
       reject(error)

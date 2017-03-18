@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { CONSUMER_KEY, REDIRECT_URI } from 'react-native-dotenv'
 
 import MainTab from './MainTab'
+import LocationTab from './LocationTab'
 import ConfigTab from './ConfigTab'
 
 export default class Chase extends Component {
@@ -35,10 +36,10 @@ export default class Chase extends Component {
             title="場所"
             iconName="ios-pin-outline"
             selectedIconName="ios-pin"
-            selected={this.state.selectedTab === 'loc'}
-            onPress={() => { this.setState({ selectedTab: 'loc' }) }}
+            selected={this.state.selectedTab === 'place'}
+            onPress={() => { this.setState({ selectedTab: 'place' }) }}
           >
-            <MainTab {...this.props} />
+            <LocationTab {...this.props} />
           </Icon.TabBarItem>
           <Icon.TabBarItem
             title="ToDo"
