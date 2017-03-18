@@ -33,16 +33,16 @@ export default class Chase extends Component {
             <MainTab {...this.props} />
           </Icon.TabBarItem>
           <Icon.TabBarItem
-            title="場所"
-            iconName="ios-pin-outline"
-            selectedIconName="ios-pin"
+            title="読む"
+            iconName="ios-glasses-outline"
+            selectedIconName="ios-glasses"
             selected={this.state.selectedTab === 'place'}
             onPress={() => { this.setState({ selectedTab: 'place' }) }}
           >
             <LocationTab {...this.props} />
           </Icon.TabBarItem>
           <Icon.TabBarItem
-            title="ToDo"
+            title="タスク"
             iconName="ios-filing-outline"
             selectedIconName="ios-filing"
             selected={this.state.selectedTab === 'todo'}
