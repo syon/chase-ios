@@ -11,14 +11,14 @@ import ChaseApp from './ChaseApp';
 global.storage = new Storage({
   storageBackend: AsyncStorage,
 })
-console.log('[App.js] Storage', global.storage)
+// console.log('[App.js] Storage', global.storage)
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const reducer = combineReducers(reducers);
 const store = createStoreWithMiddleware(reducer);
 
 let unsubscribe = store.subscribe(() => {
-  console.log('[App.js] getState', store.getState())
+  // console.log('[App.js] getState', store.getState())
 })
 
 export default class App extends Component {
