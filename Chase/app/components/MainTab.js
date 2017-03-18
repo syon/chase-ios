@@ -10,6 +10,7 @@ export default class extends Component {
     super(props)
     this.state = {
       refreshing: false,
+      itemsForDS: [],
       dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
     }
     this.listupFromStorage = this.listupFromStorage.bind(this)
@@ -24,14 +25,33 @@ export default class extends Component {
     this.setState({ refreshing: true });
     this.props.actions.refreshCatalog('')
       .then(catalog => {
+        const filteredCatalog = this.makeFilteredCatalog(catalog);
         const itemsForDS = this.makeItemsForDS(catalog);
         this.setState({
           refreshing: false,
+          itemsForDS: itemsForDS,
           dataSource: this.state.dataSource.cloneWithRows(itemsForDS)
         })
       }).catch(err => {
         console.warn('[Error Message from Storage]', err);
       })
+  }
+
+  makeFilteredCatalog(catalog) {
+    if (catalog) {
+      Object.keys(catalog).forEach(function(key) {
+        const c = catalog[key];
+        if (c.tags) {
+          let needsDelete = false;
+          Object.keys(c.tags).forEach(function(key) {
+            if (key.match(/^loc:/)) { needsDelete = true; }
+          })
+          if (needsDelete) {
+            delete catalog[key]
+          }
+        }
+      });
+    }
   }
 
   makeItemsForDS(catalog) {
@@ -54,6 +74,7 @@ export default class extends Component {
   render() {
     const cs = {
       refreshing: this.state.refreshing,
+      itemsForDS: this.state.itemsForDS,
       dataSource: this.state.dataSource
     }
     return (

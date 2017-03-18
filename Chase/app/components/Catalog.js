@@ -14,6 +14,7 @@ import WKWebView from 'react-native-wkwebview-reborn'
 import MyWebView from './MyWebView'
 
 const AS_BTNS = ['家で読む', '職場で読む', 'キャンセル']
+const AS_BTN_TAGS = ['loc:home', 'loc:office']
 const AS_BTNS_CIDX = 2
 
 export default class extends Component {
@@ -67,12 +68,20 @@ export default class extends Component {
   }
 
   onSwipe(_, idx) {
+    const swipedItem = this.props.catalogState.itemsForDS[idx]
+    console.info('swipedItem is', swipedItem);
     ActionSheetIOS.showActionSheetWithOptions({
       options: AS_BTNS,
       cancelButtonIndex: AS_BTNS_CIDX
     },
     ((buttonIndex) => {
-      this.props.actions.addTag(idx, buttonIndex)
+      switch(buttonIndex) {
+        case(AS_BTNS_CIDX):
+          console.info('Canceled.')
+          break
+        default:
+          this.props.actions.addTag(swipedItem.itemId, AS_BTN_TAGS[buttonIndex])
+      }
     }).bind(this))
   }
 

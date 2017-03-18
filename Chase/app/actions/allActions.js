@@ -120,25 +120,25 @@ function makeCatalog(listFromPocket) {
       itemId: itemId,
       title: m.resolved_title ? m.resolved_title : m.given_title,
       url: m.resolved_url ? m.resolved_url : m.given_url,
-      sortId: m.sort_id
+      sortId: m.sort_id,
+      tags: m.tags
     }
     catalogBySort[m.sort_id] = itemId
   })
   return catalog
 }
 
-const AS_BTN_TAGS = ['loc:home', 'loc:office']
-
-export function addTag(listIdx, asBtnIdx) {
+export function addTag(itemId, tagNm) {
   return function(dispatch, getState) {
-    const itemId = catalogBySort[listIdx]
-    const tagNm = AS_BTN_TAGS[asBtnIdx]
+    console.log('タグ付けします...', itemId);
     const at = memAccessToken
     const promise = PocketAPI.tags_add(CONSUMER_KEY, at, itemId, tagNm)
     promise.then((result) => {
-      console.log(result)
+      if (result.action_results) {
+        console.info('Success: Add Tag', itemId);
+      }
     }).catch(err => {
-      console.log(err)
+      console.error(err)
     })
   }
 }
