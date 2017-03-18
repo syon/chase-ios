@@ -32,7 +32,6 @@ export default class extends Component {
       })
       .then(catalog => {
         const itemsForDS = this.makeItemsForDS(catalog);
-        console.info('★★カタログのStateを書き換えます', itemsForDS);
         this.setState({
           refreshing: false,
           dataSource: this.state.dataSource.cloneWithRows(itemsForDS)

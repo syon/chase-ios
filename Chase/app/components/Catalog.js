@@ -72,11 +72,8 @@ export default class extends Component {
       cancelButtonIndex: AS_BTNS_CIDX
     },
     ((buttonIndex) => {
-      console.log('buttonIndex', buttonIndex)
-      console.log('In ActionSheet idx:',idx)
       this.props.actions.addTag(idx, buttonIndex)
     }).bind(this))
-    console.log('idx:',idx)
   }
 
   openWebView(item) {
