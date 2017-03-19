@@ -24,6 +24,8 @@ export default function (state = initialState, action = {}) {
       return Object.assign({}, state, {
         catalogSceneA: action.catalog
       })
+    case 'LOGOUT_DONE':
+      return initialState
     default:
       return state
   }

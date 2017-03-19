@@ -86,9 +86,7 @@ function updateLoginData(loginData) {
 
 export function disconnectFromPocket() {
   return function(dispatch, getState) {
-    global.storage.remove({
-      key: 'loginState'
-    })
+    global.storage.remove({ key: 'loginState' })
     updateLoginData({})
     dispatch({ type: 'LOGOUT_DONE' })
     showLoginScreen(dispatch)
