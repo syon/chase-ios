@@ -13,36 +13,36 @@ global.storage = new Storage({
 console.log('[App.js] Storage', global.storage)
 
 export default class App extends Component {
-	constructor(props) {
-		super(props)
+  constructor(props) {
+    super(props)
     this.startApp()
-	}
+  }
 
-	startApp() {
-		Navigation.startTabBasedApp({
-			tabs: [
-				{
-					label: 'Main',
-					screen: 'Chase.MainScreen',
-					icon: (<Icon name="ios-wine-outline" size={30} color="#900" />),
-					selectedIcon: (<Icon name="ios-wine" size={30} color="#900" />),
-					title: 'Main',
-				},
-				{
-					label: 'Config',
-					screen: 'Chase.ConfigScreen',
-					icon: (<Icon name="ios-trophy-outline" size={30} color="#900" />),
-					selectedIcon: (<Icon name="ios-trophy" size={30} color="#900" />),
-					title: 'Config',
-				},
-				{
-					label: 'Login',
-					screen: 'Chase.LoginScreen',
-					icon: (<Icon name="ios-trophy-outline" size={30} color="#900" />),
-					selectedIcon: (<Icon name="ios-trophy" size={30} color="#900" />),
-					title: 'Login',
-				},
-			],
-		})
-	}
+  startApp() {
+    Navigation.startTabBasedApp({
+      tabs: [
+        {
+          label: 'Main',
+          screen: 'Chase.MainScreen',
+          icon: (<Icon name="ios-wine-outline" size={30} color="#900" />),
+          selectedIcon: (<Icon name="ios-wine" size={30} color="#900" />),
+          title: 'Main',
+        },
+        {
+          label: 'Config',
+          screen: 'Chase.ConfigScreen',
+          icon: (<Icon name="ios-trophy-outline" size={30} color="#900" />),
+          selectedIcon: (<Icon name="ios-trophy" size={30} color="#900" />),
+          title: 'Config',
+        },
+        {
+          label: 'Login',
+          screen: 'Chase.LoginScreen',
+          icon: (<Icon name="ios-trophy-outline" size={30} color="#900" />),
+          selectedIcon: (<Icon name="ios-trophy" size={30} color="#900" />),
+          title: 'Login',
+        },
+      ],
+    })
+  }
 }
