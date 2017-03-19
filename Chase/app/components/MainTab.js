@@ -18,27 +18,16 @@ class MainTab extends Component {
   }
 
   componentDidMount() {
-    const promise = this.props.actions.loadCatalogFromStorage('catalogMain')
+    const promise = this.props.actions.loginFromStorage()
     promise.then(() => {
-      this.listupFromStorage()
+      return this.props.actions.loadCatalogFromStorage('catalogMain')
+    }).then(() => {
+      return this.listupFromStorage()
     }).catch(err => console.error(err))
   }
 
   listupFromStorage() {
     this.setState({ refreshing: true });
-    // global.storage.load({
-    //   key: 'catalogMain',
-    // }).then(catalog => {
-    //   const filteredCatalog = this.makeFilteredCatalog(catalog);
-    //   const itemsForDS = this.makeItemsForDS(catalog);
-    //   this.setState({
-    //     refreshing: false,
-    //     itemsForDS: itemsForDS,
-    //     dataSource: this.state.dataSource.cloneWithRows(itemsForDS)
-    //   })
-    // }).catch(err => {
-    //   console.warn('[Error Message from Storage]', err);
-    // })
     const catalog = this.props.shelf.catalogMain
     console.log('MainTab this.props.shelf is',this.props.shelf);
     const filteredCatalog = this.makeFilteredCatalog(catalog)

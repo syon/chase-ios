@@ -6,20 +6,23 @@ let memAccessToken = null
 
 export function loginFromStorage() {
   return function(dispatch, getState) {
-    global.storage.load({
-      key: 'loginState',
-    }).then(ret => {
-      memAccessToken = ret.accessToken
-      dispatch({ type: 'LOGIN_SUCCESS', data: ret })
-    }).catch(err => {
-      dispatch({ type: 'NEEDS_AUTH' })
-      console.warn('[Error Message from Storage]', err);
-      switch (err.name) {
-        case 'NotFoundError':
-          break
-        case 'ExpiredError':
-          break
-      }
+    return new Promise((resolve, reject) => {
+      global.storage.load({
+        key: 'loginState',
+      }).then(ret => {
+        memAccessToken = ret.accessToken
+        dispatch({ type: 'LOGIN_SUCCESS', data: ret })
+        resolve()
+      }).catch(err => {
+        dispatch({ type: 'NEEDS_AUTH' })
+        console.warn('[Error Message from Storage]', err);
+        switch (err.name) {
+          case 'NotFoundError':
+            break
+          case 'ExpiredError':
+            break
+        }
+      })
     })
   }
 }
@@ -105,8 +108,9 @@ export function loadCatalogFromStorage(catalogId) {
             dispatch({ type: 'REFRESH_CATALOG_SCENE_C', catalog })
             break
         }
+        resolve()
       }).catch(err => {
-        console.warn('[Error Message from Storage]', err);
+        reject(err)
       })
     })
   }
