@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+import App from './app/app.ios';
 
-// import React, { Component } from 'react';
-import React, { AppRegistry } from 'react-native';
-import App from './app/containers/App';
-
-AppRegistry.registerComponent('Chase', () => App);
+const app = new App();

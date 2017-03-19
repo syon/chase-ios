@@ -6,7 +6,7 @@ import {
   Linking
 } from 'react-native';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this._handleOpenURL = this._handleOpenURL.bind(this)
@@ -42,3 +42,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
 });
+
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as allActions from '../actions/allActions'
+
+export default connect(
+  (state, ownProps) => ({
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators(allActions, dispatch)
+  })
+)(Login)
