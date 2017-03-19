@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { AsyncStorage } from 'react-native'
 import Storage from 'react-native-storage'
 import { Navigation } from 'react-native-navigation'
+
+import './utils/ReactotronConfig'
 import { iconsMap, iconsLoaded } from './utils/AppIcons'
 
 import * as screens from './screens'
@@ -10,7 +12,7 @@ screens.register()
 global.storage = new Storage({
   storageBackend: AsyncStorage,
 })
-console.log('[App.js] Storage', global.storage)
+console.tron.display({ name: 'Storage', value: global.storage })
 
 const navigatorStyle = {
   drawUnderTabBar: true,
