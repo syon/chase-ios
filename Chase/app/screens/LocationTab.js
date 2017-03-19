@@ -3,7 +3,7 @@ import {
   ListView,
 } from 'react-native'
 
-import Catalog from './Catalog'
+import Catalog from '../components/Catalog'
 
 export default class extends Component {
   constructor(props) {

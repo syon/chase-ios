@@ -3,7 +3,7 @@ import {
   ListView,
 } from 'react-native'
 
-import Catalog from './Catalog'
+import Catalog from '../components/Catalog'
 
 class MainTab extends Component {
   constructor(props) {

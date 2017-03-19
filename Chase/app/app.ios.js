@@ -4,8 +4,8 @@ import Storage from 'react-native-storage';
 import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons'
 
-import registerScreens from './screens'
-registerScreens()
+import * as screens from './screens'
+screens.register()
 
 global.storage = new Storage({
   storageBackend: AsyncStorage,
