@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { AsyncStorage } from 'react-native';
-import Storage from 'react-native-storage';
-import { Navigation } from 'react-native-navigation';
-import Icon from 'react-native-vector-icons/Ionicons'
+import React, { Component } from 'react'
+import { AsyncStorage } from 'react-native'
+import Storage from 'react-native-storage'
+import { Navigation } from 'react-native-navigation'
+import { iconsMap, iconsLoaded } from './utils/AppIcons'
 
 import * as screens from './screens'
 screens.register()
@@ -15,7 +15,9 @@ console.log('[App.js] Storage', global.storage)
 export default class App extends Component {
   constructor(props) {
     super(props)
-    this.startApp()
+    iconsLoaded.then(() => {
+      this.startApp()
+    })
   }
 
   startApp() {
@@ -24,22 +26,22 @@ export default class App extends Component {
         {
           label: 'Main',
           screen: 'Chase.MainScreen',
-          icon: (<Icon name="ios-wine-outline" size={30} color="#900" />),
-          selectedIcon: (<Icon name="ios-wine" size={30} color="#900" />),
+          icon: iconsMap['ios-paper-outline'],
+          selectedIcon: iconsMap['ios-paper'],
           title: 'Main',
         },
         {
           label: 'Config',
           screen: 'Chase.ConfigScreen',
-          icon: (<Icon name="ios-trophy-outline" size={30} color="#900" />),
-          selectedIcon: (<Icon name="ios-trophy" size={30} color="#900" />),
+          icon: iconsMap['ios-options-outline'],
+          selectedIcon: iconsMap['ios-options'],
           title: 'Config',
         },
         {
           label: 'Login',
           screen: 'Chase.LoginScreen',
-          icon: (<Icon name="ios-trophy-outline" size={30} color="#900" />),
-          selectedIcon: (<Icon name="ios-trophy" size={30} color="#900" />),
+          icon: iconsMap['ios-options-outline'],
+          selectedIcon: iconsMap['ios-options'],
           title: 'Login',
         },
       ],
