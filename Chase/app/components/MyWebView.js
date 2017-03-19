@@ -7,6 +7,12 @@ import {
 } from 'react-native'
 import WKWebView from 'react-native-wkwebview-reborn'
 
+// this.props.navigator.toggleDrawer({
+//   to: 'closed',
+//   side: 'left',
+//   animated: true
+// })
+
 export default class extends Component {
   constructor(props) {
     super(props);
@@ -14,16 +20,21 @@ export default class extends Component {
   }
 
   render() {
+    console.log('webview', this.props)
+    const wv = this.props.item ? (
+      <WKWebView
+        source={{ uri: this.props.item ? this.props.item.url : '' }}
+        onProgress={(progress) => this.setState({ rate: progress })}
+      />
+    ) : null
+    const pv = this.state.rate < 1 ? (<ProgressViewIOS progress={this.state.rate} />) : null
     return (
       <View style={{flex: 1}}>
-        <StatusBar hidden={true} />
-        <WKWebView
-          source={{uri: this.props.item.url}}
-          onProgress={(progress) => this.setState({ rate: progress })}
-        />
+        {/*<StatusBar hidden={true} />*/}
+        { pv }
+        { wv }
         <View>
-          <ProgressViewIOS progress={this.state.rate} />
-          <Button onPress={() => {this.props.navigator.pop()}} title="←" />
+          {/*<Button onPress={() => {this.props.navigator.pop()}} title="←" />*/}
         </View>
       </View>
     )

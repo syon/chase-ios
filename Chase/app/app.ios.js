@@ -12,6 +12,12 @@ global.storage = new Storage({
 })
 console.log('[App.js] Storage', global.storage)
 
+const navigatorStyle = {
+  drawUnderTabBar: true,
+  statusBarBlur: true,
+  statusBarHideWithNavBar: true,
+}
+
 export default class App extends Component {
   constructor(props) {
     super(props)
@@ -29,6 +35,7 @@ export default class App extends Component {
           icon: iconsMap['ios-paper-outline'],
           selectedIcon: iconsMap['ios-paper'],
           title: 'Main',
+          navigatorStyle,
         },
         {
           label: 'Scene',
@@ -36,6 +43,7 @@ export default class App extends Component {
           icon: iconsMap['ios-glasses-outline'],
           selectedIcon: iconsMap['ios-glasses'],
           title: 'Scene',
+          navigatorStyle,
         },
         {
           label: 'Config',
@@ -43,6 +51,7 @@ export default class App extends Component {
           icon: iconsMap['ios-options-outline'],
           selectedIcon: iconsMap['ios-options'],
           title: 'Config',
+          navigatorStyle,
         },
         {
           label: 'Login',
@@ -50,6 +59,7 @@ export default class App extends Component {
           icon: iconsMap['ios-options-outline'],
           selectedIcon: iconsMap['ios-options'],
           title: 'Login',
+          navigatorStyle,
         },
       ],
     })

@@ -6,6 +6,7 @@ import MainTab from './MainTab'
 import SceneTab from './SceneTab'
 import ConfigTab from './ConfigTab'
 import Login from './Login'
+import MyWebView from '../components/MyWebView'
 
 const store = configureStore();
 let unsubscribe = store.subscribe(() => {
@@ -17,4 +18,5 @@ export function register() {
   Navigation.registerComponent('Chase.SceneTabScreen', () => SceneTab, store, Provider)
   Navigation.registerComponent('Chase.ConfigTabScreen', () => ConfigTab, store, Provider)
   Navigation.registerComponent('Chase.LoginTabScreen', () => Login, store, Provider)
+  Navigation.registerComponent('Chase.WebViewScreen', () => MyWebView, store, Provider)
 }

@@ -10,9 +10,6 @@ import {
   ActionSheetIOS,
 } from 'react-native'
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
-import WKWebView from 'react-native-wkwebview-reborn'
-
-import MyWebView from './MyWebView'
 
 const AS_BTNS = ['家で読む', '職場で読む', 'キャンセル']
 const AS_BTN_TAGS = ['loc:home', 'loc:office']
@@ -89,8 +86,13 @@ export default class extends Component {
   openWebView(item) {
     this.props.navigator.push({
       title: '',
-      component: MyWebView,
-      passProps: { item }
+      screen: 'Chase.WebViewScreen',
+      passProps: { item },
+      navigatorStyle: {
+        navBarHideOnScroll: true,
+        statusBarHideWithNavBar: true,
+        tabBarHidden: true,
+      },
     })
   }
 
