@@ -9,7 +9,7 @@ class ConfigTab extends Component {
 
   onSavePage() {
     const url = 'https://getpocket.com/developer/docs/authentication'
-    this.props.savePage(url)
+    this.props.actions.savePage(url)
   }
 
   render() {

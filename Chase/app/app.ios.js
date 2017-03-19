@@ -53,14 +53,6 @@ export default class App extends Component {
           title: 'Config',
           navigatorStyle,
         },
-        {
-          label: 'Login',
-          screen: 'Chase.LoginTabScreen',
-          icon: iconsMap['ios-options-outline'],
-          selectedIcon: iconsMap['ios-options'],
-          title: 'Login',
-          navigatorStyle,
-        },
       ],
     })
   }

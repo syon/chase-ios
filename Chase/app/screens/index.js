@@ -17,6 +17,6 @@ export function register() {
   Navigation.registerComponent('Chase.MainTabScreen', () => MainTab, store, Provider)
   Navigation.registerComponent('Chase.SceneTabScreen', () => SceneTab, store, Provider)
   Navigation.registerComponent('Chase.ConfigTabScreen', () => ConfigTab, store, Provider)
-  Navigation.registerComponent('Chase.LoginTabScreen', () => Login, store, Provider)
+  Navigation.registerComponent('Chase.LoginScreen', () => Login, store, Provider)
   Navigation.registerComponent('Chase.WebViewScreen', () => MyWebView, store, Provider)
 }
