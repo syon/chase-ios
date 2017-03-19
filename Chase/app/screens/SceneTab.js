@@ -5,7 +5,7 @@ import {
 
 import Catalog from '../components/Catalog'
 
-export default class extends Component {
+class SceneTab extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -67,3 +67,19 @@ export default class extends Component {
     )
   }
 }
+
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as allActions from '../actions/allActions'
+
+export default connect(
+  (state, ownProps) => ({
+    mode: state.mode,
+    login: state.login,
+    items: state.items,
+    shelf: state.shelf,
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators(allActions, dispatch)
+  })
+)(SceneTab)

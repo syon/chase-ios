@@ -25,21 +25,28 @@ export default class App extends Component {
       tabs: [
         {
           label: 'Main',
-          screen: 'Chase.MainScreen',
+          screen: 'Chase.MainTabScreen',
           icon: iconsMap['ios-paper-outline'],
           selectedIcon: iconsMap['ios-paper'],
           title: 'Main',
         },
         {
+          label: 'Scene',
+          screen: 'Chase.SceneTabScreen',
+          icon: iconsMap['ios-glasses-outline'],
+          selectedIcon: iconsMap['ios-glasses'],
+          title: 'Scene',
+        },
+        {
           label: 'Config',
-          screen: 'Chase.ConfigScreen',
+          screen: 'Chase.ConfigTabScreen',
           icon: iconsMap['ios-options-outline'],
           selectedIcon: iconsMap['ios-options'],
           title: 'Config',
         },
         {
           label: 'Login',
-          screen: 'Chase.LoginScreen',
+          screen: 'Chase.LoginTabScreen',
           icon: iconsMap['ios-options-outline'],
           selectedIcon: iconsMap['ios-options'],
           title: 'Login',

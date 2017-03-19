@@ -3,7 +3,7 @@ import { Navigation } from 'react-native-navigation';
 
 import configureStore from '../store/configureStore';
 import MainTab from './MainTab'
-import LocationTab from './LocationTab'
+import SceneTab from './SceneTab'
 import ConfigTab from './ConfigTab'
 import Login from './Login'
 
@@ -13,7 +13,8 @@ let unsubscribe = store.subscribe(() => {
 })
 
 export function register() {
-  Navigation.registerComponent('Chase.MainScreen', () => MainTab, store, Provider)
-  Navigation.registerComponent('Chase.ConfigScreen', () => ConfigTab, store, Provider)
-  Navigation.registerComponent('Chase.LoginScreen', () => Login, store, Provider)
+  Navigation.registerComponent('Chase.MainTabScreen', () => MainTab, store, Provider)
+  Navigation.registerComponent('Chase.SceneTabScreen', () => SceneTab, store, Provider)
+  Navigation.registerComponent('Chase.ConfigTabScreen', () => ConfigTab, store, Provider)
+  Navigation.registerComponent('Chase.LoginTabScreen', () => Login, store, Provider)
 }
