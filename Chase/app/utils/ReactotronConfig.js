@@ -1,4 +1,5 @@
 import Reactotron from 'reactotron-react-native'
+import { reactotronRedux } from 'reactotron-redux'
 import { HOST_ADDR } from 'react-native-dotenv'
 
 if (__DEV__) {
@@ -7,6 +8,7 @@ if (__DEV__) {
       host: HOST_ADDR,
       name: 'Chase',
     })
+    .use(reactotronRedux())
     .connect()
 
   console.tron = Reactotron
