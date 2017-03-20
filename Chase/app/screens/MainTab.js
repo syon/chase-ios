@@ -13,45 +13,29 @@ class MainTab extends Component {
       itemsForDS: [],
       dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
     }
-    this.listupFromStorage = this.listupFromStorage.bind(this)
     this._onRefresh = this._onRefresh.bind(this)
   }
 
   componentDidMount() {
-    this.props.actions.ready().then(() => {
-      console.info('MainTab#componentDidMount#ready().then')
-      this.listupFromStorage()
-    })
-  }
-
-  listupFromStorage() {
-    this.setState({ refreshing: true });
-    const catalog = this.props.shelf.catalogMain
-    console.log('MainTab this.props.shelf is',this.props.shelf);
-    const filteredCatalog = this.makeFilteredCatalog(catalog)
-    const itemsForDS = this.makeItemsForDS(catalog)
-    this.setState({
-      refreshing: false,
-      itemsForDS: itemsForDS,
-      dataSource: this.state.dataSource.cloneWithRows(itemsForDS)
-    })
+    this.props.actions.ready()
   }
 
   makeFilteredCatalog(catalog) {
     if (catalog) {
       Object.keys(catalog).forEach(function(key) {
-        const c = catalog[key];
+        const c = catalog[key]
         if (c.tags) {
           let needsDelete = false;
           Object.keys(c.tags).forEach(function(key) {
-            if (key.match(/^loc:/)) { needsDelete = true; }
+            if (key.match(/^loc:/)) { needsDelete = true }
           })
           if (needsDelete) {
             delete catalog[key]
           }
         }
-      });
+      })
     }
+    return catalog
   }
 
   makeItemsForDS(catalog) {
@@ -69,22 +53,22 @@ class MainTab extends Component {
 
   _onRefresh() {
     console.tron.log('MainTab#_onRefresh')
-    const promise = this.props.actions.refreshCatalog('catalogMain')
-    promise.then(() => {
-      this.listupFromStorage()
-    })
+    this.setState({ refreshing: true });
+    this.props.actions.refreshCatalog('catalogMain')
   }
 
   render() {
-    const cs = {
-      refreshing: this.state.refreshing,
-      itemsForDS: this.state.itemsForDS,
-      dataSource: this.state.dataSource
-    }
+    const catalog = this.props.shelf.catalogMain
+    const fc = this.makeFilteredCatalog(catalog)
+    const items = this.makeItemsForDS(fc)
     return (
       <Catalog
         {...this.props}
-        catalogState={ cs }
+        catalogState={{
+          refreshing: this.state.refreshing,
+          itemsForDS: items,
+          dataSource: this.state.dataSource.cloneWithRows(items)
+        }}
         onRefresh={ this._onRefresh }
         style={{flex: 1}}
       />
