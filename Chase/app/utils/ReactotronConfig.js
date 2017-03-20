@@ -1,8 +1,6 @@
 import Reactotron from 'reactotron-react-native'
 import { HOST_ADDR } from 'react-native-dotenv'
 
-console.tron = Reactotron
-
 if (__DEV__) {
   Reactotron
     .configure({
@@ -10,4 +8,7 @@ if (__DEV__) {
       name: 'Chase',
     })
     .connect()
+
+  console.tron = Reactotron
+  Reactotron.clear()
 }
