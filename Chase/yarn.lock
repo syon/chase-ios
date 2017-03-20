@@ -3216,6 +3216,15 @@ reactotron-react-native@^1.9.1:
     rn-host-detect "^1.0.1"
     socket.io-client "~1.7.1"
 
+reactotron-redux@^1.9.1:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/reactotron-redux/-/reactotron-redux-1.9.1.tgz#e2c0e930bdd4915254cbfe2c5522bff9c306f542"
+  dependencies:
+    ramda "^0.23.0"
+    ramdasauce "^1.2.0"
+    reactotron-core-client "^1.9.1"
+    redux "^3.6.0"
+
 read-pkg-up@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/read-pkg-up/-/read-pkg-up-1.0.1.tgz#9d63c13276c065918d57f002a57f40a1b643fb02"
