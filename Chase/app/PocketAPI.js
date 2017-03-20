@@ -112,9 +112,9 @@ export function get(consumerKey, accessToken, tag) {
         throw response
       }
     }).then((result) => {
-      console.log('================get',result);
       resolve(result)
     }).catch((error) => {
+      console.error('PocketAPI#get', { consumerKey, accessToken, tag })
       reject(error)
     })
   })

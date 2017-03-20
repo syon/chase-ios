@@ -17,7 +17,7 @@ class SceneTab extends Component {
   }
 
   componentDidMount() {
-    this.listupFromStorage()
+    // this.listupFromStorage()
   }
 
   listupFromStorage() {

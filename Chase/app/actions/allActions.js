@@ -5,6 +5,51 @@ import * as PocketAPI from '../PocketAPI'
 
 let memAccessToken = null
 
+export function ready() {
+  return async function(dispatch, getState) {
+    try {
+      await _loadUserInfo(dispatch)
+      await _loadCatalog(dispatch, 'catalogMain')
+    } catch (e) {
+      showLoginScreen(dispatch)
+      console.tron.error(e)
+    }
+  }
+}
+
+async function _loadUserInfo(dispatch) {
+  console.info('allActions#_loadUserInfo')
+  await global.storage.load({ key: 'loginState' }).then(user => {
+    console.info('user',user)
+    memAccessToken = user.accessToken
+    dispatch({ type: 'LOGIN_SUCCESS', data: user })
+    return
+  })
+}
+
+async function _loadCatalog(dispatch, catalogId) {
+  console.info('allActions#_loadCatalog', catalogId)
+  await global.storage.load({ key: catalogId }).then(catalog => {
+    console.info('allActions#_loadCatalog#load.then', catalogId, catalog)
+    console.tron.log({ catalogId, catalog })
+    switch(catalogId) {
+      case('catalogMain'):
+        dispatch({ type: 'REFRESH_CATALOG_MAIN', catalog })
+        break
+      case('catalogSceneA'):
+        dispatch({ type: 'REFRESH_CATALOG_SCENE_A', catalog })
+        break
+      case('catalogSceneB'):
+        dispatch({ type: 'REFRESH_CATALOG_SCENE_B', catalog })
+        break
+      case('catalogSceneC'):
+        dispatch({ type: 'REFRESH_CATALOG_SCENE_C', catalog })
+        break
+    }
+    return
+  })
+}
+
 export function loginFromStorage() {
   return function(dispatch, getState) {
     return new Promise((resolve, reject) => {
@@ -135,22 +180,25 @@ export function loadCatalogFromStorage(catalogId) {
 export function refreshCatalog(catalogId) {
   return function(dispatch, getState) {
     return new Promise((resolve, reject) => {
+      console.tron.log({ preview:'allActions#refreshCatalog', value: catalogId })
+      console.info('getState()', getState())
       const at = getState().login.accessToken
       const api = PocketAPI.get(CONSUMER_KEY, at)
       api.then((result) => {
-        console.log('APIからの返事きた')
+        console.tron.log('APIからの返事きた')
         const catalog = makeCatalog(result.list)
-        console.log('Catalog保存します...')
+        console.tron.log('Catalog保存します...')
         dispatch({ type: 'REFRESH_CATALOG_MAIN', catalog })
         global.storage.save({
           key: catalogId,
           rawData: catalog,
           expires: null
         })
-        console.log('Catalog保存しました')
+        console.tron.log('Catalog保存しました')
         resolve(catalog)
       }).catch(result => {
-        console.log('Failed to load pages.', result)
+        console.error('Failed to load pages.', result)
+        console.tron.error('Failed to load pages.', result)
       })
     })
   }

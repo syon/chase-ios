@@ -6,11 +6,6 @@ const initialState = {
 }
 
 export default function (state = initialState, action = {}) {
-  console.tron.display({
-    name: 'Shelf Reducer',
-    preview: action.type,
-    value: action
-  })
   switch (action.type) {
     case 'REFRESH_CATALOG_MAIN':
       return Object.assign({}, state, {

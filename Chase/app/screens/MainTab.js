@@ -18,12 +18,10 @@ class MainTab extends Component {
   }
 
   componentDidMount() {
-    const promise = this.props.actions.loginFromStorage()
-    promise.then(() => {
-      return this.props.actions.loadCatalogFromStorage('catalogMain')
-    }).then(() => {
-      return this.listupFromStorage()
-    }).catch(err => console.error(err))
+    this.props.actions.ready().then(() => {
+      console.info('MainTab#componentDidMount#ready().then')
+      this.listupFromStorage()
+    })
   }
 
   listupFromStorage() {
@@ -70,6 +68,7 @@ class MainTab extends Component {
   }
 
   _onRefresh() {
+    console.tron.log('MainTab#_onRefresh')
     const promise = this.props.actions.refreshCatalog('catalogMain')
     promise.then(() => {
       this.listupFromStorage()
