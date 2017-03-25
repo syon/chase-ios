@@ -64,7 +64,7 @@ import * as allActions from '../actions/allActions'
 
 export default connect(
   (state, ownProps) => ({
-    mode: state.mode,
+    phase: state.phase,
     login: state.login,
     items: state.items,
     shelf: state.shelf,

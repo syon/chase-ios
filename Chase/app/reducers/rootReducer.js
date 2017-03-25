@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import mode from './mode'
+import phase from './phase'
 import login from './login'
 import shelf from './shelf'
 
 const rootReducer = combineReducers({
-  mode,
+  phase,
   login,
   shelf,
 })
