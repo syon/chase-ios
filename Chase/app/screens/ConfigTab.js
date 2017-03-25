@@ -20,7 +20,7 @@ class ConfigTab extends Component {
         <Text>{ login.accessToken }</Text>
         <Text>{ login.username }</Text>
         <Button onPress={this.onSavePage} title="Add!" />
-        <Button onPress={actions.getMainTabItemList} title="API Test - getAllUntaggedItems" />
+        <Button onPress={actions.getMainTabItemList} title="API Test" />
       </View>
     )
   }

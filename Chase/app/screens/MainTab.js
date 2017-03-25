@@ -20,24 +20,6 @@ class MainTab extends Component {
     this.props.actions.ready()
   }
 
-  makeFilteredCatalog(catalog) {
-    if (catalog) {
-      Object.keys(catalog).forEach(function(key) {
-        const c = catalog[key]
-        if (c.tags) {
-          let needsDelete = false;
-          Object.keys(c.tags).forEach(function(key) {
-            if (key.match(/^loc:/)) { needsDelete = true }
-          })
-          if (needsDelete) {
-            delete catalog[key]
-          }
-        }
-      })
-    }
-    return catalog
-  }
-
   makeItemsForDS(catalog) {
     let items = []
     Object.keys(catalog).forEach(function(key) {
@@ -59,8 +41,7 @@ class MainTab extends Component {
 
   render() {
     const catalog = this.props.shelf.catalogMain
-    const fc = this.makeFilteredCatalog(catalog)
-    const items = this.makeItemsForDS(fc)
+    const items = this.makeItemsForDS(catalog)
     return (
       <Catalog
         {...this.props}
