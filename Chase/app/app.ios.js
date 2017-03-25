@@ -32,11 +32,11 @@ export default class App extends Component {
     Navigation.startTabBasedApp({
       tabs: [
         {
-          label: 'Main',
+          label: 'Inbox',
           screen: 'Chase.MainTabScreen',
-          icon: iconsMap['ios-paper-outline'],
-          selectedIcon: iconsMap['ios-paper'],
-          title: 'Main',
+          icon: iconsMap['ios-filing-outline'],
+          selectedIcon: iconsMap['ios-filing'],
+          title: 'Inbox',
           navigatorStyle,
         },
         {
@@ -45,6 +45,14 @@ export default class App extends Component {
           icon: iconsMap['ios-glasses-outline'],
           selectedIcon: iconsMap['ios-glasses'],
           title: 'Scene',
+          navigatorStyle,
+        },
+        {
+          label: 'Tags',
+          screen: 'Chase.TagsTabScreen',
+          icon: iconsMap['ios-pricetags-outline'],
+          selectedIcon: iconsMap['ios-pricetags'],
+          title: 'Tags',
           navigatorStyle,
         },
         {

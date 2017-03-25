@@ -3,12 +3,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const replaceSuffixPattern = /--(active|big|small|very-big)/g
 const icons = {
-  'ios-paper-outline': [30],
-  'ios-paper': [30],
-  'ios-glasses-outline': [30],
-  'ios-glasses': [30],
   'ios-filing-outline': [30],
   'ios-filing': [30],
+  'ios-glasses-outline': [30],
+  'ios-glasses': [30],
+  'ios-pricetags-outline': [30],
+  'ios-pricetags': [30],
   'ios-options-outline': [30],
   'ios-options': [30],
 }
