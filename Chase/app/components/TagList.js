@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import {
+  TouchableOpacity,
   ListView,
+  StyleSheet,
   View,
   Text,
 } from 'react-native'
+
+import Icon from 'react-native-vector-icons/Ionicons'
 
 export default class extends Component {
   constructor(props) {
@@ -13,13 +17,21 @@ export default class extends Component {
       refreshing: false,
       dataSource: ds.cloneWithRows(['row 1', 'row 2']),
     }
+    this._renderRow = this._renderRow.bind(this)
   }
 
   _renderRow(rowData) {
+    const _onPress = () => { console.info('★', rowData.name, this.props) }
     return (
-      <View>
-        <Text>{ rowData.name } -- { rowData.items.length }</Text>
-      </View>
+      <TouchableOpacity onPress={ _onPress } style={styles.row}>
+        <View style={styles.rowLeft}>
+          <Icon style={styles.icon} name="ios-pricetag" size={20} />
+          <Text>{ rowData.name }</Text>
+        </View>
+        <View>
+          <Text style={styles.badge}>{ rowData.items.length }</Text>
+        </View>
+      </TouchableOpacity>
     )
   }
 
@@ -32,3 +44,29 @@ export default class extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    borderBottomColor: '#ddd',
+    borderBottomWidth: 1,
+  },
+  rowLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    width: 40,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#ddd'
+  },
+  badge: {
+    padding: 10,
+    color: '#ccc'
+  },
+})

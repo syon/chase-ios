@@ -38,7 +38,7 @@ class TagsTab extends Component {
           />
         }
       >
-        <TagList tagsArr={tagsArr} />
+        <TagList tagsArr={tagsArr} {...this.props} />
       </ScrollView>
     )
   }
@@ -47,6 +47,7 @@ class TagsTab extends Component {
 const styles = StyleSheet.create({
   scrollview: {
     flex: 1,
+    backgroundColor: 'rgb(240, 239, 245)',
   },
   welcome: {
     margin: 10,
