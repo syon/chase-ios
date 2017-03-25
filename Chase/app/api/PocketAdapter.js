@@ -19,3 +19,14 @@ export async function getAllUntaggedItems() {
   }
   return await PocketAPI.get(CONSUMER_KEY, memAccessToken, params)
 }
+
+export async function getItemsTaggedBy(tagNm) {
+  const params = {
+    state: 'unread',
+    tag: tagNm,
+    count: 20,
+    sort: 'newest',
+    detailType: 'simple',
+  }
+  return await PocketAPI.get(CONSUMER_KEY, memAccessToken, params)
+}

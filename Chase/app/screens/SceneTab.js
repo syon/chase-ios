@@ -10,28 +10,14 @@ class SceneTab extends Component {
     super(props)
     this.state = {
       refreshing: false,
+      itemsForDS: [],
       dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
     }
-    this.listupFromStorage = this.listupFromStorage.bind(this)
     this._onRefresh = this._onRefresh.bind(this)
   }
 
   componentDidMount() {
     // this.listupFromStorage()
-  }
-
-  listupFromStorage() {
-    this.setState({ refreshing: true });
-    this.props.actions.refreshCatalog('catalogSceneA')
-      .then(catalog => {
-        const itemsForDS = this.makeItemsForDS(catalog);
-        this.setState({
-          refreshing: false,
-          dataSource: this.state.dataSource.cloneWithRows(itemsForDS)
-        })
-      }).catch(err => {
-        console.warn('[Error Message from Storage]', err);
-      })
   }
 
   makeItemsForDS(catalog) {
@@ -48,19 +34,23 @@ class SceneTab extends Component {
   }
 
   _onRefresh() {
-    this.listupFromStorage()    
+    console.tron.log('SceneTab#_onRefresh')
+    this.setState({ refreshing: true });
+    this.props.actions.refreshSceneCatalogs()
   }
 
   render() {
-    const cs = {
-      refreshing: this.state.refreshing,
-      dataSource: this.state.dataSource
-    }
+    const catalog = this.props.shelf.catalogSceneA
+    const items = this.makeItemsForDS(catalog)
     return (
       <Catalog
         {...this.props}
-        catalogState={ cs }
         showSegment={ true }
+        catalogState={{
+          refreshing: this.state.refreshing,
+          itemsForDS: items,
+          dataSource: this.state.dataSource.cloneWithRows(items)
+        }}
         onRefresh={ this._onRefresh }
         style={{flex: 1}}
       />

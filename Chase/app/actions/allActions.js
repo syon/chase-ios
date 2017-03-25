@@ -204,6 +204,23 @@ export function refreshCatalog(catalogId) {
   }
 }
 
+export function refreshSceneCatalogs() {
+  return function(dispatch, getState) {
+    return new Promise((resolve, reject) => {
+      console.tron.log('allActions#refreshSceneCatalogs')
+      console.tron.display({ name: 'allActions', preview: 'getState()', value: getState() })
+
+      Pocket.getItemsTaggedBy('loc:home').then((result) => {
+        const catalog = makeCatalog(result.list)
+        dispatch({ type: 'REFRESH_CATALOG_SCENE_A', catalog })
+        resolve()
+      }).catch(result => {
+        console.tron.error('Failed to load pages.', result)
+      })
+    })
+  }
+}
+
 let catalogBySort = {}
 
 function makeCatalog(listFromPocket) {
