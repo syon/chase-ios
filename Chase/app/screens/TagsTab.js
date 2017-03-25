@@ -8,6 +8,8 @@ import {
   RefreshControl,
 } from 'react-native'
 
+import TagList from '../components/TagList'
+
 class TagsTab extends Component {
 
   state = {
@@ -22,14 +24,9 @@ class TagsTab extends Component {
 
   render() {
     const { tags, actions } = this.props
-    const elems = []
+    const tagsArr = []
     Object.keys(tags).forEach((tagKey) => {
-      tagObj = tags[tagKey]
-      elems.push(
-        <View>
-          <Text>{ tagObj.name } -- { tagObj.items.length }</Text>
-        </View>
-      )
+      tagsArr.push(tags[tagKey])
     })
     return (
       <ScrollView
@@ -41,9 +38,7 @@ class TagsTab extends Component {
           />
         }
       >
-        <View style={styles.welcome}>
-          { elems }
-        </View>
+        <TagList tagsArr={tagsArr} />
       </ScrollView>
     )
   }
