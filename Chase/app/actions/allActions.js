@@ -8,20 +8,29 @@ let memAccessToken = null
 
 export function ready() {
   return async function(dispatch, getState) {
+    console.tron.log('Loading UserInfo...')
     try {
       await _loadUserInfo(dispatch)
-      await _loadCatalog(dispatch, 'catalogMain')
     } catch (e) {
       showLoginScreen(dispatch)
       console.tron.error(e)
+      throw e
     }
+    try {
+      await _loadMainCatalog(dispatch)
+      await _bumpAllTags(dispatch)
+    } catch (e) {
+      console.tron.error(e)
+      throw e
+    }
+    console.tron.log('Loading UserInfo... Done.')
   }
 }
 
 async function _loadUserInfo(dispatch) {
   console.info('allActions#_loadUserInfo')
   await global.storage.load({ key: 'loginState' }).then(user => {
-    console.info('user',user)
+    console.tron.display({ name: 'user', value: user })
     memAccessToken = user.accessToken
     Pocket.setAccessToken(user.accessToken)
     dispatch({ type: 'LOGIN_SUCCESS', data: user })
@@ -29,24 +38,9 @@ async function _loadUserInfo(dispatch) {
   })
 }
 
-async function _loadCatalog(dispatch, catalogId) {
-  console.tron.log('allActions#_loadCatalog')
-  await global.storage.load({ key: catalogId }).then(catalog => {
-    switch(catalogId) {
-      case('catalogMain'):
-        dispatch({ type: 'REFRESH_CATALOG_MAIN', catalog })
-        break
-      case('catalogSceneA'):
-        dispatch({ type: 'REFRESH_CATALOG_SCENE_A', catalog })
-        break
-      case('catalogSceneB'):
-        dispatch({ type: 'REFRESH_CATALOG_SCENE_B', catalog })
-        break
-      case('catalogSceneC'):
-        dispatch({ type: 'REFRESH_CATALOG_SCENE_C', catalog })
-        break
-    }
-    return
+async function _loadMainCatalog(dispatch) {
+  await global.storage.load({ key: 'catalogMain' }).then(catalog => {
+    dispatch({ type: 'REFRESH_CATALOG_MAIN', catalog })
   })
 }
 
@@ -236,6 +230,21 @@ function _loadSceneCatalogC(dispatch) {
   })
 }
 
+export function refreshTagCatalog(tagNm) {
+  return function(dispatch, getState) {
+    return new Promise((resolve, reject) => {
+      dispatch({ type: 'REFRESH_CATALOG_TAG', catalog: null })
+      console.tron.log('allActions#refreshTagCatalog')
+      console.tron.display({ name: 'allActions', preview: 'getState()', value: getState() })
+      Pocket.getItemsTaggedBy(tagNm).then((result) => {
+        const catalog = _makeCatalog(result.list)
+        dispatch({ type: 'REFRESH_CATALOG_TAG', catalog })
+      })
+      resolve()
+    })
+  }
+}
+
 let catalogBySort = {}
 
 function _makeCatalog(listFromPocket) {
@@ -286,10 +295,11 @@ export function changeScene(idx) {
 
 export function refreshAllTags() {
   return async function(dispatch, getState) {
-    console.tron.log('refreshAllTags start')
-    const tags = await Pocket.getAllTags()
-    console.tron.log('refreshAllTags end')
-    console.tron.log(tags)
-    dispatch({ type: 'REFRESH_TAGS', tags })
+    await _bumpAllTags(dispatch)
   }
+}
+
+async function _bumpAllTags(dispatch) {
+  const tags = await Pocket.getAllTags()
+  dispatch({ type: 'REFRESH_TAGS', tags })
 }

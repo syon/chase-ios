@@ -4,9 +4,13 @@ import * as PocketAPI from './PocketAPI'
 
 let memAccessToken = null
 
+export function hasAccessToken() {
+  return !!memAccessToken
+}
+
 export function setAccessToken(at) {
   memAccessToken = at
-  console.info('AccessToken has set.', at)
+  console.tron.display({ name: 'AccessToken has set.', value: at })
 }
 
 export async function getAllUntaggedItems() {
@@ -32,6 +36,7 @@ export async function getItemsTaggedBy(tagNm) {
 }
 
 export async function getAllTags() {
+  if (!memAccessToken) { return }
   console.tron.display({ name: 'Adapter#getAllTags', preview: 'start', value: tags })
   const params = {
     state: 'unread',

@@ -5,7 +5,7 @@ import {
 
 import Catalog from '../components/Catalog'
 
-class MainTab extends Component {
+class TagsTabInner extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -16,21 +16,23 @@ class MainTab extends Component {
     this._onRefresh = this._onRefresh.bind(this)
   }
 
-  componentDidMount = async () => {
-    await this.props.actions.ready()
+  componentDidMount() {
+    this._onRefresh()
   }
 
   _onRefresh() {
-    console.tron.log('MainTab#_onRefresh')
-    this.setState({ refreshing: true });
-    this.props.actions.refreshCatalog('catalogMain')
+    console.tron.log('TagsTabInner#_onRefresh')
+    this.setState({ refreshing: true })
+    this.props.actions.refreshTagCatalog(this.props.tag.name)
   }
 
   render() {
-    const catalog = this.props.shelf.catalogMain
+    const { scene, shelf } = this.props
+    let catalog = shelf.catalogTag
     return (
       <Catalog
         {...this.props}
+        showSegment={ false }
         catalogState={{
           refreshing: this.state.refreshing,
           catalogHash: catalog,
@@ -49,10 +51,12 @@ import * as allActions from '../actions/allActions'
 export default connect(
   (state, ownProps) => ({
     phase: state.phase,
+    login: state.login,
+    items: state.items,
     shelf: state.shelf,
     scene: state.scene,
   }),
   (dispatch) => ({
     actions: bindActionCreators(allActions, dispatch)
   })
-)(MainTab)
+)(TagsTabInner)

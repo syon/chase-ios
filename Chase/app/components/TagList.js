@@ -26,8 +26,8 @@ export default class extends Component {
       console.info('★', rowData.name, this.props)
       this.props.navigator.push({
         title: tag.name,
-        screen: 'Chase.TagsTabScreen',
-        passProps: { tag },
+        screen: 'Chase.TagsTabInnerScreen',
+        passProps: { tag, ...this.props },
       })
     }
     return (

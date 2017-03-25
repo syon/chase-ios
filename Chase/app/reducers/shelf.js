@@ -3,6 +3,7 @@ const initialState = {
   catalogSceneA: {},
   catalogSceneB: {},
   catalogSceneC: {},
+  catalogTag: {},
 }
 
 export default function (state = initialState, action = {}) {
@@ -22,6 +23,10 @@ export default function (state = initialState, action = {}) {
     case 'REFRESH_CATALOG_SCENE_C':
       return Object.assign({}, state, {
         catalogSceneC: action.catalog
+      })
+    case 'REFRESH_CATALOG_TAG':
+      return Object.assign({}, state, {
+        catalogTag: action.catalog
       })
     case 'LOGOUT_DONE':
       return initialState

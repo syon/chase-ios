@@ -99,6 +99,7 @@ export default class extends Component {
   }
 
   makeItemsForDS(catalog) {
+    if (!catalog) { return [] }
     let items = []
     Object.keys(catalog).forEach(function(key) {
       items.push(catalog[key])

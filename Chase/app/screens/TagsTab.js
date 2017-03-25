@@ -23,7 +23,7 @@ class TagsTab extends Component {
   }
 
   render() {
-    const { tags, actions } = this.props
+    const { login, tags, actions } = this.props
     const tagsArr = []
     Object.keys(tags).forEach((tagKey) => {
       tagsArr.push(tags[tagKey])
@@ -60,6 +60,7 @@ import * as allActions from '../actions/allActions'
 
 export default connect(
   (state, ownProps) => ({
+    login: state.login,
     tags: state.tags,
   }),
   (dispatch) => ({
