@@ -21,7 +21,6 @@ class SceneTab extends Component {
   }
 
   makeItemsForDS(catalog) {
-    console.log('makeItemsForDSmakeItemsForDSmakeItemsForDS', catalog)
     let items = []
     Object.keys(catalog).forEach(function(key) {
       items.push(catalog[key])
