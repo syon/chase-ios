@@ -1,7 +1,7 @@
 import { CONSUMER_KEY, REDIRECT_URI } from 'react-native-dotenv'
 import { Navigation } from 'react-native-navigation'
 
-import * as PocketAPI from '../PocketAPI'
+import * as PocketAPI from '../api/PocketAPI'
 
 let memAccessToken = null
 
