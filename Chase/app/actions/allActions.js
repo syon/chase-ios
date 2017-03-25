@@ -30,10 +30,8 @@ async function _loadUserInfo(dispatch) {
 }
 
 async function _loadCatalog(dispatch, catalogId) {
-  console.info('allActions#_loadCatalog', catalogId)
+  console.tron.log('allActions#_loadCatalog')
   await global.storage.load({ key: catalogId }).then(catalog => {
-    console.info('allActions#_loadCatalog#load.then', catalogId, catalog)
-    console.tron.log({ catalogId, catalog })
     switch(catalogId) {
       case('catalogMain'):
         dispatch({ type: 'REFRESH_CATALOG_MAIN', catalog })
