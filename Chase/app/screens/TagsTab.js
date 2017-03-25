@@ -12,21 +12,25 @@ class TagsTab extends Component {
 
   state = {
     isRefreshing: false,
-    loaded: 0,
   }
 
-  _onRefresh = () => {
-    this.setState({isRefreshing: true});
-    setTimeout(() => {
-      this.setState({
-        loaded: this.state.loaded + 10,
-        isRefreshing: false,
-      });
-    }, 5000);
+  _onRefresh = async () => {
+    this.setState({ isRefreshing: true })
+    await this.props.actions.refreshAllTags()
+    this.setState({ isRefreshing: false })
   }
 
   render() {
-    const { login, actions } = this.props;
+    const { tags, actions } = this.props
+    const elems = []
+    Object.keys(tags).forEach((tagKey) => {
+      tagObj = tags[tagKey]
+      elems.push(
+        <View>
+          <Text>{ tagObj.name } -- { tagObj.items.length }</Text>
+        </View>
+      )
+    })
     return (
       <ScrollView
         style={styles.scrollview}
@@ -34,16 +38,11 @@ class TagsTab extends Component {
           <RefreshControl
             refreshing={this.state.isRefreshing}
             onRefresh={this._onRefresh}
-            tintColor="#ff0000"
-            title="Loading..."
-            titleColor="#00ff00"
-            colors={['#ff0000', '#00ff00', '#0000ff']}
-            progressBackgroundColor="#ffff00"
           />
-        }>
+        }
+      >
         <View style={styles.welcome}>
-          <Button onPress={actions.testPocketAdapter} title="API Test" />
-          <Text>{ this.state.loaded }</Text>
+          { elems }
         </View>
       </ScrollView>
     )
@@ -65,7 +64,7 @@ import * as allActions from '../actions/allActions'
 
 export default connect(
   (state, ownProps) => ({
-    login: state.login,
+    tags: state.tags,
   }),
   (dispatch) => ({
     actions: bindActionCreators(allActions, dispatch)

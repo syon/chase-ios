@@ -283,3 +283,13 @@ export function changeScene(idx) {
     dispatch({ type: 'CHANGE_SCENE', sceneIdx: idx })
   }
 }
+
+export function refreshAllTags() {
+  return async function(dispatch, getState) {
+    console.tron.log('refreshAllTags start')
+    const tags = await Pocket.getAllTags()
+    console.tron.log('refreshAllTags end')
+    console.tron.log(tags)
+    dispatch({ type: 'REFRESH_TAGS', tags })
+  }
+}

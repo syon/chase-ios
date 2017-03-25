@@ -32,6 +32,7 @@ export async function getItemsTaggedBy(tagNm) {
 }
 
 export async function getAllTags() {
+  console.tron.display({ name: 'Adapter#getAllTags', preview: 'start', value: tags })
   const params = {
     state: 'unread',
     count: 100,
@@ -52,6 +53,6 @@ export async function getAllTags() {
       })
     }
   })
-  console.tron.display({ name: 'Adapter#getAllTags', preview: 'Done.', value: tags })
-  return 
+  console.tron.display({ name: 'Adapter#getAllTags', preview: 'end', value: tags })
+  return tags
 }
