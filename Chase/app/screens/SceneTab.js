@@ -20,19 +20,6 @@ class SceneTab extends Component {
     // this.listupFromStorage()
   }
 
-  makeItemsForDS(catalog) {
-    let items = []
-    Object.keys(catalog).forEach(function(key) {
-      items.push(catalog[key])
-    })
-    items = items.sort((a,b) => {
-      if (a.sortId < b.sortId) return -1
-      if (a.sortId > b.sortId) return 1
-      return 0
-    })
-    return items
-  }
-
   _onRefresh() {
     console.tron.log('SceneTab#_onRefresh')
     this.setState({ refreshing: true });
@@ -53,15 +40,13 @@ class SceneTab extends Component {
         catalog = shelf.catalogSceneC
         break
     }
-    const items = this.makeItemsForDS(catalog)
     return (
       <Catalog
         {...this.props}
         showSegment={ true }
         catalogState={{
           refreshing: this.state.refreshing,
-          itemsForDS: items,
-          dataSource: this.state.dataSource.cloneWithRows(items)
+          catalogHash: catalog,
         }}
         onRefresh={ this._onRefresh }
         style={{flex: 1}}

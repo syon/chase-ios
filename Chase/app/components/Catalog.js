@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {
   View,
+  ListView,
   SegmentedControlIOS,
   TouchableWithoutFeedback,
   Image,
@@ -18,9 +19,10 @@ const AS_BTNS_CIDX = 2
 export default class extends Component {
   constructor(props) {
     super(props)
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
     this.state = {
       refreshing: false,
-      dataSource: this.props.catalogState.dataSource,
+      dataSource: ds.cloneWithRows(['row 1', 'row 2']),
     }
     this.renderRowFront = this.renderRowFront.bind(this)
     this.renderRowBack = this.renderRowBack.bind(this)
@@ -96,6 +98,19 @@ export default class extends Component {
     })
   }
 
+  makeItemsForDS(catalog) {
+    let items = []
+    Object.keys(catalog).forEach(function(key) {
+      items.push(catalog[key])
+    })
+    items = items.sort((a,b) => {
+      if (a.sortId < b.sortId) return -1
+      if (a.sortId > b.sortId) return 1
+      return 0
+    })
+    return items
+  }
+
   render() {
     const { scene, actions } = this.props
     const segment = this.props.showSegment ? (
@@ -107,13 +122,14 @@ export default class extends Component {
         }}
         style={styles.segment}
       />
-    ) : null;
+    ) : null
+    const items = this.makeItemsForDS(this.props.catalogState.catalogHash)
 
     return (
       <View style={styles.wrap}>
         { segment }
         <SwipeListView
-          dataSource={this.props.catalogState.dataSource}
+          dataSource={this.state.dataSource.cloneWithRows(items)}
           renderRow={(data, secId, rowId) => (
             <SwipeRow
               leftOpenValue={75}

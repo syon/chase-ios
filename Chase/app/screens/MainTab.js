@@ -20,19 +20,6 @@ class MainTab extends Component {
     this.props.actions.ready()
   }
 
-  makeItemsForDS(catalog) {
-    let items = []
-    Object.keys(catalog).forEach(function(key) {
-      items.push(catalog[key])
-    })
-    items = items.sort((a,b) => {
-      if (a.sortId < b.sortId) return -1
-      if (a.sortId > b.sortId) return 1
-      return 0
-    })
-    return items
-  }
-
   _onRefresh() {
     console.tron.log('MainTab#_onRefresh')
     this.setState({ refreshing: true });
@@ -41,14 +28,12 @@ class MainTab extends Component {
 
   render() {
     const catalog = this.props.shelf.catalogMain
-    const items = this.makeItemsForDS(catalog)
     return (
       <Catalog
         {...this.props}
         catalogState={{
           refreshing: this.state.refreshing,
-          itemsForDS: items,
-          dataSource: this.state.dataSource.cloneWithRows(items)
+          catalogHash: catalog,
         }}
         onRefresh={ this._onRefresh }
         style={{flex: 1}}
