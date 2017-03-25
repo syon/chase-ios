@@ -21,6 +21,7 @@ class SceneTab extends Component {
   }
 
   makeItemsForDS(catalog) {
+    console.log('makeItemsForDSmakeItemsForDSmakeItemsForDS', catalog)
     let items = []
     Object.keys(catalog).forEach(function(key) {
       items.push(catalog[key])
@@ -40,7 +41,19 @@ class SceneTab extends Component {
   }
 
   render() {
-    const catalog = this.props.shelf.catalogSceneA
+    const { scene, shelf } = this.props
+    let catalog = null
+    switch (scene.currentIdx) {
+      case 0:
+        catalog = shelf.catalogSceneA
+        break
+      case 1:
+        catalog = shelf.catalogSceneB
+        break
+      case 2:
+        catalog = shelf.catalogSceneC
+        break
+    }
     const items = this.makeItemsForDS(catalog)
     return (
       <Catalog
@@ -68,6 +81,7 @@ export default connect(
     login: state.login,
     items: state.items,
     shelf: state.shelf,
+    scene: state.scene,
   }),
   (dispatch) => ({
     actions: bindActionCreators(allActions, dispatch)

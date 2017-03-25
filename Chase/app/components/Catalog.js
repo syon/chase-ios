@@ -97,12 +97,13 @@ export default class extends Component {
   }
 
   render() {
+    const { scene, actions } = this.props
     const segment = this.props.showSegment ? (
       <SegmentedControlIOS
-        values={['One', 'Two']}
-        selectedIndex={this.state.selectedIndex}
+        values={scene.allScenes}
+        selectedIndex={scene.currentIdx}
         onChange={(event) => {
-          this.setState({selectedIndex: event.nativeEvent.selectedSegmentIndex});
+          actions.changeScene(event.nativeEvent.selectedSegmentIndex)
         }}
         style={styles.segment}
       />

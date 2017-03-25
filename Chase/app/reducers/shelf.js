@@ -17,11 +17,11 @@ export default function (state = initialState, action = {}) {
       })
     case 'REFRESH_CATALOG_SCENE_B':
       return Object.assign({}, state, {
-        catalogSceneA: action.catalog
+        catalogSceneB: action.catalog
       })
     case 'REFRESH_CATALOG_SCENE_C':
       return Object.assign({}, state, {
-        catalogSceneA: action.catalog
+        catalogSceneC: action.catalog
       })
     case 'LOGOUT_DONE':
       return initialState

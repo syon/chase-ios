@@ -65,6 +65,7 @@ export default connect(
   (state, ownProps) => ({
     phase: state.phase,
     shelf: state.shelf,
+    scene: state.scene,
   }),
   (dispatch) => ({
     actions: bindActionCreators(allActions, dispatch)

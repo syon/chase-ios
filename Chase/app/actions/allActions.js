@@ -186,7 +186,7 @@ export function refreshCatalog(catalogId) {
       console.info('getState()', getState())
       Pocket.getAllUntaggedItems().then((result) => {
         console.tron.log('APIからの返事きた', result)
-        const catalog = makeCatalog(result.list)
+        const catalog = _makeCatalog(result.list)
         console.tron.log('Catalog保存します...')
         dispatch({ type: 'REFRESH_CATALOG_MAIN', catalog })
         global.storage.save({
@@ -209,21 +209,38 @@ export function refreshSceneCatalogs() {
     return new Promise((resolve, reject) => {
       console.tron.log('allActions#refreshSceneCatalogs')
       console.tron.display({ name: 'allActions', preview: 'getState()', value: getState() })
-
-      Pocket.getItemsTaggedBy('loc:home').then((result) => {
-        const catalog = makeCatalog(result.list)
-        dispatch({ type: 'REFRESH_CATALOG_SCENE_A', catalog })
-        resolve()
-      }).catch(result => {
-        console.tron.error('Failed to load pages.', result)
-      })
+      _loadSceneCatalogA(dispatch)
+      _loadSceneCatalogB(dispatch)
+      _loadSceneCatalogC(dispatch)
+      resolve()
     })
   }
 }
 
+function _loadSceneCatalogA(dispatch) {
+  Pocket.getItemsTaggedBy('loc:home').then((result) => {
+    const catalog = _makeCatalog(result.list)
+    dispatch({ type: 'REFRESH_CATALOG_SCENE_A', catalog })
+  })
+}
+
+function _loadSceneCatalogB(dispatch) {
+  Pocket.getItemsTaggedBy('loc:office').then((result) => {
+    const catalog = _makeCatalog(result.list)
+    dispatch({ type: 'REFRESH_CATALOG_SCENE_B', catalog })
+  })
+}
+
+function _loadSceneCatalogC(dispatch) {
+  Pocket.getItemsTaggedBy('loc:rest').then((result) => {
+    const catalog = _makeCatalog(result.list)
+    dispatch({ type: 'REFRESH_CATALOG_SCENE_C', catalog })
+  })
+}
+
 let catalogBySort = {}
 
-function makeCatalog(listFromPocket) {
+function _makeCatalog(listFromPocket) {
   let catalog = {}
   Object.keys(listFromPocket).forEach((key) => {
     const m = listFromPocket[key]
@@ -264,5 +281,11 @@ export function testPocketAdapter() {
     }).catch(err => {
       console.error(err)
     })
+  }
+}
+
+export function changeScene(idx) {
+  return function(dispatch, getState) {
+    dispatch({ type: 'CHANGE_SCENE', sceneIdx: idx })
   }
 }
