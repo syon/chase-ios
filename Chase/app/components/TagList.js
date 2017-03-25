@@ -87,6 +87,6 @@ const styles = StyleSheet.create({
   },
   badge: {
     padding: 10,
-    color: '#ccc'
+    color: 'rgb(51, 123, 246)'
   },
 })
