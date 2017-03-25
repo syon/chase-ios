@@ -21,15 +21,24 @@ export default class extends Component {
   }
 
   _renderRow(rowData) {
-    const _onPress = () => { console.info('★', rowData.name, this.props) }
+    const tag = rowData
+    const _onPress = () => {
+      console.info('★', rowData.name, this.props)
+      this.props.navigator.push({
+        title: tag.name,
+        screen: 'Chase.TagsTabScreen',
+        passProps: { tag },
+      })
+    }
     return (
       <TouchableOpacity onPress={ _onPress } style={styles.row}>
         <View style={styles.rowLeft}>
-          <Icon style={styles.icon} name="ios-pricetag" size={20} />
-          <Text>{ rowData.name }</Text>
+          <Icon style={styles.tagIcon} name="ios-pricetag" size={20} />
+          <Text>{ tag.name }</Text>
         </View>
-        <View>
-          <Text style={styles.badge}>{ rowData.items.length }</Text>
+        <View style={styles.rowRight}>
+          <Text style={styles.badge}>{ tag.items.length }</Text>
+          <Icon style={styles.chevronIcon} name="ios-arrow-forward" size={20} />
         </View>
       </TouchableOpacity>
     )
@@ -58,8 +67,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  icon: {
+  rowRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  tagIcon: {
     width: 40,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#ddd'
+  },
+  chevronIcon: {
+    width: 30,
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
