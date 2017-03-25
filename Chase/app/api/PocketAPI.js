@@ -94,6 +94,7 @@ export function get(consumerKey, accessToken, options) {
     access_token: accessToken,
   }
   const params = Object.assign({}, defaultParams, options)
+  console.tron.display({ name: 'PocketAPI#get', preview: 'Calling...', value: params })
   return new Promise((resolve, reject) => {
     fetch('https://getpocket.com/v3/get', {
       method: 'POST',
@@ -109,6 +110,7 @@ export function get(consumerKey, accessToken, options) {
         throw response
       }
     }).then((result) => {
+      console.tron.display({ name: 'PocketAPI#get', preview: 'Done.', value: result })
       resolve(result)
     }).catch((error) => {
       console.error('PocketAPI#get', { consumerKey, accessToken, tag })

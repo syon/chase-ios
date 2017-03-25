@@ -232,7 +232,7 @@ function _loadSceneCatalogB(dispatch) {
 }
 
 function _loadSceneCatalogC(dispatch) {
-  Pocket.getItemsTaggedBy('loc:rest').then((result) => {
+  Pocket.getItemsTaggedBy('loc:remote').then((result) => {
     const catalog = _makeCatalog(result.list)
     dispatch({ type: 'REFRESH_CATALOG_SCENE_C', catalog })
   })
@@ -275,12 +275,8 @@ export function addTag(itemId, tagNm) {
 export function testPocketAdapter() {
   return function(dispatch, getState) {
     console.log('testPocketAdapter...');
-    const promise = Pocket.getAllUntaggedItems()
-    promise.then((result) => {
-      console.info('result', result);
-    }).catch(err => {
-      console.error(err)
-    })
+    const result = Pocket.getAllTags()
+    console.info('result', result);
   }
 }
 
