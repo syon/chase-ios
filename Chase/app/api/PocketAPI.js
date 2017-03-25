@@ -88,7 +88,12 @@ export function add(consumerKey, accessToken, url) {
   })
 }
 
-export function get(consumerKey, accessToken, tag) {
+export function get(consumerKey, accessToken, options) {
+  const defaultParams = {
+    consumer_key: consumerKey,
+    access_token: accessToken,
+  }
+  const params = Object.assign({}, defaultParams, options)
   return new Promise((resolve, reject) => {
     fetch('https://getpocket.com/v3/get', {
       method: 'POST',
@@ -96,15 +101,7 @@ export function get(consumerKey, accessToken, tag) {
         'Content-Type': 'application/json; charset=UTF-8',
         'X-Accept': 'application/json',
       },
-      body: JSON.stringify({
-        consumer_key: consumerKey,
-        access_token: accessToken,
-        state: 'unread',
-        tag: tag,
-        count: 20,
-        sort: 'newest',
-        detailType: 'complete',
-      })
+      body: JSON.stringify(params)
     }).then((response) => {
       if (response.ok) {
         return response.json()

@@ -2,6 +2,7 @@ import { CONSUMER_KEY, REDIRECT_URI } from 'react-native-dotenv'
 import { Navigation } from 'react-native-navigation'
 
 import * as PocketAPI from '../api/PocketAPI'
+import * as Pocket from '../api/PocketAdapter'
 
 let memAccessToken = null
 
@@ -22,6 +23,7 @@ async function _loadUserInfo(dispatch) {
   await global.storage.load({ key: 'loginState' }).then(user => {
     console.info('user',user)
     memAccessToken = user.accessToken
+    Pocket.setAccessToken(user.accessToken)
     dispatch({ type: 'LOGIN_SUCCESS', data: user })
     return
   })
@@ -182,10 +184,8 @@ export function refreshCatalog(catalogId) {
     return new Promise((resolve, reject) => {
       console.tron.log({ preview:'allActions#refreshCatalog', value: catalogId })
       console.info('getState()', getState())
-      const at = getState().login.accessToken
-      const api = PocketAPI.get(CONSUMER_KEY, at)
-      api.then((result) => {
-        console.tron.log('APIからの返事きた')
+      Pocket.getAllUntaggedItems().then((result) => {
+        console.tron.log('APIからの返事きた', result)
         const catalog = makeCatalog(result.list)
         console.tron.log('Catalog保存します...')
         dispatch({ type: 'REFRESH_CATALOG_MAIN', catalog })
@@ -232,6 +232,18 @@ export function addTag(itemId, tagNm) {
       if (result.action_results) {
         console.info('Success: Add Tag', itemId);
       }
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+}
+
+export function testPocketAdapter() {
+  return function(dispatch, getState) {
+    console.log('testPocketAdapter...');
+    const promise = Pocket.getAllUntaggedItems()
+    promise.then((result) => {
+      console.info('result', result);
     }).catch(err => {
       console.error(err)
     })
