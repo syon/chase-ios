@@ -210,21 +210,21 @@ export function refreshSceneCatalogs() {
 }
 
 function _loadSceneCatalogA(dispatch) {
-  Pocket.getItemsTaggedBy('loc:home').then((result) => {
+  Pocket.getItemsTaggedBy('chase:a').then((result) => {
     const catalog = _makeCatalog(result.list)
     dispatch({ type: 'REFRESH_CATALOG_SCENE_A', catalog })
   })
 }
 
 function _loadSceneCatalogB(dispatch) {
-  Pocket.getItemsTaggedBy('loc:office').then((result) => {
+  Pocket.getItemsTaggedBy('chase:b').then((result) => {
     const catalog = _makeCatalog(result.list)
     dispatch({ type: 'REFRESH_CATALOG_SCENE_B', catalog })
   })
 }
 
 function _loadSceneCatalogC(dispatch) {
-  Pocket.getItemsTaggedBy('loc:remote').then((result) => {
+  Pocket.getItemsTaggedBy('chase:c').then((result) => {
     const catalog = _makeCatalog(result.list)
     dispatch({ type: 'REFRESH_CATALOG_SCENE_C', catalog })
   })

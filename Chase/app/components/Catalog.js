@@ -12,9 +12,8 @@ import {
 } from 'react-native'
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
 
-const AS_BTNS = ['家で読む', '職場で読む', 'キャンセル']
-const AS_BTN_TAGS = ['loc:home', 'loc:office']
-const AS_BTNS_CIDX = 2
+const AS_BTN_TAGS = ['chase:a', 'chase:b', 'chase:c']
+const AS_BTNS_CIDX = 3
 
 export default class extends Component {
   constructor(props) {
@@ -73,7 +72,7 @@ export default class extends Component {
     const swipedItem = catalogRows[idx]
     console.info('swipedItem is', swipedItem);
     ActionSheetIOS.showActionSheetWithOptions({
-      options: AS_BTNS,
+      options: [...this.props.scene.allScenes, 'Cancel'],
       cancelButtonIndex: AS_BTNS_CIDX
     },
     ((buttonIndex) => {
