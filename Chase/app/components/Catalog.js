@@ -28,6 +28,7 @@ export default class extends Component {
     this.renderRowBack = this.renderRowBack.bind(this)
     this.onSwipe = this.onSwipe.bind(this)
     this.openWebView = this.openWebView.bind(this)
+    this.getCatalogRows = this.getCatalogRows.bind(this)
   }
 
   renderRowFront(item) {
@@ -68,7 +69,8 @@ export default class extends Component {
   }
 
   onSwipe(_, idx) {
-    const swipedItem = this.props.catalogState.itemsForDS[idx]
+    const catalogRows = this.getCatalogRows()
+    const swipedItem = catalogRows[idx]
     console.info('swipedItem is', swipedItem);
     ActionSheetIOS.showActionSheetWithOptions({
       options: AS_BTNS,
@@ -98,23 +100,24 @@ export default class extends Component {
     })
   }
 
-  makeItemsForDS(catalog) {
-    if (!catalog) { return [] }
-    let items = []
-    Object.keys(catalog).forEach(function(key) {
-      items.push(catalog[key])
+  getCatalogRows() {
+    const cHash = this.props.catalogState.catalogHash
+    if (!cHash) { return [] }
+    let rows = []
+    Object.keys(cHash).forEach(function(key) {
+      rows.push(cHash[key])
     })
-    items = items.sort((a,b) => {
+    rows = rows.sort((a,b) => {
       if (a.sortId < b.sortId) return -1
       if (a.sortId > b.sortId) return 1
       return 0
     })
-    return items
+    return rows
   }
 
   render() {
-    const { scene, actions } = this.props
-    const segment = this.props.showSegment ? (
+    const { scene, actions, showSegment, catalogState } = this.props
+    const segment = showSegment ? (
       <SegmentedControlIOS
         values={scene.allScenes}
         selectedIndex={scene.currentIdx}
@@ -124,13 +127,12 @@ export default class extends Component {
         style={styles.segment}
       />
     ) : null
-    const items = this.makeItemsForDS(this.props.catalogState.catalogHash)
 
     return (
       <View style={styles.wrap}>
         { segment }
         <SwipeListView
-          dataSource={this.state.dataSource.cloneWithRows(items)}
+          dataSource={this.state.dataSource.cloneWithRows(this.getCatalogRows())}
           renderRow={(data, secId, rowId) => (
             <SwipeRow
               leftOpenValue={75}
