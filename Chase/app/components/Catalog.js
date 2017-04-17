@@ -10,7 +10,8 @@ import {
   RefreshControl,
   ActionSheetIOS,
 } from 'react-native'
-import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
+
+import Box from './Box'
 
 const AS_BTN_TAGS = ['chase:a', 'chase:b', 'chase:c']
 const AS_BTNS_CIDX = 3
@@ -23,68 +24,37 @@ export default class extends Component {
       refreshing: false,
       dataSource: ds.cloneWithRows(['row 1', 'row 2']),
     }
-    this.renderRowFront = this.renderRowFront.bind(this)
-    this.renderRowBack = this.renderRowBack.bind(this)
-    this.onSwipe = this.onSwipe.bind(this)
     this.openWebView = this.openWebView.bind(this)
     this.getCatalogRows = this.getCatalogRows.bind(this)
   }
 
-  renderRowFront(item) {
-    const thumbsPath = 'https://d2aed4ktvx51jm.cloudfront.net/items/thumbs'
-    const item10Id = `0000000000${item.itemId}`.substr(-10, 10)
-    const itemId3 = item10Id.slice(0, 3)
-    const imgUrl = `${thumbsPath}/${itemId3}/${item10Id}.jpg`
+  renderRow(item) {
     return (
-      <TouchableWithoutFeedback onPress={() => this.openWebView(item)}>
-        <View style={styles.rowFront}>
-          <Image
-            style={styles.thumbnail}
-            source={{uri: imgUrl}}
-          />
-          <View style={styles.itemBody}>
-            <Text style={styles.title}>{ item.title }</Text>
-          </View>
-        </View>
-      </TouchableWithoutFeedback>
+      <Box
+        item={item}
+        openWebView={() => this.openWebView(item)}
+      />
     )
   }
 
-  renderRowBack(item) {
-    return (
-      <View style={styles.rowBack}>
-        <TouchableWithoutFeedback onPress={() => {console.log('★L')}}>
-          <View style={styles.rowBackBtnL} >
-            <Text>Left</Text>
-          </View>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => {console.log('★R')}}>
-          <View style={styles.rowBackBtnR} >
-            <Text>Right</Text>
-          </View>
-        </TouchableWithoutFeedback>
-      </View>
-    )
-  }
-
-  onSwipe(_, idx) {
-    const catalogRows = this.getCatalogRows()
-    const swipedItem = catalogRows[idx]
-    console.info('swipedItem is', swipedItem);
-    ActionSheetIOS.showActionSheetWithOptions({
-      options: [...this.props.scene.allScenes, 'Cancel'],
-      cancelButtonIndex: AS_BTNS_CIDX
-    },
-    ((buttonIndex) => {
-      switch(buttonIndex) {
-        case(AS_BTNS_CIDX):
-          console.info('Canceled.')
-          break
-        default:
-          this.props.actions.addTag(swipedItem.itemId, AS_BTN_TAGS[buttonIndex])
-      }
-    }).bind(this))
-  }
+  // onSwipe(_, idx) {
+  //   const catalogRows = this.getCatalogRows()
+  //   const swipedItem = catalogRows[idx]
+  //   console.info('swipedItem is', swipedItem);
+  //   ActionSheetIOS.showActionSheetWithOptions({
+  //     options: [...this.props.scene.allScenes, 'Cancel'],
+  //     cancelButtonIndex: AS_BTNS_CIDX
+  //   },
+  //   ((buttonIndex) => {
+  //     switch(buttonIndex) {
+  //       case(AS_BTNS_CIDX):
+  //         console.info('Canceled.')
+  //         break
+  //       default:
+  //         this.props.actions.addTag(swipedItem.itemId, AS_BTN_TAGS[buttonIndex])
+  //     }
+  //   }).bind(this))
+  // }
 
   openWebView(item) {
     this.props.navigator.push({
@@ -101,7 +71,7 @@ export default class extends Component {
 
   getCatalogRows() {
     const cHash = this.props.catalogState.catalogHash
-    if (!cHash) { return [] }
+    if (!cHash) { return [{}] }
     let rows = []
     Object.keys(cHash).forEach(function(key) {
       rows.push(cHash[key])
@@ -130,25 +100,16 @@ export default class extends Component {
     return (
       <View style={styles.wrap}>
         { segment }
-        <SwipeListView
+        <ListView
           dataSource={this.state.dataSource.cloneWithRows(this.getCatalogRows())}
-          renderRow={(data, secId, rowId) => (
-            <SwipeRow
-              leftOpenValue={75}
-              rightOpenValue={-75}
-              disableLeftSwipe={true}
-            >
-              { this.renderRowBack(data) }
-              { this.renderRowFront(data) }
-            </SwipeRow>
-          )}
-          onRowOpen={this.onSwipe}
+          renderRow={this.renderRow}
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
               onRefresh={this.props.onRefresh.bind(this)}
             />
           }
+          contentInset={{top: 0, left: 0, bottom: 50, right: 0}}
           style={styles.itemList}
         />
       </View>
@@ -159,6 +120,7 @@ export default class extends Component {
 const styles = StyleSheet.create({
   wrap: {
     flex: 1,
+    backgroundColor: 'rgb(240, 239, 245)',
   },
   segment: {
     margin: 10,
