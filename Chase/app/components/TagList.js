@@ -49,6 +49,7 @@ export default class extends Component {
       <ListView
         dataSource={this.state.dataSource.cloneWithRows(this.props.tagsArr)}
         renderRow={this._renderRow}
+        enableEmptySections={true}
       />
     )
   }
