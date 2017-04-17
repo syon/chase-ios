@@ -5,11 +5,27 @@ class ConfigTab extends Component {
   constructor(props) {
     super(props);
     this.onSavePage = this.onSavePage.bind(this)
+    this.toggleTabsHidden = this.toggleTabsHidden.bind(this)
+    this.toggleTabsShown = this.toggleTabsShown.bind(this)
   }
 
   onSavePage() {
     const url = 'https://getpocket.com/developer/docs/authentication'
     this.props.actions.savePage(url)
+  }
+
+  toggleTabsHidden() {
+    this.props.navigator.toggleTabs({
+      to: 'hidden',
+      animated: true
+    });
+  }
+
+  toggleTabsShown() {
+    this.props.navigator.toggleTabs({
+      to: 'shown',
+      animated: true
+    });
   }
 
   render() {
@@ -20,6 +36,8 @@ class ConfigTab extends Component {
         <Text>{ login.accessToken }</Text>
         <Text>{ login.username }</Text>
         <Button onPress={this.onSavePage} title="Add!" />
+        <Button onPress={this.toggleTabsHidden} title="toggleTabsHidden" />
+        <Button onPress={this.toggleTabsShown} title="toggleTabsShown" />
         <Button onPress={actions.testPocketAdapter} title="API Test" />
       </View>
     )
