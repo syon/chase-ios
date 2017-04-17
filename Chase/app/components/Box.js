@@ -6,6 +6,7 @@ import {
   View,
   Text,
   Image,
+  TouchableWithoutFeedback,
 } from 'react-native'
 import Button from 'react-native-button'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -13,6 +14,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 export default class extends Component {
   constructor(props) {
     super(props)
+    this.onThumbPress = this.onThumbPress.bind(this)
   }
 
   makeThumb(item) {
@@ -25,15 +27,28 @@ export default class extends Component {
     )
   }
 
+  onThumbPress() {
+    this.props.navigator.showLightBox({
+      screen: "Chase.ConfigTabScreen",
+      passProps: { item: this.props.item },
+      style: {
+        backgroundBlur: "light",
+        backgroundColor: "#ffffff80"
+      }
+    });
+  }
+
   render() {
     const { item } = this.props
     if (!item) { return null }
     const thumb = this.makeThumb(item)
     return (
       <View style={styles.box}>
-        <View style={styles.thumbWrap}>
-          { thumb }
-        </View>
+        <TouchableWithoutFeedback onPress={this.onThumbPress}>
+          <View onPress={this.onThumbPress} style={styles.thumbWrap}>
+            { thumb }
+          </View>
+        </TouchableWithoutFeedback>
         <View style={styles.boxBody}>
           <Text>{ item.title }</Text>
           <Text>2017.4.17</Text>

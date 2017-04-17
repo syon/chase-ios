@@ -26,14 +26,12 @@ export default class extends Component {
     }
     this.openWebView = this.openWebView.bind(this)
     this.getCatalogRows = this.getCatalogRows.bind(this)
+    this.renderRow = this.renderRow.bind(this)
   }
 
   renderRow(item) {
     return (
-      <Box
-        item={item}
-        openWebView={() => this.openWebView(item)}
-      />
+      <Box item={item} {...this.props} />
     )
   }
 
