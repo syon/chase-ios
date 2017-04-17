@@ -8,6 +8,7 @@ import TagsTab from './TagsTab'
 import TagsTabInner from './TagsTabInner'
 import ConfigTab from './ConfigTab'
 import Login from './Login'
+import LightBox from './LightBox'
 import MyWebView from '../components/MyWebView'
 
 const store = configureStore();
@@ -22,5 +23,6 @@ export function register() {
   Navigation.registerComponent('Chase.TagsTabInnerScreen', () => TagsTabInner, store, Provider)
   Navigation.registerComponent('Chase.ConfigTabScreen', () => ConfigTab, store, Provider)
   Navigation.registerComponent('Chase.LoginScreen', () => Login, store, Provider)
+  Navigation.registerComponent('Chase.LightBox', () => LightBox, store, Provider)
   Navigation.registerComponent('Chase.WebViewScreen', () => MyWebView, store, Provider)
 }

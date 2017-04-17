@@ -18,19 +18,24 @@ export default class extends Component {
   }
 
   makeThumb(item) {
-    const thumbsPath = 'https://d2aed4ktvx51jm.cloudfront.net/items/thumbs'
-    const item10Id = `0000000000${item.itemId}`.substr(-10, 10)
-    const itemId3 = item10Id.slice(0, 3)
-    const imgUrl = `${thumbsPath}/${itemId3}/${item10Id}.jpg`
+    const imgUrl = this.makeImgUrl(item)
     return (
       <Image style={styles.thumbnail} source={{uri: imgUrl}} />
     )
   }
 
+  makeImgUrl(item) {
+    const thumbsPath = 'https://d2aed4ktvx51jm.cloudfront.net/items/thumbs'
+    const item10Id = `0000000000${item.itemId}`.substr(-10, 10)
+    const itemId3 = item10Id.slice(0, 3)
+    return `${thumbsPath}/${itemId3}/${item10Id}.jpg`
+  }
+
   onThumbPress() {
+    const imgUrl = this.makeImgUrl(this.props.item)
     this.props.navigator.showLightBox({
-      screen: "Chase.ConfigTabScreen",
-      passProps: { item: this.props.item },
+      screen: "Chase.LightBox",
+      passProps: { item: this.props.item, imgUrl },
       style: {
         backgroundBlur: "light",
         backgroundColor: "#ffffff80"

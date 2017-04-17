@@ -7,7 +7,6 @@ class ConfigTab extends Component {
     this.onSavePage = this.onSavePage.bind(this)
     this.toggleTabsHidden = this.toggleTabsHidden.bind(this)
     this.toggleTabsShown = this.toggleTabsShown.bind(this)
-    this.dismissLightBox = this.dismissLightBox.bind(this)
   }
 
   onSavePage() {
@@ -29,10 +28,6 @@ class ConfigTab extends Component {
     });
   }
 
-  dismissLightBox() {
-    this.props.navigator.dismissLightBox();
-  }
-
   render() {
     const { login, actions } = this.props;
     return (
@@ -43,7 +38,6 @@ class ConfigTab extends Component {
         <Button onPress={this.onSavePage} title="Add!" />
         <Button onPress={this.toggleTabsHidden} title="toggleTabsHidden" />
         <Button onPress={this.toggleTabsShown} title="toggleTabsShown" />
-        <Button onPress={this.dismissLightBox} title="dismissLightBox" />
         <Button onPress={actions.testPocketAdapter} title="API Test" />
       </View>
     )
