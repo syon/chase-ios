@@ -6,9 +6,8 @@ import {
   View,
   Text,
   Image,
-  Button,
 } from 'react-native'
-
+import Button from 'react-native-button'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 export default class extends Component {
@@ -42,9 +41,9 @@ export default class extends Component {
           <Text>✓</Text>
         </View>
         <View style={styles.selectScene}>
-          <Button onPress={() => {}} title="chase:a" />
-          <Button onPress={() => {}} title="chase:b" />
-          <Button onPress={() => {}} title="chase:c" />
+          <Button onPress={() => {}} style={styles.sceneBtn}>自宅</Button>
+          <Button onPress={() => {}} style={styles.sceneBtn}>職場</Button>
+          <Button onPress={() => {}} style={styles.sceneBtn}>暇つぶし</Button>
         </View>
       </View>
     )
@@ -76,7 +75,12 @@ const styles = StyleSheet.create({
   },
   selectScene: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
+    paddingBottom: 5,
+  },
+  sceneBtn: {
+    fontSize: 14,
     padding: 10,
+    overflow: 'hidden',
   },
 })

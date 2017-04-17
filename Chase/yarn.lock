@@ -3041,6 +3041,10 @@ react-deep-force-update@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.0.1.tgz#f911b5be1d2a6fe387507dd6e9a767aa2924b4c7"
 
+react-native-button@^1.8.2:
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/react-native-button/-/react-native-button-1.8.2.tgz#49e5cadd22ee443adea52a85539d288aa2117ade"
+
 react-native-dotenv@^0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/react-native-dotenv/-/react-native-dotenv-0.0.3.tgz#5caf47a30b9c797c679dda835d81ae2ce3c1cc11"
