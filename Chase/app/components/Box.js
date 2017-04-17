@@ -37,7 +37,7 @@ export default class extends Component {
         <View style={styles.boxBody}>
           <Text>{ item.title }</Text>
           <Text>2017.4.17</Text>
-          <Text>www000000000000000.example.com</Text>
+          <Text style={styles.domain}>www000000000000000.example.com</Text>
           <Text>✓</Text>
         </View>
         <View style={styles.selectScene}>
@@ -72,6 +72,10 @@ const styles = StyleSheet.create({
   },
   boxBody: {
     padding: 20,
+  },
+  domain: {
+    fontSize: 12,
+    color: '#a3aab1',
   },
   selectScene: {
     flexDirection: 'row',
