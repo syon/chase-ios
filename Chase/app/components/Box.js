@@ -6,6 +6,7 @@ import {
   View,
   Text,
   Image,
+  Button,
 } from 'react-native'
 
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -39,11 +40,11 @@ export default class extends Component {
           <Text>2017.4.17</Text>
           <Text>www000000000000000.example.com</Text>
           <Text>✓</Text>
-          <View style={styles.selectScene}>
-            <Text>chase:a</Text>
-            <Text>chase:b</Text>
-            <Text>chase:c</Text>
-          </View>
+        </View>
+        <View style={styles.selectScene}>
+          <Button onPress={() => {}} title="chase:a" />
+          <Button onPress={() => {}} title="chase:b" />
+          <Button onPress={() => {}} title="chase:c" />
         </View>
       </View>
     )
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
   },
   thumbWrap: {
     flex: 1,
-    height: 120,
+    height: 100,
   },
   thumbnail: {
     flex: 1,
@@ -76,5 +77,6 @@ const styles = StyleSheet.create({
   selectScene: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    padding: 10,
   },
 })
