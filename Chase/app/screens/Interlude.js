@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Button, StyleSheet, Text, Image } from 'react-native'
 
-class LightBox extends Component {
+class Interlude extends Component {
   constructor(props) {
     super(props);
     this.openWebView = this.openWebView.bind(this)
@@ -58,4 +58,4 @@ export default connect(
   (dispatch) => ({
     actions: bindActionCreators(allActions, dispatch)
   })
-)(LightBox)
+)(Interlude)
