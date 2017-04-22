@@ -33,13 +33,12 @@ export default class extends Component {
 
   onThumbPress() {
     const imgUrl = this.makeImgUrl(this.props.item)
-    this.props.navigator.showLightBox({
+    this.props.navigator.push({
       screen: "Chase.LightBox",
       passProps: { item: this.props.item, imgUrl },
-      style: {
-        backgroundBlur: "light",
-        backgroundColor: "#ffffff80"
-      }
+      navigatorStyle: {
+        tabBarHidden: true,
+      },
     });
   }
 

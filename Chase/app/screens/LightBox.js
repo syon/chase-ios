@@ -4,11 +4,21 @@ import { View, Button, StyleSheet, Text, Image } from 'react-native'
 class LightBox extends Component {
   constructor(props) {
     super(props);
-    this.dismissLightBox = this.dismissLightBox.bind(this)
+    this.openWebView = this.openWebView.bind(this)
   }
 
-  dismissLightBox() {
-    this.props.navigator.dismissLightBox();
+  openWebView() {
+    const { item } = this.props
+    this.props.navigator.push({
+      title: '',
+      screen: 'Chase.WebViewScreen',
+      passProps: { item },
+      navigatorStyle: {
+        navBarHideOnScroll: true,
+        statusBarHideWithNavBar: true,
+        tabBarHidden: true,
+      },
+    })
   }
 
   render() {
@@ -19,7 +29,7 @@ class LightBox extends Component {
           <Image style={styles.thumbnail} source={{uri: imgUrl}} />
         </View>
         <Text>{item.title}</Text>
-        <Button onPress={this.dismissLightBox} title="dismissLightBox" />
+        <Button onPress={this.openWebView} title="openWebView" />
       </View>
     )
   }
@@ -28,11 +38,8 @@ class LightBox extends Component {
 const styles = StyleSheet.create({
   welcome: {
     flex: 1,
-    borderWidth: 1,
-    // height: 500,
   },
   imgFrame: {
-    flex: 1,
     height: 200,
   },
   thumbnail: {
