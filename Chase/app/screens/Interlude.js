@@ -7,6 +7,7 @@ class Interlude extends Component {
   constructor(props) {
     super(props);
     this.openWebView = this.openWebView.bind(this)
+    this.onSelectScene = this.onSelectScene.bind(this)
   }
 
   openWebView() {
@@ -21,6 +22,11 @@ class Interlude extends Component {
         tabBarHidden: true,
       },
     })
+  }
+
+  onSelectScene(abc) {
+    const { item } = this.props
+    this.props.actions.applyScene(item.itemId, abc)
   }
 
   render() {
@@ -44,9 +50,9 @@ class Interlude extends Component {
         </View>
         <Button onPress={this.openWebView}>openWebView</Button>
         <View style={styles.selectScene}>
-          <Button onPress={() => {}} style={styles.sceneBtn}>自宅</Button>
-          <Button onPress={() => {}} style={styles.sceneBtn}>職場</Button>
-          <Button onPress={() => {}} style={styles.sceneBtn}>暇つぶし</Button>
+          <Button onPress={() => { this.onSelectScene('a') }} style={styles.sceneBtn}>自宅</Button>
+          <Button onPress={() => { this.onSelectScene('b') }} style={styles.sceneBtn}>職場</Button>
+          <Button onPress={() => { this.onSelectScene('c') }} style={styles.sceneBtn}>暇つぶし</Button>
         </View>
       </View>
     )

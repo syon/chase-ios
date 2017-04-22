@@ -267,6 +267,21 @@ function _makeCatalog(listFromPocket) {
   return catalog
 }
 
+export function applyScene(itemId, abc) {
+  return function(dispatch, getState) {
+    console.tron.info('allActions#applyScene', {itemId, abc})
+    const at = memAccessToken
+    const promise = PocketAPI.tags_add(CONSUMER_KEY, at, itemId, `chase:${abc}`)
+    promise.then((result) => {
+      if (result.action_results) {
+        console.tron.info('allActions#applyScene', result)
+      }
+    }).catch(err => {
+      console.tron.error('allActions#applyScene', err)
+    })
+  }
+}
+
 export function addTag(itemId, tagNm) {
   return function(dispatch, getState) {
     console.log('タグ付けします...', itemId);
@@ -274,9 +289,11 @@ export function addTag(itemId, tagNm) {
     const promise = PocketAPI.tags_add(CONSUMER_KEY, at, itemId, tagNm)
     promise.then((result) => {
       if (result.action_results) {
+        console.tron.log('allActions#addTag - Success')
         console.info('Success: Add Tag', itemId);
       }
     }).catch(err => {
+      console.tron.error('allActions#addTag - Error')
       console.error(err)
     })
   }

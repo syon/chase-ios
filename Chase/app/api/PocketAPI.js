@@ -121,6 +121,7 @@ export function get(consumerKey, accessToken, options) {
 
 export function tags_add(consumerKey, accessToken, itemId, tag) {
   return new Promise((resolve, reject) => {
+    console.tron.start('API#tags_add', {consumerKey, accessToken, itemId, tag})
     let params = new URLSearchParams()
     params.append('consumer_key', consumerKey)
     params.append('access_token', accessToken)
@@ -134,8 +135,10 @@ export function tags_add(consumerKey, accessToken, itemId, tag) {
         throw response
       }
     }).then((result) => {
+      console.tron.info('API#tags_add', result)
       resolve(result)
     }).catch((error) => {
+      console.tron.error('API#tags_add', error)
       reject(error)
     })
   })
