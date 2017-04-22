@@ -55,9 +55,7 @@ export default class extends Component {
         </TouchableWithoutFeedback>
         <View style={styles.boxBody}>
           <Text>{ item.title }</Text>
-          <Text>2017.4.17</Text>
           <Text style={styles.domain}>www000000000000000.example.com</Text>
-          <Text>✓</Text>
         </View>
         <View style={styles.selectScene}>
           <Button onPress={() => {}} style={styles.sceneBtn}>自宅</Button>
