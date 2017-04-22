@@ -17,21 +17,16 @@ export default class extends Component {
   }
 
   onSelectSceneA() {
-    console.tron.info('Pressed A work is', this.props.work)
-    console.tron.info('Pressed A', this.props.item.itemId)
-    
     this.setState({ tappedA: true })
     this.props.actions.applyScene(this.props.item.itemId, 'a')
   }
 
   onSelectSceneB() {
-    console.tron.log('Pressed B')
     this.setState({ tappedB: true })
     this.props.actions.applyScene(this.props.item.itemId, 'b')
   }
 
   onSelectSceneC() {
-    console.tron.log('Pressed C')
     this.setState({ tappedC: true })
     this.props.actions.applyScene(this.props.item.itemId, 'c')
   }

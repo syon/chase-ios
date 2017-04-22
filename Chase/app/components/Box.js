@@ -35,11 +35,11 @@ export default class extends Component {
   }
 
   onThumbPress() {
-    const { item, work } = this.props
+    const { item, work, actions } = this.props
     const imgUrl = this.makeImgUrl(this.props.item)
     this.props.navigator.push({
       screen: "Chase.Interlude",
-      passProps: { item, work, imgUrl },
+      passProps: { item, work, actions, imgUrl },
       navigatorStyle: {
         tabBarHidden: true,
       },
