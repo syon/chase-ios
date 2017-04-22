@@ -89,7 +89,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   boxBody: {
-    padding: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   itemTitle: {
     fontSize: responsiveFontSize(2.5),
