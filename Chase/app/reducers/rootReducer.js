@@ -5,6 +5,7 @@ import login from './login'
 import shelf from './shelf'
 import scene from './scene'
 import tags from './tags'
+import work from './work'
 
 const rootReducer = combineReducers({
   phase,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   shelf,
   scene,
   tags,
+  work,
 })
 
 export default rootReducer

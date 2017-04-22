@@ -12,6 +12,8 @@ import Button from 'react-native-button'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 
+import SceneSelector from '../components/SceneSelector'
+
 export default class extends Component {
   constructor(props) {
     super(props)
@@ -33,10 +35,11 @@ export default class extends Component {
   }
 
   onThumbPress() {
+    const { item, work } = this.props
     const imgUrl = this.makeImgUrl(this.props.item)
     this.props.navigator.push({
       screen: "Chase.Interlude",
-      passProps: { item: this.props.item, imgUrl },
+      passProps: { item, work, imgUrl },
       navigatorStyle: {
         tabBarHidden: true,
       },
@@ -44,7 +47,7 @@ export default class extends Component {
   }
 
   render() {
-    const { item } = this.props
+    const { item, work } = this.props
     if (!item) { return null }
     const thumb = this.makeThumb(item)
     return (
@@ -58,11 +61,7 @@ export default class extends Component {
           <Text style={styles.itemTitle}>{ item.title }</Text>
           <Text style={styles.domain}>{ item.fqdn }</Text>
         </View>
-        <View style={styles.selectScene}>
-          <Button onPress={() => {}} style={styles.sceneBtn}>自宅</Button>
-          <Button onPress={() => {}} style={styles.sceneBtn}>職場</Button>
-          <Button onPress={() => {}} style={styles.sceneBtn}>暇つぶし</Button>
-        </View>
+        <SceneSelector {...this.props} />
       </View>
     )
   }

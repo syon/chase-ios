@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text, Image } from 'react-native'
 import Button from 'react-native-button'
-import { responsiveFontSize } from 'react-native-responsive-dimensions';
+import { responsiveFontSize } from 'react-native-responsive-dimensions'
+
+import SceneSelector from '../components/SceneSelector'
 
 class Interlude extends Component {
   constructor(props) {
     super(props);
     this.openWebView = this.openWebView.bind(this)
-    this.onSelectScene = this.onSelectScene.bind(this)
   }
 
   openWebView() {
@@ -24,13 +25,8 @@ class Interlude extends Component {
     })
   }
 
-  onSelectScene(abc) {
-    const { item } = this.props
-    this.props.actions.applyScene(item.itemId, abc)
-  }
-
   render() {
-    const { login, actions, item, imgUrl } = this.props
+    const { login, actions, item, imgUrl, work } = this.props
     return (
       <View style={styles.welcome}>
         <View style={styles.imgFrame}>
@@ -49,11 +45,7 @@ class Interlude extends Component {
           </View>
         </View>
         <Button onPress={this.openWebView}>openWebView</Button>
-        <View style={styles.selectScene}>
-          <Button onPress={() => { this.onSelectScene('a') }} style={styles.sceneBtn}>自宅</Button>
-          <Button onPress={() => { this.onSelectScene('b') }} style={styles.sceneBtn}>職場</Button>
-          <Button onPress={() => { this.onSelectScene('c') }} style={styles.sceneBtn}>暇つぶし</Button>
-        </View>
+        <SceneSelector {...this.props} />
       </View>
     )
   }

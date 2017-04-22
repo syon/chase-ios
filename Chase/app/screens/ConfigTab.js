@@ -7,6 +7,7 @@ class ConfigTab extends Component {
     this.onSavePage = this.onSavePage.bind(this)
     this.toggleTabsHidden = this.toggleTabsHidden.bind(this)
     this.toggleTabsShown = this.toggleTabsShown.bind(this)
+    this.dumpAllProps = this.dumpAllProps.bind(this)
   }
 
   onSavePage() {
@@ -28,6 +29,10 @@ class ConfigTab extends Component {
     });
   }
 
+  dumpAllProps() {
+    console.tron.info('DUMP ALL PROPS', this.props)
+  }
+
   render() {
     const { login, actions } = this.props;
     return (
@@ -38,6 +43,7 @@ class ConfigTab extends Component {
         <Button onPress={this.onSavePage} title="Add!" />
         <Button onPress={this.toggleTabsHidden} title="toggleTabsHidden" />
         <Button onPress={this.toggleTabsShown} title="toggleTabsShown" />
+        <Button onPress={this.dumpAllProps} title="dumpAllProps" />
         <Button onPress={actions.testPocketAdapter} title="API Test" />
       </View>
     )
@@ -57,6 +63,7 @@ import * as allActions from '../actions/allActions'
 export default connect(
   (state, ownProps) => ({
     login: state.login,
+    allStates: state
   }),
   (dispatch) => ({
     actions: bindActionCreators(allActions, dispatch)

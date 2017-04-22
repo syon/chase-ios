@@ -51,6 +51,7 @@ export default connect(
     phase: state.phase,
     shelf: state.shelf,
     scene: state.scene,
+    work: state.work,
   }),
   (dispatch) => ({
     actions: bindActionCreators(allActions, dispatch)

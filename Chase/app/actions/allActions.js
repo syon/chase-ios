@@ -275,6 +275,7 @@ export function applyScene(itemId, abc) {
     promise.then((result) => {
       if (result.action_results) {
         console.tron.info('allActions#applyScene', result)
+        dispatch({ type: 'SET_WORK_SCENE', itemId, abc })
       }
     }).catch(err => {
       console.tron.error('allActions#applyScene', err)
