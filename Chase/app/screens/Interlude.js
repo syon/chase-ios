@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text, Image } from 'react-native'
 import Button from 'react-native-button'
+import { responsiveFontSize } from 'react-native-responsive-dimensions';
 
 class Interlude extends Component {
   constructor(props) {
@@ -66,7 +67,9 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   itemTitle: {
-    fontSize: 16,
+    fontSize: responsiveFontSize(2.5),
+    lineHeight: responsiveFontSize(3),
+    marginBottom: 3,
   },
   toolbar: {
     flexDirection: 'row',
@@ -87,7 +90,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   sceneBtn: {
-    fontSize: 14,
+    fontSize: responsiveFontSize(2),
     padding: 10,
     overflow: 'hidden',
   },

@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 import Button from 'react-native-button'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { responsiveFontSize } from 'react-native-responsive-dimensions';
 
 export default class extends Component {
   constructor(props) {
@@ -54,7 +55,7 @@ export default class extends Component {
           </View>
         </TouchableWithoutFeedback>
         <View style={styles.boxBody}>
-          <Text>{ item.title }</Text>
+          <Text style={styles.itemTitle}>{ item.title }</Text>
           <Text style={styles.domain}>www000000000000000.example.com</Text>
         </View>
         <View style={styles.selectScene}>
@@ -90,8 +91,13 @@ const styles = StyleSheet.create({
   boxBody: {
     padding: 20,
   },
+  itemTitle: {
+    fontSize: responsiveFontSize(2.5),
+    lineHeight: responsiveFontSize(3),
+    marginBottom: 3,
+  },
   domain: {
-    fontSize: 12,
+    fontSize: responsiveFontSize(1.5),
     color: '#a3aab1',
   },
   selectScene: {
@@ -100,7 +106,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   sceneBtn: {
-    fontSize: 14,
+    fontSize: responsiveFontSize(2),
     padding: 10,
     overflow: 'hidden',
   },
