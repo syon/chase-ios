@@ -252,10 +252,13 @@ function _makeCatalog(listFromPocket) {
   Object.keys(listFromPocket).forEach((key) => {
     const m = listFromPocket[key]
     itemId = m.resolved_id == "0" ? m.item_id : m.resolved_id
+    const url = m.resolved_url ? m.resolved_url : m.given_url
+    const fqdn = `${url}/`.match(/\/\/(.*?)\//)[1]
     catalog[key] = {
       itemId: itemId,
       title: m.resolved_title ? m.resolved_title : m.given_title,
-      url: m.resolved_url ? m.resolved_url : m.given_url,
+      url: url,
+      fqdn: fqdn,
       sortId: m.sort_id,
       tags: m.tags
     }

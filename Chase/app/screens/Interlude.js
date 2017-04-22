@@ -34,7 +34,7 @@ class Interlude extends Component {
           <Text style={styles.itemTitle}>{ item.title }</Text>
           <View style={styles.toolbar}>
             <View style={styles.toolbarLeft}>
-              <Text style={styles.domain}>www000000000000000.example.com</Text>
+              <Text style={styles.domain}>{ item.fqdn }</Text>
               <Text style={styles.date}>2017.4.17</Text>
             </View>
             <View style={styles.toolbarRight}>
@@ -78,10 +78,13 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   date: {
-    fontSize: 12,
+    fontSize: responsiveFontSize(1.5),
+    lineHeight: responsiveFontSize(2),
+    color: '#a3aab1',
   },
   domain: {
-    fontSize: 12,
+    fontSize: responsiveFontSize(1.5),
+    lineHeight: responsiveFontSize(2),
     color: '#a3aab1',
   },
   selectScene: {
