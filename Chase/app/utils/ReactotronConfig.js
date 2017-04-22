@@ -4,6 +4,7 @@ import { HOST_ADDR } from 'react-native-dotenv'
 
 class MyTron {
   static log(msg) {
+    console.info(msg)
     Reactotron.log(msg)
   }
   
@@ -12,6 +13,7 @@ class MyTron {
   }
 
   static start(label, obj) {
+    console.info(label, obj)
     Reactotron.display({
       name: label,
       preview: 'START',
@@ -20,6 +22,7 @@ class MyTron {
   }
 
   static info(label, obj) {
+    console.info(label, obj)
     Reactotron.display({
       name: label,
       preview: 'INFO',
@@ -28,6 +31,7 @@ class MyTron {
   }
 
   static error(label, obj) {
+    console.error(label, obj)
     Reactotron.display({
       name: 'ERROR',
       preview: label,
