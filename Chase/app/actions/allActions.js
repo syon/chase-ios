@@ -19,6 +19,9 @@ export function ready() {
     try {
       await _loadMainCatalog(dispatch)
       await _bumpAllTags(dispatch)
+      _loadSceneCatalogA(dispatch)
+      _loadSceneCatalogB(dispatch)
+      _loadSceneCatalogC(dispatch)
     } catch (e) {
       console.tron.error(e)
       throw e
@@ -174,8 +177,7 @@ export function loadCatalogFromStorage(catalogId) {
 export function refreshCatalog(catalogId) {
   return function(dispatch, getState) {
     return new Promise((resolve, reject) => {
-      console.tron.log({ preview:'allActions#refreshCatalog', value: catalogId })
-      console.info('getState()', getState())
+      console.tron.info('allActions#refreshCatalog', catalogId)
       Pocket.getAllUntaggedItems().then((result) => {
         console.tron.log('APIからの返事きた', result)
         const catalog = _makeCatalog(result.list)
@@ -199,8 +201,7 @@ export function refreshCatalog(catalogId) {
 export function refreshSceneCatalogs() {
   return function(dispatch, getState) {
     return new Promise((resolve, reject) => {
-      console.tron.log('allActions#refreshSceneCatalogs')
-      console.tron.display({ name: 'allActions', preview: 'getState()', value: getState() })
+      console.tron.info('allActions#refreshSceneCatalogs', getState)
       _loadSceneCatalogA(dispatch)
       _loadSceneCatalogB(dispatch)
       _loadSceneCatalogC(dispatch)
@@ -212,6 +213,7 @@ export function refreshSceneCatalogs() {
 function _loadSceneCatalogA(dispatch) {
   Pocket.getItemsTaggedBy('chase:a').then((result) => {
     const catalog = _makeCatalog(result.list)
+    console.tron.info('allActions#_loadSceneCatalogA', catalog)
     dispatch({ type: 'REFRESH_CATALOG_SCENE_A', catalog })
   })
 }
@@ -219,6 +221,7 @@ function _loadSceneCatalogA(dispatch) {
 function _loadSceneCatalogB(dispatch) {
   Pocket.getItemsTaggedBy('chase:b').then((result) => {
     const catalog = _makeCatalog(result.list)
+    console.tron.info('allActions#_loadSceneCatalogB', catalog)
     dispatch({ type: 'REFRESH_CATALOG_SCENE_B', catalog })
   })
 }
@@ -226,6 +229,7 @@ function _loadSceneCatalogB(dispatch) {
 function _loadSceneCatalogC(dispatch) {
   Pocket.getItemsTaggedBy('chase:c').then((result) => {
     const catalog = _makeCatalog(result.list)
+    console.tron.info('allActions#_loadSceneCatalogC', catalog)
     dispatch({ type: 'REFRESH_CATALOG_SCENE_C', catalog })
   })
 }
