@@ -4,54 +4,24 @@ import { View, Button, StyleSheet, Text } from 'react-native'
 class ConfigTab extends Component {
   constructor(props) {
     super(props);
-    this.onSavePage = this.onSavePage.bind(this)
-    this.toggleTabsHidden = this.toggleTabsHidden.bind(this)
-    this.toggleTabsShown = this.toggleTabsShown.bind(this)
-    this.dumpAllProps = this.dumpAllProps.bind(this)
-  }
-
-  onSavePage() {
-    const url = 'https://getpocket.com/developer/docs/authentication'
-    this.props.actions.savePage(url)
-  }
-
-  toggleTabsHidden() {
-    this.props.navigator.toggleTabs({
-      to: 'hidden',
-      animated: true
-    });
-  }
-
-  toggleTabsShown() {
-    this.props.navigator.toggleTabs({
-      to: 'shown',
-      animated: true
-    });
-  }
-
-  dumpAllProps() {
-    console.tron.info('DUMP ALL PROPS', this.props)
   }
 
   render() {
     const { login, actions } = this.props;
     return (
-      <View style={styles.welcome}>
-        <Button onPress={actions.disconnectFromPocket} title="Disconnect" />
-        <Text>{ login.accessToken }</Text>
+      <View style={styles.container}>
         <Text>{ login.username }</Text>
-        <Button onPress={this.onSavePage} title="Add!" />
-        <Button onPress={this.toggleTabsHidden} title="toggleTabsHidden" />
-        <Button onPress={this.toggleTabsShown} title="toggleTabsShown" />
-        <Button onPress={this.dumpAllProps} title="dumpAllProps" />
-        <Button onPress={actions.testPocketAdapter} title="API Test" />
+        <Button onPress={actions.disconnectFromPocket} title="Disconnect" />
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  welcome: {
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     margin: 10,
   },
 })

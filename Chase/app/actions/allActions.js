@@ -96,7 +96,7 @@ export function doAfterRedirect(eventUrl) {
   console.log('doAfterRedirect', eventUrl)
   return function(dispatch, getState) {
     if (eventUrl.match(/authorizationFinished/)) {
-      console.info('Dismiss!!!!!!!!!!!!!!!!!')
+      console.tron.info('#doAfterRedirect - Dismiss', eventUrl)
       Navigation.dismissAllModals({
         animationType: 'slide-down'
       })
@@ -107,10 +107,10 @@ export function doAfterRedirect(eventUrl) {
         updateLoginData(loginData)
         dispatch({ type: 'LOGIN_SUCCESS', data: loginData })
       }).catch(result => {
-        console.log('doAfterRedirect', 'Declined', result)
+        console.tron.info('#doAfterRedirect - Declined', result)
       })
     } else {
-      console.log('doAfterRedirect', 'Unexpected', eventUrl)
+      console.tron.error('#doAfterRedirect - Unexpected', eventUrl)
     }
   }
 }
