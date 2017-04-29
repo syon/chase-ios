@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { View, Button, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
+import Button from 'react-native-button'
+import { responsiveFontSize } from 'react-native-responsive-dimensions';
 
 class ConfigTab extends Component {
   constructor(props) {
@@ -10,8 +12,13 @@ class ConfigTab extends Component {
     const { login, actions } = this.props;
     return (
       <View style={styles.container}>
-        <Text>{ login.username }</Text>
-        <Button onPress={actions.disconnectFromPocket} title="Disconnect" />
+        <Text style={styles.username}>{ login.username }</Text>
+        <Button
+          onPress={actions.disconnectFromPocket}
+          style={styles.btn}
+        >
+          Disconnect
+        </Button>
       </View>
     )
   }
@@ -22,8 +29,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 10,
+    marginBottom: 50,
   },
+  username: {
+    fontSize: responsiveFontSize(2),
+    margin: 20,
+  },
+  btn: {
+    fontSize: responsiveFontSize(2.5),
+  }
 })
 
 import { bindActionCreators } from 'redux'
