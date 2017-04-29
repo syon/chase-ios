@@ -54,6 +54,14 @@ async function _loadUserInfo(dispatch) {
 async function _loadMainCatalog(dispatch) {
   await global.storage.load({ key: 'catalogMain' }).then(catalog => {
     dispatch({ type: 'REFRESH_CATALOG_MAIN', catalog })
+  }).catch(e => {
+    switch (e.name) {
+      case 'NotFoundError':
+        break
+      default:
+        console.tron.error(e)
+        throw e
+    }
   })
 }
 
