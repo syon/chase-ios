@@ -8,25 +8,28 @@ let memAccessToken = null
 
 export function ready() {
   return async function(dispatch, getState) {
-    console.tron.log('Loading UserInfo...')
-    try {
-      await _loadUserInfo(dispatch)
-    } catch (e) {
-      showLoginScreen(dispatch)
-      console.tron.error(e)
-      throw e
-    }
-    try {
-      await _loadMainCatalog(dispatch)
-      await _bumpAllTags(dispatch)
-      _loadSceneCatalogA(dispatch)
-      _loadSceneCatalogB(dispatch)
-      _loadSceneCatalogC(dispatch)
-    } catch (e) {
-      console.tron.error(e)
-      throw e
-    }
-    console.tron.log('Loading UserInfo... Done.')
+    await _initialize(dispatch)
+  }
+}
+
+async function _initialize(dispatch) {
+  console.tron.log('Loading UserInfo...')
+  try {
+    await _loadUserInfo(dispatch)
+  } catch (e) {
+    showLoginScreen(dispatch)
+    console.tron.error(e)
+    throw e
+  }
+  try {
+    await _loadMainCatalog(dispatch)
+    await _bumpAllTags(dispatch)
+    _loadSceneCatalogA(dispatch)
+    _loadSceneCatalogB(dispatch)
+    _loadSceneCatalogC(dispatch)
+  } catch (e) {
+    console.tron.error(e)
+    throw e
   }
 }
 
@@ -105,7 +108,7 @@ export function doAfterRedirect(eventUrl) {
       promise.then((result) => {
         const loginData = { username: result.username, accessToken: result.access_token }
         updateLoginData(loginData)
-        dispatch({ type: 'LOGIN_SUCCESS', data: loginData })
+        _initialize(dispatch)
       }).catch(result => {
         console.tron.info('#doAfterRedirect - Declined', result)
       })
