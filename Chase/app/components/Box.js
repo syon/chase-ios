@@ -17,7 +17,7 @@ import SceneSelector from '../components/SceneSelector'
 export default class extends Component {
   constructor(props) {
     super(props)
-    this.onThumbPress = this.onThumbPress.bind(this)
+    this.onBoxPressed = this.onBoxPressed.bind(this)
   }
 
   makeThumb(item) {
@@ -34,7 +34,7 @@ export default class extends Component {
     return `${thumbsPath}/${itemId3}/${item10Id}.jpg`
   }
 
-  onThumbPress() {
+  onBoxPressed() {
     const { item, work, actions } = this.props
     const imgUrl = this.makeImgUrl(this.props.item)
     this.props.navigator.push({
@@ -52,15 +52,17 @@ export default class extends Component {
     const thumb = this.makeThumb(item)
     return (
       <View style={styles.box}>
-        <TouchableWithoutFeedback onPress={this.onThumbPress}>
-          <View onPress={this.onThumbPress} style={styles.thumbWrap}>
-            { thumb }
+        <TouchableWithoutFeedback onPress={this.onBoxPressed}>
+          <View>
+            <View style={styles.thumbWrap}>
+              { thumb }
+            </View>
+            <View style={styles.boxBody}>
+              <Text style={styles.itemTitle}>{ item.title }</Text>
+              <Text style={styles.domain}>{ item.fqdn }</Text>
+            </View>
           </View>
         </TouchableWithoutFeedback>
-        <View style={styles.boxBody}>
-          <Text style={styles.itemTitle}>{ item.title }</Text>
-          <Text style={styles.domain}>{ item.fqdn }</Text>
-        </View>
         <SceneSelector {...this.props} />
       </View>
     )
