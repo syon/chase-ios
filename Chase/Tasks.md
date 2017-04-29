@@ -9,18 +9,13 @@ Tasks
 ## Inbox
 
 - WebViewまわりどうするか
-- レイアウト
-- Descriptionほしい
-- はてブカウントほしい
-- はてブへのリンクほしい
 - Storageいらなくない？オンライン前提。
-- どれかのシーンを選ぶか既読にしたらBoxグレーアウト
 
 
 ## Interlude
 
 - 既読ボタン押下後の処理中表現
-- 既読ボタン押下後のグレーアウト
+- シーンを選ばずにタグ付け
 
 
 ## Scene
@@ -43,3 +38,10 @@ Done.
 - サムネイル高解像度
 - OGP タイトル提供
 - OGP Description提供
+
+
+## Next Features
+
+- OGP Descriptionほしい
+- はてブカウントほしい
+- はてブへのリンクほしい
