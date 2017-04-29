@@ -119,6 +119,31 @@ export function get(consumerKey, accessToken, options) {
   })
 }
 
+export function archive(consumerKey, accessToken, itemId) {
+  return new Promise((resolve, reject) => {
+    console.tron.start('API#archive', {consumerKey, accessToken, itemId})
+    let params = new URLSearchParams()
+    params.append('consumer_key', consumerKey)
+    params.append('access_token', accessToken)
+    params.append('actions', `[{"action":"archive","item_id":${itemId}}]`)
+    fetch(`https://getpocket.com/v3/send?${params.toString()}`, {
+      method: 'GET',
+    }).then((response) => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        throw response
+      }
+    }).then((result) => {
+      console.tron.info('API#archive', result)
+      resolve(result)
+    }).catch((error) => {
+      console.tron.error('API#archive', error)
+      throw error
+    })
+  })
+}
+
 export function tags_add(consumerKey, accessToken, itemId, tag) {
   return new Promise((resolve, reject) => {
     console.tron.start('API#tags_add', {consumerKey, accessToken, itemId, tag})

@@ -9,6 +9,7 @@ class Interlude extends Component {
   constructor(props) {
     super(props);
     this.openWebView = this.openWebView.bind(this)
+    this.onPressArchiveBtn = this.onPressArchiveBtn.bind(this)
   }
 
   openWebView() {
@@ -23,6 +24,11 @@ class Interlude extends Component {
         tabBarHidden: true,
       },
     })
+  }
+
+  onPressArchiveBtn() {
+    const { item, actions } = this.props
+    actions.archive(item.itemId)
   }
 
   render() {
@@ -40,7 +46,7 @@ class Interlude extends Component {
               <Text style={styles.date}>2017.4.17</Text>
             </View>
             <View style={styles.toolbarRight}>
-              <Button onPress={() => {}} style={styles.sceneBtn}>✓</Button>
+              <Button onPress={this.onPressArchiveBtn}>✓</Button>
             </View>
           </View>
         </View>
@@ -89,11 +95,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingBottom: 5,
-  },
-  sceneBtn: {
-    fontSize: responsiveFontSize(2),
-    padding: 10,
-    overflow: 'hidden',
   },
 })
 

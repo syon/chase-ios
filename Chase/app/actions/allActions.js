@@ -300,6 +300,21 @@ export function addTag(itemId, tagNm) {
   }
 }
 
+export function archive(itemId) {
+  return function(dispatch, getState) {
+    const at = memAccessToken
+    const promise = PocketAPI.archive(CONSUMER_KEY, at, itemId)
+    promise.then((result) => {
+      if (result.action_results) {
+        console.tron.log('allActions#archive - Success')
+      }
+    }).catch(err => {
+      console.tron.error('allActions#archive - Error')
+      console.error(err)
+    })
+  }
+}
+
 export function testPocketAdapter() {
   return function(dispatch, getState) {
     console.log('testPocketAdapter...');
