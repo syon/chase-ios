@@ -263,6 +263,7 @@ function _makeCatalog(listFromPocket) {
     const url = m.resolved_url ? m.resolved_url : m.given_url
     const fqdn = `${url}/`.match(/\/\/(.*?)\//)[1]
     catalog[key] = {
+      key: itemId,
       itemId: itemId,
       title: m.resolved_title ? m.resolved_title : m.given_title,
       url: url,

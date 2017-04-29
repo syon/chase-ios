@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {
   View,
-  ListView,
+  FlatList,
   SegmentedControlIOS,
   TouchableWithoutFeedback,
   Image,
@@ -19,40 +19,19 @@ const AS_BTNS_CIDX = 3
 export default class extends Component {
   constructor(props) {
     super(props)
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
     this.state = {
       refreshing: false,
-      dataSource: ds.cloneWithRows(['row 1', 'row 2']),
     }
     this.openWebView = this.openWebView.bind(this)
     this.getCatalogRows = this.getCatalogRows.bind(this)
-    this.renderRow = this.renderRow.bind(this)
+    this.renderItem = this.renderItem.bind(this)
   }
 
-  renderRow(item) {
+  renderItem({ item }) {
     return (
       <Box item={item} {...this.props} />
     )
   }
-
-  // onSwipe(_, idx) {
-  //   const catalogRows = this.getCatalogRows()
-  //   const swipedItem = catalogRows[idx]
-  //   console.info('swipedItem is', swipedItem);
-  //   ActionSheetIOS.showActionSheetWithOptions({
-  //     options: [...this.props.scene.allScenes, 'Cancel'],
-  //     cancelButtonIndex: AS_BTNS_CIDX
-  //   },
-  //   ((buttonIndex) => {
-  //     switch(buttonIndex) {
-  //       case(AS_BTNS_CIDX):
-  //         console.info('Canceled.')
-  //         break
-  //       default:
-  //         this.props.actions.addTag(swipedItem.itemId, AS_BTN_TAGS[buttonIndex])
-  //     }
-  //   }).bind(this))
-  // }
 
   openWebView(item) {
     this.props.navigator.push({
@@ -98,17 +77,12 @@ export default class extends Component {
     return (
       <View style={styles.wrap}>
         { segment }
-        <ListView
-          dataSource={this.state.dataSource.cloneWithRows(this.getCatalogRows())}
-          renderRow={this.renderRow}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.props.onRefresh.bind(this)}
-            />
-          }
+        <FlatList
+          data={this.getCatalogRows()}
+          renderItem={this.renderItem}
+          onRefresh={this.props.onRefresh.bind(this)}
+          refreshing={this.state.refreshing}
           contentInset={{top: 0, left: 0, bottom: 50, right: 0}}
-          enableEmptySections={true}
           style={styles.itemList}
         />
       </View>
