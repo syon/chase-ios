@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, Image } from 'react-native'
+import { View, StyleSheet, Text, Image, TouchableWithoutFeedback } from 'react-native'
 import Button from 'react-native-button'
 import { responsiveFontSize } from 'react-native-responsive-dimensions'
 
@@ -35,11 +35,17 @@ class Interlude extends Component {
     const { login, actions, item, imgUrl, work } = this.props
     return (
       <View style={styles.welcome}>
-        <View style={styles.imgFrame}>
-          <Image style={styles.thumbnail} source={{uri: imgUrl}} />
-        </View>
+        <TouchableWithoutFeedback onPress={this.openWebView}>
+          <View>
+            <View style={styles.imgFrame}>
+              <Image style={styles.thumbnail} source={{uri: imgUrl}} />
+            </View>
+            <View style={styles.itemTitleFrame}>
+              <Text style={styles.itemTitle}>{ item.title }</Text>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
         <View style={styles.boxBody}>
-          <Text style={styles.itemTitle}>{ item.title }</Text>
           <View style={styles.toolbar}>
             <View style={styles.toolbarLeft}>
               <Text style={styles.domain}>{ item.fqdn }</Text>
@@ -50,7 +56,6 @@ class Interlude extends Component {
             </View>
           </View>
         </View>
-        <Button onPress={this.openWebView}>openWebView</Button>
         <SceneSelector {...this.props} />
       </View>
     )
@@ -69,11 +74,16 @@ const styles = StyleSheet.create({
   },
   boxBody: {
     padding: 20,
+    paddingTop: 10,
+  },
+  itemTitleFrame: {
+    paddingTop: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   itemTitle: {
     fontSize: responsiveFontSize(2.5),
     lineHeight: responsiveFontSize(3),
-    marginBottom: 3,
   },
   toolbar: {
     flexDirection: 'row',
