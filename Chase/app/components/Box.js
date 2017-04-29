@@ -46,12 +46,20 @@ export default class extends Component {
     });
   }
 
+  judgeArchived(item, work) {
+    try {
+      return work[item.itemId].archive
+    } catch(e) {}
+    return false
+  }
+
   render() {
     const { item, work } = this.props
     if (!item) { return null }
     const thumb = this.makeThumb(item)
+    let archivedBG = this.judgeArchived(item, work) ? '#0aa' : '#fff'
     return (
-      <View style={styles.box}>
+      <View style={[styles.box, {backgroundColor: archivedBG}]}>
         <TouchableWithoutFeedback onPress={this.onBoxPressed}>
           <View>
             <View style={styles.thumbWrap}>
@@ -69,7 +77,7 @@ export default class extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+let styles = StyleSheet.create({
   box: {
     margin: 10,
     backgroundColor: '#fff',

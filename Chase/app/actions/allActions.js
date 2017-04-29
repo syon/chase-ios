@@ -181,6 +181,7 @@ export function refreshCatalog(catalogId) {
   return function(dispatch, getState) {
     return new Promise((resolve, reject) => {
       console.tron.info('allActions#refreshCatalog', catalogId)
+      dispatch({ type: 'REFRESH_WORK' })
       Pocket.getAllUntaggedItems().then((result) => {
         console.tron.log('APIからの返事きた', result)
         const catalog = _makeCatalog(result.list)
@@ -309,6 +310,7 @@ export function addTag(itemId, tagNm) {
 
 export function archive(itemId) {
   return function(dispatch, getState) {
+    dispatch({ type: 'SET_WORK_ARCHIVE', itemId })
     const at = memAccessToken
     const promise = PocketAPI.archive(CONSUMER_KEY, at, itemId)
     promise.then((result) => {
@@ -316,7 +318,7 @@ export function archive(itemId) {
         console.tron.log('allActions#archive - Success')
       }
     }).catch(err => {
-      console.tron.error('allActions#archive - Error')
+      console.tron.error('allActions#archive - Error', err)
       console.error(err)
     })
   }

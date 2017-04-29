@@ -28,7 +28,7 @@ export async function getItemsTaggedBy(tagNm) {
   const params = {
     state: 'unread',
     tag: tagNm,
-    count: 20,
+    count: 100,
     sort: 'newest',
     detailType: 'simple',
   }

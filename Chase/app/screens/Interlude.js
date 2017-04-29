@@ -8,7 +8,11 @@ import SceneSelector from '../components/SceneSelector'
 class Interlude extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      done: false,
+    }
     this.openWebView = this.openWebView.bind(this)
+    this.judgeArchived = this.judgeArchived.bind(this)
     this.onPressArchiveBtn = this.onPressArchiveBtn.bind(this)
   }
 
@@ -26,15 +30,25 @@ class Interlude extends Component {
     })
   }
 
+  judgeArchived(item, work) {
+    try {
+      if (this.state.done) { return true }
+      return work[item.itemId].archive
+    } catch(e) {}
+    return false
+  }
+
   onPressArchiveBtn() {
+    this.setState({ done: true })
     const { item, actions } = this.props
     actions.archive(item.itemId)
   }
 
   render() {
-    const { login, actions, item, imgUrl, work } = this.props
+    const { actions, item, imgUrl, work } = this.props
+    let archivedBG = this.judgeArchived(item, work) ? '#0aa' : '#fff'
     return (
-      <View style={styles.welcome}>
+      <View style={[styles.welcome, {backgroundColor: archivedBG}]}>
         <TouchableWithoutFeedback onPress={this.openWebView}>
           <View>
             <View style={styles.imgFrame}>
@@ -52,7 +66,7 @@ class Interlude extends Component {
               <Text style={styles.date}>2017.4.17</Text>
             </View>
             <View style={styles.toolbarRight}>
-              <Button onPress={this.onPressArchiveBtn}>✓</Button>
+              <Button onPress={this.onPressArchiveBtn} style={styles.btnArchive}>✓</Button>
             </View>
           </View>
         </View>
@@ -101,6 +115,10 @@ const styles = StyleSheet.create({
     lineHeight: responsiveFontSize(2),
     color: '#a3aab1',
   },
+  btnArchive: {
+    fontSize: responsiveFontSize(3),
+    padding: 15,
+  },
   selectScene: {
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -108,15 +126,4 @@ const styles = StyleSheet.create({
   },
 })
 
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import * as allActions from '../actions/allActions'
-
-export default connect(
-  (state, ownProps) => ({
-    login: state.login,
-  }),
-  (dispatch) => ({
-    actions: bindActionCreators(allActions, dispatch)
-  })
-)(Interlude)
+export default Interlude
