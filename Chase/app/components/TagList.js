@@ -37,7 +37,6 @@ export default class extends Component {
           <Text>{ tag.name }</Text>
         </View>
         <View style={styles.rowRight}>
-          <Text style={styles.badge}>{ tag.items.length }</Text>
           <Icon style={styles.chevronIcon} name="ios-arrow-forward" size={20} />
         </View>
       </TouchableOpacity>

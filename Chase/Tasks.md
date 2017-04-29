@@ -29,12 +29,12 @@ Tasks
 
 ## Tags
 
-- シーンabcタグを除外
+Done.
 
 
 ## Config
 
-- どうするこのページ
+Done.
 
 
 ## S3

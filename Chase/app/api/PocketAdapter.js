@@ -37,7 +37,7 @@ export async function getItemsTaggedBy(tagNm) {
 
 export async function getAllTags() {
   if (!memAccessToken) { return }
-  console.tron.display({ name: 'Adapter#getAllTags', preview: 'start', value: tags })
+  console.tron.info('Adapter#getAllTags - start')
   const params = {
     state: 'unread',
     count: 100,
@@ -54,10 +54,12 @@ export async function getAllTags() {
         tagObj = m.tags[tagKey]
         let theTag = tags[tagKey] || { name: tagObj.tag, items: []}
         theTag.items.push(tagObj.item_id)
-        tags[tagKey] = theTag
+        if (!tagKey.match(/^chase:(a|b|c)/)) {
+          tags[tagKey] = theTag
+        }
       })
     }
   })
-  console.tron.display({ name: 'Adapter#getAllTags', preview: 'end', value: tags })
+  console.tron.info('Adapter#getAllTags - end', tags)
   return tags
 }
