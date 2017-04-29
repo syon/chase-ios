@@ -18,8 +18,7 @@ async function _initialize(dispatch) {
     await _loadUserInfo(dispatch)
   } catch (e) {
     showLoginScreen(dispatch)
-    console.tron.error(e)
-    throw e
+    return
   }
   try {
     await _loadMainCatalog(dispatch)
@@ -41,6 +40,14 @@ async function _loadUserInfo(dispatch) {
     Pocket.setAccessToken(user.accessToken)
     dispatch({ type: 'LOGIN_SUCCESS', data: user })
     return
+  }).catch(e => {
+    switch (err.name) {
+      case 'NotFoundError':
+        break
+      default:
+        console.tron.error(e)
+        throw e
+    }
   })
 }
 

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Button,
   View,
   Linking
 } from 'react-native';
+import Button from 'react-native-button'
+import { responsiveFontSize } from 'react-native-responsive-dimensions';
 
 class Login extends Component {
   constructor(props) {
@@ -28,7 +29,12 @@ class Login extends Component {
     const { actions } = this.props;
     return (
       <View style={styles.container}>
-        <Button onPress={actions.connectToPocket} title="Connect to Pocket" />
+        <Button
+          onPress={actions.connectToPocket}
+          style={styles.btn}
+        >
+          Connect to Pocket
+        </Button>
       </View>
     )
   }
@@ -41,6 +47,9 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     backgroundColor: '#F5FCFF',
   },
+  btn: {
+    fontSize: responsiveFontSize(3),
+  }
 });
 
 import { bindActionCreators } from 'redux'
