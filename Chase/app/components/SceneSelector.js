@@ -18,16 +18,19 @@ export default class extends Component {
 
   onSelectSceneA() {
     this.setState({ tappedA: true })
+    this.props.sceneSelected()
     this.props.actions.applyScene(this.props.item.itemId, 'a')
   }
 
   onSelectSceneB() {
     this.setState({ tappedB: true })
+    this.props.sceneSelected()
     this.props.actions.applyScene(this.props.item.itemId, 'b')
   }
 
   onSelectSceneC() {
     this.setState({ tappedC: true })
+    this.props.sceneSelected()
     this.props.actions.applyScene(this.props.item.itemId, 'c')
   }
 

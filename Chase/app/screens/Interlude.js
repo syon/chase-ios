@@ -14,6 +14,7 @@ class Interlude extends Component {
     this.openWebView = this.openWebView.bind(this)
     this.judgeArchived = this.judgeArchived.bind(this)
     this.onPressArchiveBtn = this.onPressArchiveBtn.bind(this)
+    this.sceneSelected = this.sceneSelected.bind(this)
   }
 
   openWebView() {
@@ -44,14 +45,22 @@ class Interlude extends Component {
     actions.archive(item.itemId)
   }
 
+  sceneSelected() {
+    const { actions, item } = this.props
+    this.setState({ done: true })
+    actions.archive(item.itemId)
+  }
+
   render() {
     const { actions, item, imgUrl, work } = this.props
-    let archivedBG = this.judgeArchived(item, work) ? '#0aa' : '#fff'
+    const isDone = this.judgeArchived(item, work)
+    let imageOpcty = isDone ? 0.5 : 1
+    let archivedBG = isDone ? '#aaa' : '#fff'
     return (
       <View style={[styles.welcome, {backgroundColor: archivedBG}]}>
         <TouchableWithoutFeedback onPress={this.openWebView}>
           <View>
-            <View style={styles.imgFrame}>
+            <View style={[styles.imgFrame, {opacity: imageOpcty}]}>
               <Image style={styles.thumbnail} source={{uri: imgUrl}} />
             </View>
             <View style={styles.itemTitleFrame}>
@@ -66,11 +75,11 @@ class Interlude extends Component {
               <Text style={styles.date}>2017.4.17</Text>
             </View>
             <View style={styles.toolbarRight}>
-              <Button onPress={this.onPressArchiveBtn} style={styles.btnArchive}>✓</Button>
+              <Button onPress={this.onPressArchiveBtn} disabled={isDone} style={styles.btnArchive}>✓</Button>
             </View>
           </View>
         </View>
-        <SceneSelector {...this.props} />
+        <SceneSelector {...this.props} sceneSelected={this.sceneSelected} />
       </View>
     )
   }

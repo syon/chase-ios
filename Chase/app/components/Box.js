@@ -18,6 +18,7 @@ export default class extends Component {
   constructor(props) {
     super(props)
     this.onBoxPressed = this.onBoxPressed.bind(this)
+    this.sceneSelected = this.sceneSelected.bind(this)
   }
 
   makeThumb(item) {
@@ -53,16 +54,23 @@ export default class extends Component {
     return false
   }
 
+  sceneSelected() {
+    const { actions, item } = this.props
+    this.setState({ done: true })
+    actions.archive(item.itemId)
+  }
+
   render() {
     const { item, work } = this.props
     if (!item) { return null }
     const thumb = this.makeThumb(item)
-    let archivedBG = this.judgeArchived(item, work) ? '#0aa' : '#fff'
+    let imageOpcty = this.judgeArchived(item, work) ? 0.5 : 1
+    let archivedBG = this.judgeArchived(item, work) ? '#aaa' : '#fff'
     return (
       <View style={[styles.box, {backgroundColor: archivedBG}]}>
         <TouchableWithoutFeedback onPress={this.onBoxPressed}>
           <View>
-            <View style={styles.thumbWrap}>
+            <View style={[styles.thumbWrap, {opacity: imageOpcty}]}>
               { thumb }
             </View>
             <View style={styles.boxBody}>
@@ -71,7 +79,7 @@ export default class extends Component {
             </View>
           </View>
         </TouchableWithoutFeedback>
-        <SceneSelector {...this.props} />
+        <SceneSelector {...this.props} sceneSelected={this.sceneSelected} />
       </View>
     )
   }
