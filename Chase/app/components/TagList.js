@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 
 import Icon from 'react-native-vector-icons/Ionicons'
+import { responsiveFontSize } from 'react-native-responsive-dimensions'
 
 export default class extends Component {
   constructor(props) {
@@ -34,7 +35,7 @@ export default class extends Component {
       <TouchableOpacity onPress={ _onPress } style={styles.row}>
         <View style={styles.rowLeft}>
           <Icon style={styles.tagIcon} name="ios-pricetag" size={20} />
-          <Text>{ tag.name }</Text>
+          <Text style={styles.tagName}>{ tag.name }</Text>
         </View>
         <View style={styles.rowRight}>
           <Icon style={styles.chevronIcon} name="ios-arrow-forward" size={20} />
@@ -77,6 +78,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     color: '#ddd'
+  },
+  tagName: {
+    fontSize: responsiveFontSize(2.5),
   },
   chevronIcon: {
     width: 30,

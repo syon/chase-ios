@@ -94,7 +94,7 @@ export default class extends Component {
 const styles = StyleSheet.create({
   wrap: {
     flex: 1,
-    // paddingTop: 20,
+    paddingTop: 20,
     backgroundColor: 'rgb(240, 239, 245)',
   },
   segment: {
