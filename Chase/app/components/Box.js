@@ -27,13 +27,13 @@ export default class extends Component {
       <Image
         style={styles.thumbnail}
         source={{uri: imgUrl}}
-        onError={this.onErrorLoadImage}
+        onError={() => { this.onErrorLoadImage(item) }}
       />
     )
   }
 
-  onErrorLoadImage() {
-    console.tron.info('Box#onErrorLoadImage')
+  onErrorLoadImage(item) {
+    console.tron.info('Box#onErrorLoadImage', item)
     return
   }
 
