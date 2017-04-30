@@ -28,8 +28,9 @@ export default class extends Component {
   }
 
   renderItem({ item }) {
+    const { sceneSelectorVisible: v } = this.props
     return (
-      <Box item={item} {...this.props} />
+      <Box item={item} {...this.props} sceneSelectorVisible={v} />
     )
   }
 

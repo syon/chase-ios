@@ -36,6 +36,7 @@ class MainTab extends Component {
           catalogHash: catalog,
         }}
         onRefresh={ this._onRefresh }
+        sceneSelectorVisible={ true }
         style={{flex: 1}}
       />
     )

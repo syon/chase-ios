@@ -38,7 +38,8 @@ export default class extends Component {
   }
 
   render() {
-    const { item, work } = this.props
+    const { item, work, visible } = this.props
+    if (!visible) return null
     const wk = work || {}
     const d = wk[item.itemId] || {}
     return (
