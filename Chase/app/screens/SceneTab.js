@@ -49,7 +49,7 @@ class SceneTab extends Component {
           catalogHash: catalog,
         }}
         onRefresh={ this._onRefresh }
-        sceneSelectorVisible={ false }
+        sceneSelectorHidden={ true }
         style={{flex: 1}}
       />
     )

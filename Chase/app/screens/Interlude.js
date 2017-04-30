@@ -79,7 +79,10 @@ class Interlude extends Component {
             </View>
           </View>
         </View>
-        <SceneSelector {...this.props} sceneSelected={this.sceneSelected} />
+        <SceneSelector
+          {...this.props}
+          sceneSelected={this.sceneSelected}
+        />
       </View>
     )
   }

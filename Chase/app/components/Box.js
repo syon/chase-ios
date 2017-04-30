@@ -45,11 +45,11 @@ export default class extends Component {
   }
 
   onBoxPressed() {
-    const { item, work, actions } = this.props
+    const { item, work, actions, sceneSelectorHidden } = this.props
     const imgUrl = this.makeImgUrl(this.props.item)
     this.props.navigator.push({
       screen: "Chase.Interlude",
-      passProps: { item, work, actions, imgUrl },
+      passProps: { item, work, actions, imgUrl, sceneSelectorHidden },
       navigatorStyle: {
         tabBarHidden: true,
       },
@@ -70,7 +70,7 @@ export default class extends Component {
   }
 
   render() {
-    const { item, work, sceneSelectorVisible } = this.props
+    const { item, work, sceneSelectorHidden } = this.props
     if (!item) { return null }
     const thumb = this.makeThumb(item)
     let imageOpcty = this.judgeArchived(item, work) ? 0.5 : 1
@@ -91,7 +91,7 @@ export default class extends Component {
         <SceneSelector
           {...this.props}
           sceneSelected={this.sceneSelected}
-          visible={sceneSelectorVisible}
+          hidden={sceneSelectorHidden}
         />
       </View>
     )
