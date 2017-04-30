@@ -41,11 +41,11 @@ async function _loadUserInfo(dispatch) {
     dispatch({ type: 'LOGIN_SUCCESS', data: user })
     return
   }).catch(e => {
-    switch (err.name) {
+    switch (e.name) {
       case 'NotFoundError':
         break
       default:
-        console.tron.error(e)
+        console.tron.error('#_loadUserInfo', e)
         throw e
     }
   })
@@ -59,7 +59,7 @@ async function _loadMainCatalog(dispatch) {
       case 'NotFoundError':
         break
       default:
-        console.tron.error(e)
+        console.tron.error('#_loadMainCatalog', e)
         throw e
     }
   })
