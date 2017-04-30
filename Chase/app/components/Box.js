@@ -24,8 +24,17 @@ export default class extends Component {
   makeThumb(item) {
     const imgUrl = this.makeImgUrl(item)
     return (
-      <Image style={styles.thumbnail} source={{uri: imgUrl}} />
+      <Image
+        style={styles.thumbnail}
+        source={{uri: imgUrl}}
+        onError={this.onErrorLoadImage}
+      />
     )
+  }
+
+  onErrorLoadImage() {
+    console.tron.info('Box#onErrorLoadImage')
+    return
   }
 
   makeImgUrl(item) {
