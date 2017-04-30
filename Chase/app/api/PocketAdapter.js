@@ -17,7 +17,7 @@ export async function getAllUntaggedItems() {
   const params = {
     state: 'unread',
     tag: '_untagged_',
-    count: 20,
+    count: 100,
     sort: 'newest',
     detailType: 'simple',
   }
