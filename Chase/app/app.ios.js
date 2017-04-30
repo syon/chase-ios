@@ -15,16 +15,17 @@ global.storage = new Storage({
 console.tron.display({ name: 'Storage', value: global.storage })
 
 const navigatorStyle = {
-  // Statusbar
+  /* Statusbar */
   statusBarBlur: true,
-  statusBarHideWithNavBar: true,
-  // Navbar
+  // statusBarHideWithNavBar: true,
+  /* Navbar */
   navBarHidden: true,
   // drawUnderNavBar: true,
+  // navBarTransparent: true,
   // navBarHideOnScroll: true,
   navBarTranslucent: true,
-  navBarBlur: true,
-  // Tabbar
+  // navBarBlur: true,
+  /* Tabbar */
   drawUnderTabBar: true,
 }
 
@@ -44,7 +45,7 @@ export default class App extends Component {
           screen: 'Chase.MainTabScreen',
           icon: iconsMap['ios-filing-outline'],
           selectedIcon: iconsMap['ios-filing'],
-          title: 'Inbox',
+          // title: 'Inbox',
           navigatorStyle,
         },
         {
