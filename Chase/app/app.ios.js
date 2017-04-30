@@ -15,9 +15,17 @@ global.storage = new Storage({
 console.tron.display({ name: 'Storage', value: global.storage })
 
 const navigatorStyle = {
-  drawUnderTabBar: true,
+  // Statusbar
   statusBarBlur: true,
   statusBarHideWithNavBar: true,
+  // Navbar
+  navBarHidden: true,
+  // drawUnderNavBar: true,
+  // navBarHideOnScroll: true,
+  navBarTranslucent: true,
+  navBarBlur: true,
+  // Tabbar
+  drawUnderTabBar: true,
 }
 
 export default class App extends Component {

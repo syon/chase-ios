@@ -47,6 +47,7 @@ class TagsTab extends Component {
 const styles = StyleSheet.create({
   scrollview: {
     flex: 1,
+    paddingTop: 20,
     backgroundColor: 'rgb(240, 239, 245)',
   },
   welcome: {
