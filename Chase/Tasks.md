@@ -30,19 +30,19 @@ Done.
 
 ## Config
 
-Done.
+- シーン3種の任意文字列化
 
 
 ## S3
 
+- サムネイル生成
 - CloudFront 専用URL
 - サムネイル高解像度
-- OGP タイトル提供
-- OGP Description提供
 
 
 ## Next Features
 
-- OGP Descriptionほしい
-- はてブカウントほしい
-- はてブへのリンクほしい
+- OGP タイトル
+- OGP Description
+- はてブカウント
+- はてブへのリンク
