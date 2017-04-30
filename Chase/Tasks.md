@@ -35,6 +35,7 @@ Done.
 
 ## S3
 
+- CloudFront 専用URL
 - サムネイル高解像度
 - OGP タイトル提供
 - OGP Description提供
