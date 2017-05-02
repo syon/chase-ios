@@ -38,15 +38,18 @@ export default class extends Component {
   }
 
   render() {
-    const { item, work, hidden } = this.props
+    const { item, work, scene, hidden } = this.props
     if (hidden) return null
     const wk = work || {}
     const d = wk[item.itemId] || {}
+    const sceneA = scene.allScenes[0]
+    const sceneB = scene.allScenes[1]
+    const sceneC = scene.allScenes[2]
     return (
       <View style={styles.selectScene}>
-        <Button onPress={this.onSelectSceneA} disabled={this.state.tappedA || d["a"]} style={styles.sceneBtn}>自宅</Button>
-        <Button onPress={this.onSelectSceneB} disabled={this.state.tappedB || d["b"]} style={styles.sceneBtn}>職場</Button>
-        <Button onPress={this.onSelectSceneC} disabled={this.state.tappedC || d["c"]} style={styles.sceneBtn}>暇つぶし</Button>
+        <Button onPress={this.onSelectSceneA} disabled={this.state.tappedA || d["a"]} style={styles.sceneBtn}>{ sceneA }</Button>
+        <Button onPress={this.onSelectSceneB} disabled={this.state.tappedB || d["b"]} style={styles.sceneBtn}>{ sceneB }</Button>
+        <Button onPress={this.onSelectSceneC} disabled={this.state.tappedC || d["c"]} style={styles.sceneBtn}>{ sceneC }</Button>
       </View>
     )
   }

@@ -10,11 +10,22 @@ class ConfigTab extends Component {
   }
 
   _onSelectSceneEdit() {
+    const { navigator } = this.props
+    navigator.showModal({
+      screen: "Chase.ScenesEditor",
+      passProps: {},
+      navigatorStyle: {},
+      navigatorButtons: {},
+      animationType: 'slide-up'
+    })
     return
   }
 
   render() {
-    const { login, actions } = this.props;
+    const { login, scene, actions } = this.props
+    const sceneA = scene.allScenes[0]
+    const sceneB = scene.allScenes[1]
+    const sceneC = scene.allScenes[2]
     return (
       <View style={styles.container}>
         <View>
@@ -31,9 +42,9 @@ class ConfigTab extends Component {
         </View>
         <View style={styles.selectSceneBox}>
           <View style={styles.selectScene}>
-            <Button onPress={this._onSelectSceneEdit} style={styles.sceneBtn}>自宅</Button>
-            <Button onPress={this._onSelectSceneEdit} style={styles.sceneBtn}>職場</Button>
-            <Button onPress={this._onSelectSceneEdit} style={styles.sceneBtn}>暇つぶし</Button>
+            <Button onPress={this._onSelectSceneEdit} style={styles.sceneBtn}>{ sceneA }</Button>
+            <Button onPress={this._onSelectSceneEdit} style={styles.sceneBtn}>{ sceneB }</Button>
+            <Button onPress={this._onSelectSceneEdit} style={styles.sceneBtn}>{ sceneC }</Button>
           </View>
         </View>
       </View>
@@ -92,6 +103,7 @@ import * as allActions from '../actions/allActions'
 export default connect(
   (state, ownProps) => ({
     login: state.login,
+    scene: state.scene,
     allStates: state
   }),
   (dispatch) => ({
