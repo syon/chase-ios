@@ -1,6 +1,7 @@
 let catalogBySort = {}
 
 export function makeCatalog(listFromPocket) {
+  console.tron.info('ChaseDriver#makeCatalog -- listFromPocket', listFromPocket)
   let catalog = {}
   Object.keys(listFromPocket).forEach((key) => {
     const m = listFromPocket[key]
@@ -14,7 +15,8 @@ export function makeCatalog(listFromPocket) {
       url: url,
       fqdn: fqdn,
       sortId: m.sort_id,
-      tags: m.tags
+      tags: m.tags,
+      time_added: m.time_added
     }
     catalogBySort[m.sort_id] = itemId
   })
@@ -89,10 +91,19 @@ function _mergeItemAndPageinfo(item, pageinfo) {
     description: pageinfo.description,
     fqdn: item.fqdn,
     sortId: item.sort_id,
-    tags: item.tags
+    tags: item.tags,
+    date: _getDate(item.time_added),
   }
 }
 
 function _choiceText(pkt, ogp) {
   return ogp ? ogp : pkt
+}
+
+function _getDate(time10) {
+  const dt = new Date(time10 * 1000)
+  const y = dt.getFullYear()
+  const m = dt.getMonth() + 1
+  const d = dt.getDate()
+  return `${y}.${m}.${d}`
 }

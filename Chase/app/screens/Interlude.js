@@ -73,7 +73,7 @@ class Interlude extends Component {
             <View style={styles.toolbarLeft}>
               <Text style={styles.domain}>{ entry.siteName }</Text>
               <Text style={styles.domain}>{ entry.fqdn }</Text>
-              <Text style={styles.date}>2017.4.17</Text>
+              <Text style={styles.date}>{ entry.date }</Text>
             </View>
             <View style={styles.toolbarRight}>
               <Button onPress={this.onPressArchiveBtn} disabled={isDone} style={styles.btnArchive}>✓</Button>
