@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
+  Text,
   TextInput,
 } from 'react-native';
 import Button from 'react-native-button'
@@ -35,23 +36,36 @@ class ScenesEditor extends Component {
     const { actions } = this.props
     return (
       <View style={styles.container}>
-        <TextInput
-          value={this.state.textA}
-          onChangeText={(text) => this.setState({ textA: text })}
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-        />
-        <TextInput
-          value={this.state.textB}
-          onChangeText={(text) => this.setState({ textB: text })}
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-        />
-        <TextInput
-          value={this.state.textC}
-          onChangeText={(text) => this.setState({ textC: text })}
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-        />
-        <Button onPress={this._applyNewScenes} style={styles.btn}>OK</Button>
-        <Button onPress={this._dismiss} style={styles.btn}>Cancel</Button>
+        <View style={styles.form}>
+          <View style={styles.formItem}>
+            <Text>Scene A</Text>
+            <TextInput
+              value={this.state.textA}
+              onChangeText={(text) => this.setState({ textA: text })}
+              style={styles.input}
+            />
+          </View>
+          <View style={styles.formItem}>
+            <Text>Scene B</Text>
+            <TextInput
+              value={this.state.textB}
+              onChangeText={(text) => this.setState({ textB: text })}
+              style={styles.input}
+            />
+          </View>
+          <View style={styles.formItem}>
+            <Text>Scene C</Text>
+            <TextInput
+              value={this.state.textC}
+              onChangeText={(text) => this.setState({ textC: text })}
+              style={styles.input}
+            />
+          </View>
+        </View>
+        <View style={styles.btns}>
+          <Button onPress={this._applyNewScenes} style={styles.btn}>OK</Button>
+          <Button onPress={this._dismiss} style={styles.btn}>Cancel</Button>
+        </View>
       </View>
     )
   }
@@ -60,13 +74,33 @@ class ScenesEditor extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // alignItems: 'stretch',
     justifyContent: 'center',
-    alignItems: 'stretch',
+    margin: 15,
     backgroundColor: '#F5FCFF',
   },
+  form: {
+    // alignItems: 'stretch',
+    flexDirection: 'row',
+  },
+  formItem: {
+    flex: 1,
+  },
+  btns: {
+    margin: 15,
+    alignItems: 'center',
+  },
   btn: {
+    padding: 15,
     fontSize: responsiveFontSize(3),
-  }
+  },
+  input: {
+    height: 40,
+    padding: 10,
+    fontSize: responsiveFontSize(2),
+    borderColor: 'gray',
+    borderWidth: 1
+  },
 });
 
 import { bindActionCreators } from 'redux'
