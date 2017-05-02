@@ -84,7 +84,6 @@ export default class extends Component {
             </View>
             <View style={styles.boxBody}>
               <Text style={styles.itemTitle}>{ entry.title }</Text>
-              <Text style={styles.domain}>{ entry.siteName }</Text>
               <Text style={styles.domain}>{ entry.fqdn }</Text>
             </View>
           </View>

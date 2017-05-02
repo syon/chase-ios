@@ -83,10 +83,12 @@ class Interlude extends Component {
             <Text style={styles.desc}>{ entry.description }</Text>
           </View>
         </View>
-        <SceneSelector
-          {...this.props}
-          sceneSelected={this.sceneSelected}
-        />
+        <View style={{paddingBottom: 80}}>
+          <SceneSelector
+            {...this.props}
+            sceneSelected={this.sceneSelected}
+          />
+        </View>
       </ScrollView>
     )
   }
