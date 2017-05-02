@@ -1,0 +1,13 @@
+{
+  "name": "libra",
+  "description": "Get page info from the URL",
+  "version": "1.0.0",
+  "author": "syon",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "node-fetch": "^1.6.3"
+  },
+  "devDependencies": {
+  }
+}
