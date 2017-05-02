@@ -21,37 +21,49 @@ module.exports.thumb = (event, context, callback) => {
   const item10Id = `0000000000${itemId}`.substr(-10, 10);
   const itemId3 = item10Id.slice(0, 3);
   const s3path = `items/thumbs/${itemId3}/${item10Id}.jpg`;
-  // console.log('s3path --', s3path);
-  const libra = new Libra(event.url);
-  libra.getData().then(data => {
-    const imageUrl = data.image;
-    // console.log('Detected Image URL --', imageUrl);
-    fetch(imageUrl)
-      .then((response) => {
-        if (response.ok) {
-          return response.buffer();
-        }
-      })
-      .then(buffer => {
-        // console.log('Buffer --', buffer);
-        gm(buffer).resize(400).toBuffer('jpg', (err, buf) => {
-          s3.putObject({
-            Bucket: process.env.BUCKET,
-            Key: s3path,
-            Body: buf,
-          }).promise();
-        });
-      })
-      .then(v => callback(null, v), callback);
-  }).catch(e => {
-    // console.log('Fetch failed. Use blank image --');
-    gm('blank.jpg').toBuffer('jpg', (err, buf) => {
-      s3.putObject({
-        Bucket: process.env.BUCKET,
-        Key: s3path,
-        Body: buf,
-      });
-      callback(null, v)
-    });
-  });
+  console.log('S3 Path --', s3path);
+  try {
+    const libra = new Libra(event.url);
+    libra.getData().then(data => {
+      const imageUrl = data.image;
+      console.log('Detected image URL --', imageUrl);
+      fetch(imageUrl)
+        .then(response => {
+          if (response.ok) {
+            response.buffer().then(buffer => {
+              gm(buffer)
+                .resize(400)
+                .toBuffer('jpg', (err, buf) => {
+                  console.log('Resized Buffer --', buf);
+                  putImage(s3path, buf).promise();
+                });
+            })
+          }
+        }, err => {
+          putBlankImage(s3path);
+          callback(null, 'Done.');
+        })
+        .then(v => callback(null, v), callback);
+    })
+  } catch (e) {
+    putBlankImage(s3path);
+    callback(null, 'Done.');
+  }
 };
+
+function putBlankImage(s3path) {
+  console.log('Fetch failed. Using blank image.');
+  gm('./blank.jpg').toBuffer('jpg', (err, buf) => {
+    console.log('Blank image Buffer --', buf);
+    putImage(s3path, buf);
+  });
+}
+
+function putImage(s3path, buffer) {
+  console.log(`Putting image on S3 (${s3path}):`, buffer);
+  return s3.putObject({
+    Bucket: process.env.BUCKET,
+    Key: s3path,
+    Body: buffer,
+  });
+}
