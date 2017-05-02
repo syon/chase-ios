@@ -7,6 +7,7 @@ import SceneTab from './SceneTab'
 import TagsTab from './TagsTab'
 import TagsTabInner from './TagsTabInner'
 import ConfigTab from './ConfigTab'
+import ScenesEditor from './ScenesEditor'
 import Login from './Login'
 import Interlude from './Interlude'
 import MyWebView from '../components/MyWebView'
@@ -22,6 +23,7 @@ export function register() {
   Navigation.registerComponent('Chase.TagsTabScreen', () => TagsTab, store, Provider)
   Navigation.registerComponent('Chase.TagsTabInnerScreen', () => TagsTabInner, store, Provider)
   Navigation.registerComponent('Chase.ConfigTabScreen', () => ConfigTab, store, Provider)
+  Navigation.registerComponent('Chase.ScenesEditor', () => ScenesEditor, store, Provider)
   Navigation.registerComponent('Chase.LoginScreen', () => Login, store, Provider)
   Navigation.registerComponent('Chase.Interlude', () => Interlude, store, Provider)
   Navigation.registerComponent('Chase.WebViewScreen', () => MyWebView, store, Provider)

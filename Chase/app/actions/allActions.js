@@ -150,6 +150,12 @@ export function clearCatalogCache() {
   }
 }
 
+export function setScenes(scenes) {
+  return function(dispatch) {
+    dispatch({ type: 'SET_SCENES', scenes })
+  }
+}
+
 export function savePage(url) {
   return function(dispatch, getState) {
     const at = getState().pocket.accessToken

@@ -3,11 +3,12 @@ const initialState = {
   currentIdx: 0,
 }
 
-export default function phase(state = initialState, action = {}) {
+export default function scene(state = initialState, action = {}) {
   switch (action.type) {
     case 'SET_SCENES':
-      state.allScenes = action.scenes
-      return state
+      return Object.assign({}, state, {
+        allScenes: action.scenes
+      })
     case 'CHANGE_SCENE':
       return Object.assign({}, state, {
         currentIdx: action.sceneIdx

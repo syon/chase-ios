@@ -10,10 +10,10 @@ class ConfigTab extends Component {
   }
 
   _onSelectSceneEdit() {
-    const { navigator } = this.props
+    const { navigator, scene } = this.props
     navigator.showModal({
       screen: "Chase.ScenesEditor",
-      passProps: {},
+      passProps: { scene },
       navigatorStyle: {},
       navigatorButtons: {},
       animationType: 'slide-up'
