@@ -30,6 +30,16 @@ class MyTron {
     })
   }
 
+  static warn(label, obj) {
+    console.warn(label, obj)
+    Reactotron.display({
+      name: 'WARN',
+      preview: label,
+      value: obj,
+      important: true
+    })
+  }
+
   static error(label, obj) {
     console.error(label, obj)
     Reactotron.display({
