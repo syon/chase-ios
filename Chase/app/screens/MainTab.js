@@ -22,6 +22,7 @@ class MainTab extends Component {
 
   _onRefresh() {
     console.tron.log('MainTab#_onRefresh')
+    console.tron.info('MainTab#_onRefresh', this.props.pageinfo)
     this.setState({ refreshing: true });
     this.props.actions.refreshCatalog('catalogMain')
   }
@@ -52,6 +53,7 @@ export default connect(
     shelf: state.shelf,
     scene: state.scene,
     work: state.work,
+    pageinfo: state.pageinfo,
   }),
   (dispatch) => ({
     actions: bindActionCreators(allActions, dispatch)

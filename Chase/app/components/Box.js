@@ -45,11 +45,11 @@ export default class extends Component {
   }
 
   onBoxPressed() {
-    const { item, work, actions, sceneSelectorHidden } = this.props
+    const { item, work, pageinfo, actions, sceneSelectorHidden } = this.props
     const imgUrl = this.makeImgUrl(this.props.item)
     this.props.navigator.push({
       screen: "Chase.Interlude",
-      passProps: { item, work, actions, imgUrl, sceneSelectorHidden },
+      passProps: { item, work, pageinfo, actions, imgUrl, sceneSelectorHidden },
       navigatorStyle: {
         tabBarHidden: true,
       },
@@ -70,8 +70,10 @@ export default class extends Component {
   }
 
   render() {
-    const { item, work, sceneSelectorHidden } = this.props
+    const { item, work, pageinfo, sceneSelectorHidden } = this.props
     if (!item) { return null }
+    const piHash = pageinfo || {}
+    const pi = piHash[item.itemId] || {}
     const thumb = this.makeThumb(item)
     let imageOpcty = this.judgeArchived(item, work) ? 0.5 : 1
     let archivedBG = this.judgeArchived(item, work) ? '#aaa' : '#fff'
@@ -84,6 +86,7 @@ export default class extends Component {
             </View>
             <View style={styles.boxBody}>
               <Text style={styles.itemTitle}>{ item.title }</Text>
+                <Text style={styles.domain}>{ pi.site_name }</Text>
               <Text style={styles.domain}>{ item.fqdn }</Text>
             </View>
           </View>

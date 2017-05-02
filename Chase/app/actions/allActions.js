@@ -208,6 +208,7 @@ export function refreshCatalog(catalogId) {
           expires: null
         })
         console.tron.log('Catalog保存しました')
+        _makePageinfo(dispatch, catalog)
         resolve(catalog)
       }).catch(result => {
         console.error('Failed to load pages.', result)
@@ -289,6 +290,28 @@ function _makeCatalog(listFromPocket) {
     catalogBySort[m.sort_id] = itemId
   })
   return catalog
+}
+
+function _makePageinfo(dispatch, catalog) {
+  Object.keys(catalog).forEach((key) => {
+    const item = catalog[key]
+    const endpoint = 'https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod'
+    fetch(`${endpoint}/?url=${item.url}`, {
+      method: 'GET',
+    }).then((response) => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        throw response
+      }
+    }).then((result) => {
+      console.tron.info('#pageinfo', result)
+      dispatch({ type: 'SET_PAGEINFO', itemId: item.itemId, pageinfo: result })
+    }).catch((error) => {
+      console.tron.error('#pageinfo', error)
+      throw error
+    })
+  })
 }
 
 export function applyScene(itemId, abc) {

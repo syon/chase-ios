@@ -52,10 +52,12 @@ class Interlude extends Component {
   }
 
   render() {
-    const { actions, item, imgUrl, work } = this.props
+    const { actions, item, pageinfo, imgUrl, work } = this.props
     const isDone = this.judgeArchived(item, work)
     let imageOpcty = isDone ? 0.5 : 1
     let archivedBG = isDone ? '#aaa' : '#fff'
+    let pi = {}
+    try { pi = pageinfo[item.itemId] } catch(e) {}
     return (
       <View style={[styles.welcome, {backgroundColor: archivedBG}]}>
         <TouchableWithoutFeedback onPress={this.openWebView}>
@@ -65,6 +67,7 @@ class Interlude extends Component {
             </View>
             <View style={styles.itemTitleFrame}>
               <Text style={styles.itemTitle}>{ item.title }</Text>
+              <Text style={styles.itemTitle}>{ pi.title }</Text>
             </View>
           </View>
         </TouchableWithoutFeedback>
@@ -77,6 +80,9 @@ class Interlude extends Component {
             <View style={styles.toolbarRight}>
               <Button onPress={this.onPressArchiveBtn} disabled={isDone} style={styles.btnArchive}>✓</Button>
             </View>
+          </View>
+          <View>
+            <Text>{ pi.description }</Text>
           </View>
         </View>
         <SceneSelector
