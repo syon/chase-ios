@@ -3,6 +3,7 @@ import { Navigation } from 'react-native-navigation'
 
 import * as PocketAPI from '../api/PocketAPI'
 import * as Pocket from '../api/PocketAdapter'
+import * as ChaseDriver from '../api/ChaseDriver'
 
 let memAccessToken = null
 
@@ -198,7 +199,7 @@ export function refreshCatalog(catalogId) {
       console.tron.info('allActions#refreshCatalog', catalogId)
       dispatch({ type: 'REFRESH_WORK' })
       Pocket.getAllUntaggedItems().then((result) => {
-        console.tron.log('APIからの返事きた', result)
+        console.tron.info('APIからの返事きた', result)
         const catalog = _makeCatalog(result.list)
         console.tron.log('Catalog保存します...')
         dispatch({ type: 'REFRESH_CATALOG_MAIN', catalog })
@@ -208,7 +209,8 @@ export function refreshCatalog(catalogId) {
           expires: null
         })
         console.tron.log('Catalog保存しました')
-        _makePageinfo(dispatch, catalog)
+        // _makePageinfo(dispatch, catalog)
+        ChaseDriver.saveCatalogItemsAsEntryToStorage(catalog)
         resolve(catalog)
       }).catch(result => {
         console.error('Failed to load pages.', result)
