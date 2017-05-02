@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, Image, TouchableWithoutFeedback } from 'react-native'
+import { View, ScrollView, StyleSheet, Text, Image, TouchableWithoutFeedback } from 'react-native'
 import Button from 'react-native-button'
 import { responsiveFontSize } from 'react-native-responsive-dimensions'
 
@@ -57,7 +57,7 @@ class Interlude extends Component {
     let imageOpcty = isDone ? 0.5 : 1
     let archivedBG = isDone ? '#aaa' : '#fff'
     return (
-      <View style={[styles.welcome, {backgroundColor: archivedBG}]}>
+      <ScrollView style={[styles.container, {backgroundColor: archivedBG}]}>
         <TouchableWithoutFeedback onPress={this.openWebView}>
           <View>
             <View style={[styles.imgFrame, {opacity: imageOpcty}]}>
@@ -80,20 +80,20 @@ class Interlude extends Component {
             </View>
           </View>
           <View>
-            <Text>{ entry.description }</Text>
+            <Text style={styles.desc}>{ entry.description }</Text>
           </View>
         </View>
         <SceneSelector
           {...this.props}
           sceneSelected={this.sceneSelected}
         />
-      </View>
+      </ScrollView>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  welcome: {
+  container: {
     flex: 1,
   },
   imgFrame: {
@@ -134,6 +134,11 @@ const styles = StyleSheet.create({
   btnArchive: {
     fontSize: responsiveFontSize(3),
     padding: 15,
+  },
+  desc: {
+    color: '#586069',
+    fontSize: responsiveFontSize(1.5),
+    lineHeight: responsiveFontSize(2),
   },
   selectScene: {
     flexDirection: 'row',
