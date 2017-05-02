@@ -46,7 +46,7 @@ export default class extends Component {
 
   onBoxPressed() {
     const { item, work, entry, actions, sceneSelectorHidden } = this.props
-    const imgUrl = this.makeImgUrl(this.props.item)
+    const imgUrl = this.makeImgUrl(this.props.entry)
     this.props.navigator.push({
       screen: "Chase.Interlude",
       passProps: { item, work, entry, actions, imgUrl, sceneSelectorHidden },
