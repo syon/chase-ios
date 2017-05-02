@@ -53,21 +53,7 @@ async function _loadUserInfo(dispatch) {
 }
 
 async function _loadMainCatalog(dispatch) {
-  await global.storage.load({ key: 'catalogMain' }).then(catalog => {
-    dispatch({ type: 'REFRESH_CATALOG_MAIN', catalog })
-    ChaseDriver.saveCatalogItemsAsEntryToStorage(catalog)
-      .then(entries => {
-        dispatch({ type: 'REFRESH_ENTRIES', entries })
-      })
-  }).catch(e => {
-    switch (e.name) {
-      case 'NotFoundError':
-        break
-      default:
-        console.tron.error('#_loadMainCatalog', e)
-        throw e
-    }
-  })
+  _refreshInboxCatalog(dispatch)
 }
 
 export function loginFromStorage() {
@@ -199,32 +185,26 @@ export function loadCatalogFromStorage(catalogId) {
 
 export function refreshCatalog(catalogId) {
   return function(dispatch, getState) {
-    return new Promise((resolve, reject) => {
-      console.tron.info('allActions#refreshCatalog', catalogId)
-      dispatch({ type: 'REFRESH_WORK' })
-      Pocket.getAllUntaggedItems().then((result) => {
-        console.tron.info('APIからの返事きた', result)
-        const catalog = _makeCatalog(result.list)
-        console.tron.log('Catalog保存します...')
-        dispatch({ type: 'REFRESH_CATALOG_MAIN', catalog })
-        global.storage.save({
-          key: catalogId,
-          rawData: catalog,
-          expires: null
-        })
-        console.tron.log('Catalog保存しました')
-        // _makePageinfo(dispatch, catalog)
-        ChaseDriver.saveCatalogItemsAsEntryToStorage(catalog)
-          .then(entries => {
-            dispatch({ type: 'REFRESH_ENTRIES', entries })
-          })
-        resolve(catalog)
-      }).catch(e => {
-        console.error('Failed to load pages.', e)
-        console.tron.error('Failed to load pages.', e)
-      })
-    })
+    _refreshInboxCatalog(dispatch)
   }
+}
+
+function _refreshInboxCatalog(dispatch) {
+  return new Promise((resolve, reject) => {
+    console.tron.info('allActions#_refreshInboxCatalog')
+    dispatch({ type: 'REFRESH_WORK' })
+    Pocket.getAllUntaggedItems().then((result) => {
+      const catalog = _makeCatalog(result.list)
+      dispatch({ type: 'REFRESH_CATALOG_MAIN', catalog })
+      ChaseDriver.saveCatalogItemsAsEntryToStorage(catalog)
+        .then(entries => {
+          dispatch({ type: 'REFRESH_ENTRIES', entries })
+        })
+      resolve(catalog)
+    }).catch(e => {
+      console.tron.error('allActions#_refreshInboxCatalog', e)
+    })
+  })
 }
 
 export function refreshSceneCatalogs() {
@@ -299,28 +279,6 @@ function _makeCatalog(listFromPocket) {
     catalogBySort[m.sort_id] = itemId
   })
   return catalog
-}
-
-function _makePageinfo(dispatch, catalog) {
-  Object.keys(catalog).forEach((key) => {
-    const item = catalog[key]
-    const endpoint = 'https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod'
-    fetch(`${endpoint}/?url=${item.url}`, {
-      method: 'GET',
-    }).then((response) => {
-      if (response.ok) {
-        return response.json()
-      } else {
-        throw response
-      }
-    }).then((result) => {
-      console.tron.info('#pageinfo', result)
-      dispatch({ type: 'SET_PAGEINFO', itemId: item.itemId, pageinfo: result })
-    }).catch((error) => {
-      console.tron.error('#pageinfo', error)
-      throw error
-    })
-  })
 }
 
 export function applyScene(itemId, abc) {
