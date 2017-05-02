@@ -202,6 +202,10 @@ function _loadSceneCatalogA(dispatch) {
     const catalog = ChaseDriver.makeCatalog(result.list)
     console.tron.info('allActions#_loadSceneCatalogA', catalog)
     dispatch({ type: 'REFRESH_CATALOG_SCENE_A', catalog })
+    ChaseDriver.saveCatalogItemsAsEntryToStorage(catalog)
+      .then(entries => {
+        dispatch({ type: 'REFRESH_ENTRIES', entries })
+      })
   })
 }
 
@@ -210,6 +214,10 @@ function _loadSceneCatalogB(dispatch) {
     const catalog = ChaseDriver.makeCatalog(result.list)
     console.tron.info('allActions#_loadSceneCatalogB', catalog)
     dispatch({ type: 'REFRESH_CATALOG_SCENE_B', catalog })
+    ChaseDriver.saveCatalogItemsAsEntryToStorage(catalog)
+      .then(entries => {
+        dispatch({ type: 'REFRESH_ENTRIES', entries })
+      })
   })
 }
 
@@ -218,6 +226,10 @@ function _loadSceneCatalogC(dispatch) {
     const catalog = ChaseDriver.makeCatalog(result.list)
     console.tron.info('allActions#_loadSceneCatalogC', catalog)
     dispatch({ type: 'REFRESH_CATALOG_SCENE_C', catalog })
+    ChaseDriver.saveCatalogItemsAsEntryToStorage(catalog)
+      .then(entries => {
+        dispatch({ type: 'REFRESH_ENTRIES', entries })
+      })
   })
 }
 

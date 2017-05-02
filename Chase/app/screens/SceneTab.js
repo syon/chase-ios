@@ -10,14 +10,8 @@ class SceneTab extends Component {
     super(props)
     this.state = {
       refreshing: false,
-      itemsForDS: [],
-      dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
     }
     this._onRefresh = this._onRefresh.bind(this)
-  }
-
-  componentDidMount() {
-    // this.listupFromStorage()
   }
 
   _onRefresh() {
@@ -67,6 +61,8 @@ export default connect(
     items: state.items,
     shelf: state.shelf,
     scene: state.scene,
+    work: state.work,
+    entries: state.entries,
   }),
   (dispatch) => ({
     actions: bindActionCreators(allActions, dispatch)
