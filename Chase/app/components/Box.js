@@ -22,7 +22,9 @@ export default class extends Component {
   }
 
   makeThumb(entry) {
+    if (!entry.eid) { return null }
     const imgUrl = this.makeImgUrl(entry)
+    if (!imgUrl) { return null }
     return (
       <Image
         style={styles.thumbnail}

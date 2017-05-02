@@ -1,7 +1,9 @@
 let catalogBySort = {}
 
+import Libra from './LibraAPI'
+
 export function makeCatalog(listFromPocket) {
-  console.tron.info('ChaseDriver#makeCatalog -- listFromPocket', listFromPocket)
+  // console.tron.info('ChaseDriver#makeCatalog -- listFromPocket', listFromPocket)
   let catalog = {}
   Object.keys(listFromPocket).forEach((key) => {
     const m = listFromPocket[key]
@@ -24,8 +26,8 @@ export function makeCatalog(listFromPocket) {
 }
 
 export async function saveCatalogItemsAsEntryToStorage(catalog) {
-  console.tron.info('ChaseDriver#saveCatalogItemsAsEntryToStorage -- catalog', catalog)
-  const entries = await _loadEntriesFromStorage()
+  // console.tron.info('ChaseDriver#saveCatalogItemsAsEntryToStorage -- catalog', catalog)
+  let entries = await _loadEntriesFromStorage()
   const promises = []
   Object.keys(catalog).forEach(itemId => {
     const item = catalog[itemId]
@@ -43,45 +45,47 @@ export async function saveCatalogItemsAsEntryToStorage(catalog) {
 }
 
 async function _loadEntriesFromStorage() {
-  console.tron.info('ChaseDriver#_loadEntriesFromStorage')
+  // console.tron.info('ChaseDriver#_loadEntriesFromStorage -- start')
   const entries = await global.storage.load({ key: 'entries' })
     .then(entries => {
       return entries
     }).catch(e => {
-      console.tron.info('ChaseDriver#_loadEntriesFromStorage -- catch', e)
-      switch (e.name) {
-        case 'NotFoundError':
-          break
-        default:
-      }
       return {}
     })
+  // console.tron.info('ChaseDriver#_loadEntriesFromStorage -- done', entries)
   return entries
 }
 
 async function _convertItemToEntry(item) {
-  // console.tron.info('ChaseDriver#FetchingPageInfo...', item.url)
-  const endpoint = 'https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod'
-  const pageinfo = await fetch(`${endpoint}/?url=${item.url}`, {
-      method: 'GET',
-    }).then((response) => {
-      if (response.ok) {
-        // console.tron.info('ChaseDriver#FetchDone!', item.url)
-        return response.json()
-      } else {
-        throw response
-      }
-    }).then(pageinfo => {
-      return pageinfo
-    }).catch((error) => {
-      throw error
-    })
+  const isHTTPS = item.url.startsWith('https')
+  let pageinfo = {}
+  if (isHTTPS) {
+    const libra = new Libra(item.url)
+    pageinfo = await libra.getData().then(data => data).catch(e => {})
+  } else {
+    const endpoint = 'https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod'
+    pageinfo = await fetch(`${endpoint}/?url=${item.url}`, {
+        method: 'GET',
+      }).then((response) => {
+        if (response.ok) {
+          // console.tron.info('ChaseDriver#FetchDone!', item.url)
+          return response.json()
+        } else {
+          return {}
+        }
+      }).catch(e => {
+        return {}
+      })
+  }
   const entry = _mergeItemAndPageinfo(item, pageinfo)
-  // console.tron.info('ChaseDriver#Entry', entry)
+  // console.tron.info('ChaseDriver# -- New Entry:', entry)
   return entry
 }
 
 function _mergeItemAndPageinfo(item, pageinfo) {
+  if (!item) {
+    console.tron.warn('ITEM NOT FOUND', item)
+  }
   pageinfo = pageinfo || {}
   return {
     eid: item.itemId,
