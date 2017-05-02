@@ -9,14 +9,16 @@ export async function saveCatalogItemsAsEntryToStorage(catalog) {
       promises.push(_convertItemToEntry(item))
     }
   })
-  Promise.all(promises).then(values => {
+  await Promise.all(promises).then(values => {
+    console.tron.info('ChaseDriver#Promise.all Done!', values)
     values.forEach(v => { entries[v.eid] = v })
     global.storage.save({ key: 'entries', rawData: entries, expires: null })
   })
+  return entries
 }
 
 async function _loadEntriesFromStorage() {
-  console.info('ChaseDriver#_loadEntriesFromStorage')
+  console.tron.info('ChaseDriver#_loadEntriesFromStorage')
   const entries = await global.storage.load({ key: 'entries' })
     .then(entries => {
       return entries
@@ -33,13 +35,13 @@ async function _loadEntriesFromStorage() {
 }
 
 async function _convertItemToEntry(item) {
-  console.tron.info('ChaseDriver#FetchingPageInfo...', item.url)
+  // console.tron.info('ChaseDriver#FetchingPageInfo...', item.url)
   const endpoint = 'https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod'
   const pageinfo = await fetch(`${endpoint}/?url=${item.url}`, {
       method: 'GET',
     }).then((response) => {
       if (response.ok) {
-        console.tron.info('ChaseDriver#FetchDone!', item.url)
+        // console.tron.info('ChaseDriver#FetchDone!', item.url)
         return response.json()
       } else {
         throw response
@@ -50,7 +52,7 @@ async function _convertItemToEntry(item) {
       throw error
     })
   const entry = _mergeItemAndPageinfo(item, pageinfo)
-  console.tron.info('ChaseDriver#Entry', entry)
+  // console.tron.info('ChaseDriver#Entry', entry)
   return entry
 }
 

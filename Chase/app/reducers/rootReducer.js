@@ -7,6 +7,7 @@ import scene from './scene'
 import tags from './tags'
 import work from './work'
 import pageinfo from './pageinfo'
+import entries from './entries'
 
 const rootReducer = combineReducers({
   phase,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   tags,
   work,
   pageinfo,
+  entries,
 })
 
 export default rootReducer

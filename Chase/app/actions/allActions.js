@@ -211,6 +211,9 @@ export function refreshCatalog(catalogId) {
         console.tron.log('Catalog保存しました')
         // _makePageinfo(dispatch, catalog)
         ChaseDriver.saveCatalogItemsAsEntryToStorage(catalog)
+          .then(entries => {
+            dispatch({ type: 'REFRESH_ENTRIES', entries })
+          })
         resolve(catalog)
       }).catch(result => {
         console.error('Failed to load pages.', result)
