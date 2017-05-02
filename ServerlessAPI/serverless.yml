@@ -1,13 +1,25 @@
-service: libra
+service: chase
 
 frameworkVersion: ">=1.1.0"
+
+custom:
+  bucket: syon-chase
 
 provider:
   name: aws
   runtime: nodejs6.10
   stage: dev
   region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+      Resource: "arn:aws:s3:::${self:custom.bucket}/*"
 
 functions:
   info:
     handler: handler.info
+  thumb:
+    handler: handler.thumb
+    environment:
+      BUCKET: ${self:custom.bucket}

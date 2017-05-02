@@ -1,10 +1,11 @@
 {
-  "name": "libra",
+  "name": "chase-lambda",
   "description": "Get page info from the URL",
   "version": "1.0.0",
   "author": "syon",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.7.9",
     "cheerio": "^0.22.0",
     "node-fetch": "^1.6.3"
   },
