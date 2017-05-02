@@ -124,12 +124,12 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   date: {
-    fontSize: responsiveFontSize(1.5),
+    fontSize: responsiveFontSize(1.75),
     lineHeight: responsiveFontSize(2),
     color: '#a3aab1',
   },
   domain: {
-    fontSize: responsiveFontSize(1.5),
+    fontSize: responsiveFontSize(1.75),
     lineHeight: responsiveFontSize(2),
     color: '#a3aab1',
   },
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   },
   desc: {
     color: '#586069',
-    fontSize: responsiveFontSize(1.5),
+    fontSize: responsiveFontSize(1.75),
     lineHeight: responsiveFontSize(2),
   },
   selectScene: {

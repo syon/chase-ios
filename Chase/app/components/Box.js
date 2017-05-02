@@ -49,7 +49,7 @@ export default class extends Component {
     const imgUrl = this.makeImgUrl(this.props.entry)
     this.props.navigator.push({
       screen: "Chase.Interlude",
-      passProps: { item, work, entry, actions, imgUrl, sceneSelectorHidden },
+      passProps: {...this.props, imgUrl},
       navigatorStyle: {
         tabBarHidden: true,
       },

@@ -74,13 +74,12 @@ class ScenesEditor extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // alignItems: 'stretch',
     justifyContent: 'center',
-    margin: 15,
-    backgroundColor: '#F5FCFF',
+    padding: 15,
+    paddingBottom: 150,
+    backgroundColor: 'rgb(240, 239, 245)',
   },
   form: {
-    // alignItems: 'stretch',
     flexDirection: 'row',
   },
   formItem: {
@@ -96,10 +95,11 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    padding: 10,
+    padding: 5,
     fontSize: responsiveFontSize(2),
-    borderColor: 'gray',
-    borderWidth: 1
+    borderColor: '#ddd',
+    borderWidth: 1,
+    backgroundColor: '#fff',
   },
 });
 
