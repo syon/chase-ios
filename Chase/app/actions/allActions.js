@@ -161,34 +161,6 @@ export function savePage(url) {
   }
 }
 
-export function loadCatalogFromStorage(catalogId) {
-  return function(dispatch, getState) {
-    return new Promise((resolve, reject) => {
-      global.storage.load({
-        key: catalogId,
-      }).then(catalog => {
-        switch(catalogId) {
-          case('catalogMain'):
-            dispatch({ type: 'REFRESH_CATALOG_MAIN', catalog })
-            break
-          case('catalogSceneA'):
-            dispatch({ type: 'REFRESH_CATALOG_SCENE_A', catalog })
-            break
-          case('catalogSceneB'):
-            dispatch({ type: 'REFRESH_CATALOG_SCENE_B', catalog })
-            break
-          case('catalogSceneC'):
-            dispatch({ type: 'REFRESH_CATALOG_SCENE_C', catalog })
-            break
-        }
-        resolve()
-      }).catch(err => {
-        reject(err)
-      })
-    })
-  }
-}
-
 export function refreshCatalog(catalogId) {
   return function(dispatch, getState) {
     _refreshInboxCatalog(dispatch)
