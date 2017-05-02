@@ -21,10 +21,11 @@ module.exports.thumb = (event, context, callback) => {
   const item10Id = `0000000000${itemId}`.substr(-10, 10);
   const itemId3 = item10Id.slice(0, 3);
   const s3path = `items/thumbs/${itemId3}/${item10Id}.jpg`;
-  console.log('s3path --', s3path);
+  // console.log('s3path --', s3path);
   const libra = new Libra(event.url);
   libra.getData().then(data => {
     const imageUrl = data.image;
+    // console.log('Detected Image URL --', imageUrl);
     fetch(imageUrl)
       .then((response) => {
         if (response.ok) {
@@ -32,19 +33,18 @@ module.exports.thumb = (event, context, callback) => {
         }
       })
       .then(buffer => {
+        // console.log('Buffer --', buffer);
         gm(buffer).resize(400).toBuffer('jpg', (err, buf) => {
-          return buf
+          s3.putObject({
+            Bucket: process.env.BUCKET,
+            Key: s3path,
+            Body: buf,
+          }).promise();
         });
-      })
-      .then(buffer => {
-        s3.putObject({
-          Bucket: process.env.BUCKET,
-          Key: s3path,
-          Body: buffer,
-        }).promise()
       })
       .then(v => callback(null, v), callback);
   }).catch(e => {
+    // console.log('Fetch failed. Use blank image --');
     gm('blank.jpg').toBuffer('jpg', (err, buf) => {
       s3.putObject({
         Bucket: process.env.BUCKET,
