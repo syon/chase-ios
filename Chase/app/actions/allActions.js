@@ -144,6 +144,12 @@ export function disconnectFromPocket() {
   }
 }
 
+export function clearCatalogCache() {
+  return function(dispatch, getState) {
+    global.storage.remove({ key: 'entries' })
+  }
+}
+
 export function savePage(url) {
   return function(dispatch, getState) {
     const at = getState().pocket.accessToken

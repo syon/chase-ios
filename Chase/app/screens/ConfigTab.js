@@ -12,13 +12,18 @@ class ConfigTab extends Component {
     const { login, actions } = this.props;
     return (
       <View style={styles.container}>
-        <Text style={styles.username}>{ login.username }</Text>
-        <Button
-          onPress={actions.disconnectFromPocket}
-          style={styles.btn}
-        >
-          Disconnect
-        </Button>
+        <View>
+          <Text style={styles.username}>{ login.username }</Text>
+          <Button
+            onPress={actions.disconnectFromPocket}
+            style={styles.btn}
+          >
+            Disconnect
+          </Button>
+        </View>
+        <View>
+          <Button onPress={actions.clearCatalogCache} style={styles.btn}>Clear Cache</Button>
+        </View>
       </View>
     )
   }
@@ -36,6 +41,7 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   btn: {
+    padding: 15,
     fontSize: responsiveFontSize(2.5),
   }
 })
