@@ -27,8 +27,9 @@ async function _initialize(dispatch) {
     _loadSceneCatalogA(dispatch)
     _loadSceneCatalogB(dispatch)
     _loadSceneCatalogC(dispatch)
+    _loadSceneText(dispatch)
   } catch (e) {
-    console.tron.error(e)
+    console.tron.error('allActions#_initialize', e)
     throw e
   }
 }
@@ -153,7 +154,22 @@ export function clearCatalogCache() {
 export function setScenes(scenes) {
   return function(dispatch) {
     dispatch({ type: 'SET_SCENES', scenes })
+    global.storage.save({ key: 'scenes', rawData: scenes, expires: null })
   }
+}
+
+function _loadSceneText(dispatch) {
+  global.storage.load({
+    key: 'scenes',
+  }).then(scenes => {
+    dispatch({ type: 'SET_SCENES', scenes })
+  }).catch(e => {
+    switch (e.name) {
+      case 'NotFoundError':
+        break
+      default:
+    }
+  })
 }
 
 export function savePage(url) {
