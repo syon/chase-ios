@@ -148,6 +148,7 @@ export function disconnectFromPocket() {
 export function clearCatalogCache() {
   return function(dispatch, getState) {
     global.storage.remove({ key: 'entries' })
+    dispatch({ type: 'CLEAR_ENTRIES' })
   }
 }
 
@@ -342,4 +343,25 @@ export function refreshAllTags() {
 async function _bumpAllTags(dispatch) {
   const tags = await Pocket.getAllTags()
   dispatch({ type: 'REFRESH_TAGS', tags })
+}
+
+export function debugInfo() {
+  return async function(dispatch, getState) {
+    console.tron.log('== DEBUG INFO ==============================')
+    console.tron.info('Reducers:', getState())
+    await _dumpStorages()
+    console.tron.log('============================================')
+  }
+}
+
+async function _dumpStorages() {
+  await global.storage.load({ key: 'loginState' }).then(data => {
+    console.tron.info('Storages -- loginState:', data)
+  }).catch(e => { console.tron.info('Storage Load Error:', 'loginState') })
+  await global.storage.load({ key: 'entries' }).then(data => {
+    console.tron.info('Storages -- entries:', data)
+  }).catch(e => { console.tron.info('Storage Load Error:', 'entries') })
+  await global.storage.load({ key: 'scenes' }).then(data => {
+    console.tron.info('Storages -- scenes:', data)
+  }).catch(e => { console.tron.info('Storage Load Error:', 'scenes') })
 }
