@@ -28,9 +28,11 @@ export default class extends Component {
   }
 
   renderItem({ item }) {
-    const { sceneSelectorHidden: h } = this.props
+    const { entries: givenEntries, sceneSelectorHidden: h } = this.props
+    const entries = givenEntries || {}
+    const entry = entries[item.itemId] || {}
     return (
-      <Box item={item} {...this.props} sceneSelectorHidden={h} />
+      <Box item={item} entry={entry} {...this.props} sceneSelectorHidden={h} />
     )
   }
 

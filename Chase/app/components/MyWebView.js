@@ -8,8 +8,8 @@ export default class extends Component {
   }
 
   render() {
-    const { item } = this.props
-    const wv = item ? (<WKWebView source={{ uri: item ? item.url : '' }} />) : null
+    const { url } = this.props
+    const wv = url ? (<WKWebView source={{ uri: url }} />) : null
     return (
       <View style={{ flex: 1 }}>
         { wv }

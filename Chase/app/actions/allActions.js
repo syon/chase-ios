@@ -55,6 +55,10 @@ async function _loadUserInfo(dispatch) {
 async function _loadMainCatalog(dispatch) {
   await global.storage.load({ key: 'catalogMain' }).then(catalog => {
     dispatch({ type: 'REFRESH_CATALOG_MAIN', catalog })
+    ChaseDriver.saveCatalogItemsAsEntryToStorage(catalog)
+      .then(entries => {
+        dispatch({ type: 'REFRESH_ENTRIES', entries })
+      })
   }).catch(e => {
     switch (e.name) {
       case 'NotFoundError':
@@ -215,9 +219,9 @@ export function refreshCatalog(catalogId) {
             dispatch({ type: 'REFRESH_ENTRIES', entries })
           })
         resolve(catalog)
-      }).catch(result => {
-        console.error('Failed to load pages.', result)
-        console.tron.error('Failed to load pages.', result)
+      }).catch(e => {
+        console.error('Failed to load pages.', e)
+        console.tron.error('Failed to load pages.', e)
       })
     })
   }

@@ -18,11 +18,11 @@ class Interlude extends Component {
   }
 
   openWebView() {
-    const { item } = this.props
+    const { entry } = this.props
     this.props.navigator.push({
       title: '',
       screen: 'Chase.WebViewScreen',
-      passProps: { item },
+      passProps: { url: entry.url },
       navigatorStyle: {
         navBarHideOnScroll: true,
         statusBarHideWithNavBar: true,
@@ -71,6 +71,7 @@ class Interlude extends Component {
         <View style={styles.boxBody}>
           <View style={styles.toolbar}>
             <View style={styles.toolbarLeft}>
+              <Text style={styles.domain}>{ entry.siteName }</Text>
               <Text style={styles.domain}>{ entry.fqdn }</Text>
               <Text style={styles.date}>2017.4.17</Text>
             </View>

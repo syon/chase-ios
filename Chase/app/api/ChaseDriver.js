@@ -62,7 +62,7 @@ function _mergeItemAndPageinfo(item, pageinfo) {
     eid: item.itemId,
     url: item.url,
     siteName: pageinfo.site_name,
-    title: _choiceMoreText(item.title, pageinfo.title),
+    title: _choiceText(item.title, pageinfo.title),
     description: pageinfo.description,
     fqdn: item.fqdn,
     sortId: item.sort_id,
@@ -70,8 +70,6 @@ function _mergeItemAndPageinfo(item, pageinfo) {
   }
 }
 
-function _choiceMoreText(a, b) {
-  a = a || ''
-  b = b || ''
-  return (a.length > b.length) ? a : b
+function _choiceText(pkt, ogp) {
+  return ogp ? ogp : pkt
 }

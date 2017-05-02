@@ -21,45 +21,44 @@ export default class extends Component {
     this.sceneSelected = this.sceneSelected.bind(this)
   }
 
-  makeThumb(item) {
-    const imgUrl = this.makeImgUrl(item)
+  makeThumb(entry) {
+    const imgUrl = this.makeImgUrl(entry)
     return (
       <Image
         style={styles.thumbnail}
         source={{uri: imgUrl}}
-        onError={() => { this.onErrorLoadImage(item) }}
+        onError={() => { this.onErrorLoadImage(entry) }}
       />
     )
   }
 
-  onErrorLoadImage(item) {
-    console.tron.info('Box#onErrorLoadImage', item)
+  onErrorLoadImage(entry) {
+    console.tron.info('Box#onErrorLoadImage', entry)
     return
   }
 
-  makeImgUrl(item) {
+  makeImgUrl(entry) {
     const thumbsPath = 'https://d2aed4ktvx51jm.cloudfront.net/items/thumbs'
-    const item10Id = `0000000000${item.itemId}`.substr(-10, 10)
+    const item10Id = `0000000000${entry.eid}`.substr(-10, 10)
     const itemId3 = item10Id.slice(0, 3)
     return `${thumbsPath}/${itemId3}/${item10Id}.jpg`
   }
 
   onBoxPressed() {
-    const { item, work, pageinfo, entries, actions, sceneSelectorHidden } = this.props
+    const { item, work, entry, actions, sceneSelectorHidden } = this.props
     const imgUrl = this.makeImgUrl(this.props.item)
-    const entry = entries[item.itemId]
     this.props.navigator.push({
       screen: "Chase.Interlude",
-      passProps: { item, work, pageinfo, entry, actions, imgUrl, sceneSelectorHidden },
+      passProps: { item, work, entry, actions, imgUrl, sceneSelectorHidden },
       navigatorStyle: {
         tabBarHidden: true,
       },
     });
   }
 
-  judgeArchived(item, work) {
+  judgeArchived(entry, work) {
     try {
-      return work[item.itemId].archive
+      return work[entry.eid].archive
     } catch(e) {}
     return false
   }
@@ -71,13 +70,11 @@ export default class extends Component {
   }
 
   render() {
-    const { item, work, pageinfo, sceneSelectorHidden } = this.props
+    const { item, work, entry, sceneSelectorHidden } = this.props
     if (!item) { return null }
-    const piHash = pageinfo || {}
-    const pi = piHash[item.itemId] || {}
-    const thumb = this.makeThumb(item)
-    let imageOpcty = this.judgeArchived(item, work) ? 0.5 : 1
-    let archivedBG = this.judgeArchived(item, work) ? '#aaa' : '#fff'
+    const thumb = this.makeThumb(entry)
+    let imageOpcty = this.judgeArchived(entry, work) ? 0.5 : 1
+    let archivedBG = this.judgeArchived(entry, work) ? '#aaa' : '#fff'
     return (
       <View style={[styles.box, {backgroundColor: archivedBG}]}>
         <TouchableWithoutFeedback onPress={this.onBoxPressed}>
@@ -86,9 +83,9 @@ export default class extends Component {
               { thumb }
             </View>
             <View style={styles.boxBody}>
-              <Text style={styles.itemTitle}>{ item.title }</Text>
-                <Text style={styles.domain}>{ pi.site_name }</Text>
-              <Text style={styles.domain}>{ item.fqdn }</Text>
+              <Text style={styles.itemTitle}>{ entry.title }</Text>
+              <Text style={styles.domain}>{ entry.siteName }</Text>
+              <Text style={styles.domain}>{ entry.fqdn }</Text>
             </View>
           </View>
         </TouchableWithoutFeedback>
