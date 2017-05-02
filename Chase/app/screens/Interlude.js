@@ -31,33 +31,31 @@ class Interlude extends Component {
     })
   }
 
-  judgeArchived(item, work) {
+  judgeArchived(entry, work) {
     try {
       if (this.state.done) { return true }
-      return work[item.itemId].archive
+      return work[entry.eid].archive
     } catch(e) {}
     return false
   }
 
   onPressArchiveBtn() {
     this.setState({ done: true })
-    const { item, actions } = this.props
-    actions.archive(item.itemId)
+    const { entry, actions } = this.props
+    actions.archive(entry.eid)
   }
 
   sceneSelected() {
-    const { actions, item } = this.props
+    const { actions, entry } = this.props
     this.setState({ done: true })
-    actions.archive(item.itemId)
+    actions.archive(entry.eid)
   }
 
   render() {
-    const { actions, item, pageinfo, imgUrl, work } = this.props
-    const isDone = this.judgeArchived(item, work)
+    const { actions, entry, imgUrl, work } = this.props
+    const isDone = this.judgeArchived(entry, work)
     let imageOpcty = isDone ? 0.5 : 1
     let archivedBG = isDone ? '#aaa' : '#fff'
-    let pi = {}
-    try { pi = pageinfo[item.itemId] } catch(e) {}
     return (
       <View style={[styles.welcome, {backgroundColor: archivedBG}]}>
         <TouchableWithoutFeedback onPress={this.openWebView}>
@@ -66,15 +64,14 @@ class Interlude extends Component {
               <Image style={styles.thumbnail} source={{uri: imgUrl}} />
             </View>
             <View style={styles.itemTitleFrame}>
-              <Text style={styles.itemTitle}>{ item.title }</Text>
-              <Text style={styles.itemTitle}>{ pi.title }</Text>
+              <Text style={styles.itemTitle}>{ entry.title }</Text>
             </View>
           </View>
         </TouchableWithoutFeedback>
         <View style={styles.boxBody}>
           <View style={styles.toolbar}>
             <View style={styles.toolbarLeft}>
-              <Text style={styles.domain}>{ item.fqdn }</Text>
+              <Text style={styles.domain}>{ entry.fqdn }</Text>
               <Text style={styles.date}>2017.4.17</Text>
             </View>
             <View style={styles.toolbarRight}>
@@ -82,7 +79,7 @@ class Interlude extends Component {
             </View>
           </View>
           <View>
-            <Text>{ pi.description }</Text>
+            <Text>{ entry.description }</Text>
           </View>
         </View>
         <SceneSelector

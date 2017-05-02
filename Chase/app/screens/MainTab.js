@@ -54,6 +54,7 @@ export default connect(
     scene: state.scene,
     work: state.work,
     pageinfo: state.pageinfo,
+    entries: state.entries,
   }),
   (dispatch) => ({
     actions: bindActionCreators(allActions, dispatch)
