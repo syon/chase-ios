@@ -194,7 +194,7 @@ function _refreshInboxCatalog(dispatch) {
     console.tron.info('allActions#_refreshInboxCatalog')
     dispatch({ type: 'REFRESH_WORK' })
     Pocket.getAllUntaggedItems().then((result) => {
-      const catalog = _makeCatalog(result.list)
+      const catalog = ChaseDriver.makeCatalog(result.list)
       dispatch({ type: 'REFRESH_CATALOG_MAIN', catalog })
       ChaseDriver.saveCatalogItemsAsEntryToStorage(catalog)
         .then(entries => {
@@ -221,7 +221,7 @@ export function refreshSceneCatalogs() {
 
 function _loadSceneCatalogA(dispatch) {
   Pocket.getItemsTaggedBy('chase:a').then((result) => {
-    const catalog = _makeCatalog(result.list)
+    const catalog = ChaseDriver.makeCatalog(result.list)
     console.tron.info('allActions#_loadSceneCatalogA', catalog)
     dispatch({ type: 'REFRESH_CATALOG_SCENE_A', catalog })
   })
@@ -229,7 +229,7 @@ function _loadSceneCatalogA(dispatch) {
 
 function _loadSceneCatalogB(dispatch) {
   Pocket.getItemsTaggedBy('chase:b').then((result) => {
-    const catalog = _makeCatalog(result.list)
+    const catalog = ChaseDriver.makeCatalog(result.list)
     console.tron.info('allActions#_loadSceneCatalogB', catalog)
     dispatch({ type: 'REFRESH_CATALOG_SCENE_B', catalog })
   })
@@ -237,7 +237,7 @@ function _loadSceneCatalogB(dispatch) {
 
 function _loadSceneCatalogC(dispatch) {
   Pocket.getItemsTaggedBy('chase:c').then((result) => {
-    const catalog = _makeCatalog(result.list)
+    const catalog = ChaseDriver.makeCatalog(result.list)
     console.tron.info('allActions#_loadSceneCatalogC', catalog)
     dispatch({ type: 'REFRESH_CATALOG_SCENE_C', catalog })
   })
@@ -250,35 +250,12 @@ export function refreshTagCatalog(tagNm) {
       console.tron.log('allActions#refreshTagCatalog')
       console.tron.display({ name: 'allActions', preview: 'getState()', value: getState() })
       Pocket.getItemsTaggedBy(tagNm).then((result) => {
-        const catalog = _makeCatalog(result.list)
+        const catalog = ChaseDriver.makeCatalog(result.list)
         dispatch({ type: 'REFRESH_CATALOG_TAG', catalog })
       })
       resolve()
     })
   }
-}
-
-let catalogBySort = {}
-
-function _makeCatalog(listFromPocket) {
-  let catalog = {}
-  Object.keys(listFromPocket).forEach((key) => {
-    const m = listFromPocket[key]
-    itemId = m.resolved_id == "0" ? m.item_id : m.resolved_id
-    const url = m.resolved_url ? m.resolved_url : m.given_url
-    const fqdn = `${url}/`.match(/\/\/(.*?)\//)[1]
-    catalog[key] = {
-      key: itemId,
-      itemId: itemId,
-      title: m.resolved_title ? m.resolved_title : m.given_title,
-      url: url,
-      fqdn: fqdn,
-      sortId: m.sort_id,
-      tags: m.tags
-    }
-    catalogBySort[m.sort_id] = itemId
-  })
-  return catalog
 }
 
 export function applyScene(itemId, abc) {

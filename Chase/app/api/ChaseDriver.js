@@ -1,3 +1,26 @@
+let catalogBySort = {}
+
+export function makeCatalog(listFromPocket) {
+  let catalog = {}
+  Object.keys(listFromPocket).forEach((key) => {
+    const m = listFromPocket[key]
+    itemId = m.resolved_id == "0" ? m.item_id : m.resolved_id
+    const url = m.resolved_url ? m.resolved_url : m.given_url
+    const fqdn = `${url}/`.match(/\/\/(.*?)\//)[1]
+    catalog[key] = {
+      key: itemId,
+      itemId: itemId,
+      title: m.resolved_title ? m.resolved_title : m.given_title,
+      url: url,
+      fqdn: fqdn,
+      sortId: m.sort_id,
+      tags: m.tags
+    }
+    catalogBySort[m.sort_id] = itemId
+  })
+  return catalog
+}
+
 export async function saveCatalogItemsAsEntryToStorage(catalog) {
   console.tron.info('ChaseDriver#saveCatalogItemsAsEntryToStorage -- catalog', catalog)
   const entries = await _loadEntriesFromStorage()
