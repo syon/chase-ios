@@ -17,7 +17,7 @@ class SceneTab extends Component {
   }
 
   render() {
-    const { actions, entries, scene, work, shelf } = this.props
+    const { navigator, actions, entries, scene, work, shelf } = this.props
     let catalog = null
     switch (scene.currentIdx) {
       case 0:
@@ -32,6 +32,7 @@ class SceneTab extends Component {
     }
     return (
       <Catalog
+        navigator={navigator}
         actions={actions}
         reducers={{ entries, scene, work }}
         showSegment={ true }

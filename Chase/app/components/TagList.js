@@ -19,13 +19,17 @@ export default class extends Component {
     this._renderItem = this._renderItem.bind(this)
   }
 
-  _renderItem({ item }) {
-    const tag = item
+  _renderItem({ item: tag }) {
+    const { navigator, actions } = this.props
     const _onPress = () => {
-      this.props.navigator.push({
-        title: tag.name,
-        screen: 'Chase.TagsTabInnerScreen',
-        passProps: { tag, ...this.props },
+      console.tron.info('TagList#_onPress -- Loading...', tag.name)
+      actions.refreshTagCatalog(tag.name).then(() => {
+        console.tron.info('TagList#_onPress -- Done.', tag.name)
+        navigator.push({
+          title: tag.name,
+          screen: 'Chase.TagsTabInnerScreen',
+          passProps: { tag, ...this.props },
+        })
       })
     }
     return (

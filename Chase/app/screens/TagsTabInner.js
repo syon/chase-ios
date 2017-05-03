@@ -21,10 +21,11 @@ class TagsTabInner extends Component {
   }
 
   render() {
-    const { actions, entries, scene, work, shelf } = this.props
+    const { navigator, actions, entries, scene, work, shelf } = this.props
     let catalog = shelf.catalogTag
     return (
       <Catalog
+        navigator={navigator}
         actions={actions}
         reducers={{ entries, scene, work }}
         catalogState={{

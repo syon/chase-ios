@@ -21,10 +21,11 @@ class MainTab extends Component {
   }
 
   render() {
-    const { actions, entries, scene, work, shelf } = this.props
+    const { navigator, actions, entries, scene, work, shelf } = this.props
     const catalog = shelf.catalogMain
     return (
       <Catalog
+        navigator={navigator}
         actions={actions}
         reducers={{ entries, scene, work }}
         catalogState={{
