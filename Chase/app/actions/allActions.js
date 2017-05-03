@@ -355,11 +355,18 @@ async function _bumpAllTags(dispatch) {
 
 export function debugInfo() {
   return async function(dispatch, getState) {
-    console.tron.log('== DEBUG INFO ==============================')
-    console.tron.info('Reducers:', getState())
+    console.tron.log('== DEBUG INFO ===============================')
+    await _dumpReducers(getState())
+    console.tron.log('- - - - - - - - - - - - - - - - - - - - - - -')
     await _dumpStorages()
-    console.tron.log('============================================')
+    console.tron.log('=============================================')
   }
+}
+
+async function _dumpReducers(allState) {
+  Object.keys(allState).forEach(key => {
+    console.tron.info(`Reducers[${key}]:`, allState[key])
+  })
 }
 
 async function _dumpStorages() {
