@@ -31,23 +31,32 @@ const imageUrl = 'https://assets-cdn.github.com/images/modules/open_graph/github
 //     })
 //   })
 
-// function putImageFile(buffer) {
-//   const filename = 'try.jpg'
-//   fs.writeFile(filename, buffer, 'binary', (err) => {
-//     if (err) throw err
-//     console.log('File saved.')
-//     gm(filename).format((err, value) => {
-//       console.log(value)
-//     })
-//   })
-// }
+function putImageFile(buffer) {
+  const filename = 'try.jpg'
+  fs.writeFile(filename, buffer, 'binary', (err) => {
+    if (err) throw err
+    console.log('File saved.')
+    gm(filename).format((err, value) => {
+      console.log(value)
+    })
+  })
+}
 
 function png2jpg() {
   const s3path = 'items/blank.jpg'
-  gm('./blank.jpg').toBuffer('jpg', (err, buf) => {
-    console.log('Blank image Buffer --', buf);
-    putImage(s3path, buf);
-  });
+  // gm('./blank.jpg').toBuffer('jpg', (err, buf) => {
+  //   console.log('Blank image Buffer --', buf);
+  //   putImage(s3path, buf);
+  // });
+
+  // https://github.com/aheckmann/gm/issues/415
+  gm('stackoverflow.png')
+    .resize(400)
+    .background('#fff')
+    .flatten()
+    .toBuffer('jpg', (err, buf) => {
+      putImageFile(buf);
+    });
 }
 
 function putImage(s3path, buffer) {

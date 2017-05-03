@@ -32,7 +32,9 @@ module.exports.thumb = (event, context, callback) => {
           if (response.ok) {
             response.buffer().then(buffer => {
               gm(buffer)
-                .resize(400)
+                .resize(420)
+                .background('#fff')
+                .flatten()
                 .toBuffer('jpg', (err, buf) => {
                   console.log('Resized Buffer --', buf);
                   putImage(s3path, buf).promise();
