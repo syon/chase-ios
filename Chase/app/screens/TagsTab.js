@@ -25,9 +25,8 @@ class TagsTab extends Component {
   render() {
     const { login, tags, actions } = this.props
     const tagsArr = []
-    Object.keys(tags).forEach((tagKey) => {
-      let obj = tags[tagKey]
-      obj['key'] = tagKey
+    Object.keys(tags).forEach((tagKey, i) => {
+      const obj = Object.assign({}, tags[tagKey], { key: i })
       tagsArr.push(obj)
     })
     return (

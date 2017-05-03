@@ -27,7 +27,6 @@ class TagsTabInner extends Component {
     return (
       <Catalog
         {...this.props}
-        showSegment={ false }
         catalogState={{
           refreshing: this.state.refreshing,
           catalogHash: catalog,
@@ -50,6 +49,8 @@ export default connect(
     items: state.items,
     shelf: state.shelf,
     scene: state.scene,
+    work: state.work,
+    entries: state.entries,
   }),
   (dispatch) => ({
     actions: bindActionCreators(allActions, dispatch)

@@ -261,12 +261,17 @@ function _loadSceneCatalogC(dispatch) {
 export function refreshTagCatalog(tagNm) {
   return function(dispatch, getState) {
     return new Promise((resolve, reject) => {
+      console.tron.info('allActions#refreshTagCatalog -- start')
       dispatch({ type: 'REFRESH_CATALOG_TAG', catalog: null })
-      console.tron.log('allActions#refreshTagCatalog')
-      console.tron.display({ name: 'allActions', preview: 'getState()', value: getState() })
       Pocket.getItemsTaggedBy(tagNm).then((result) => {
         const catalog = ChaseDriver.makeCatalog(result.list)
         dispatch({ type: 'REFRESH_CATALOG_TAG', catalog })
+        console.tron.info('allActions#refreshTagCatalog -- catalog:', catalog)
+        ChaseDriver.saveCatalogItemsAsEntryToStorage(catalog)
+          .then(entries => {
+            dispatch({ type: 'REFRESH_ENTRIES', entries })
+            console.tron.info('allActions#refreshTagCatalog -- done', entries)
+          })
       })
       resolve()
     })
