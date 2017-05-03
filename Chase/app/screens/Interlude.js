@@ -40,19 +40,18 @@ class Interlude extends Component {
   }
 
   onPressArchiveBtn() {
+    const { entry } = this.props.reducers
     this.setState({ done: true })
-    const { entry, actions } = this.props
-    actions.archive(entry.eid)
+    this.props.actions.archive(entry.eid)
   }
 
   sceneSelected() {
-    const { actions, entry } = this.props
     this.setState({ done: true })
-    actions.archive(entry.eid)
   }
 
   render() {
-    const { actions, entry, imgUrl, work, scene } = this.props
+    const { entry, work, scene } = this.props.reducers
+    const { actions, imgUrl } = this.props
     const isDone = this.judgeArchived(entry, work)
     let imageOpcty = isDone ? 0.5 : 1
     let archivedBG = isDone ? '#aaa' : '#fff'

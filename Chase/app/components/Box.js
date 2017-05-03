@@ -63,7 +63,7 @@ export default class extends Component {
     const imgUrl = `${this.state.thumbBaseUrl}/${entry.image}`
     this.props.navigator.push({
       screen: "Chase.Interlude",
-      passProps: { actions, entry, imgUrl, work, scene },
+      passProps: { actions, imgUrl, reducers: { entry, work, scene } },
       navigatorStyle: {
         tabBarHidden: true,
       },
@@ -80,7 +80,6 @@ export default class extends Component {
   sceneSelected() {
     const { entry } = this.props.reducers
     this.setState({ done: true })
-    this.props.actions.archive(entry.eid)
   }
 
   render() {
