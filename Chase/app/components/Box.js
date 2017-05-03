@@ -58,7 +58,7 @@ export default class extends Component {
   }
 
   onBoxPressed() {
-    const { item, work, entry, scene, actions, sceneSelectorHidden } = this.props
+    const { item, work, entry, scene, actions } = this.props
     const imgUrl = `${this.state.thumbBaseUrl}/${entry.image}`
     this.props.navigator.push({
       screen: "Chase.Interlude",
@@ -83,7 +83,7 @@ export default class extends Component {
   }
 
   render() {
-    const { item, work, entry, scene, sceneSelectorHidden } = this.props
+    const { actions, item, work, entry, scene, sceneSelectorHidden } = this.props
     if (!item) { return null }
     const thumb = this.makeThumb(entry)
     let imageOpcty = this.judgeArchived(entry, work) ? 0.5 : 1
@@ -102,7 +102,7 @@ export default class extends Component {
           </View>
         </TouchableWithoutFeedback>
         <SceneSelector
-          outlet={{ entry, work, scene }}
+          outlet={{ actions, entry, work, scene }}
           sceneSelected={this.sceneSelected}
           hidden={sceneSelectorHidden}
         />
