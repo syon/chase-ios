@@ -79,8 +79,9 @@ async function _convertItemToEntry(item) {
   if (isHTTPS) {
     const libra = new Libra(item.url)
     pageinfo = await libra.getData().then(data => data).catch(e => {})
+    // console.tron.info('ChaseDriver#Libra', pageinfo)
   } else {
-    pageinfo = await fetch(`${CHASE_API_ENDPOINT}/?url=${item.url}`, {
+    pageinfo = await fetch(`${CHASE_API_ENDPOINT}/info?url=${item.url}`, {
         method: 'GET',
       }).then((response) => {
         if (response.ok) {
@@ -92,6 +93,7 @@ async function _convertItemToEntry(item) {
       }).catch(e => {
         return {}
       })
+    // console.tron.info('ChaseDriver#[Lambda/info]', pageinfo)
   }
   const entry = _mergeItemAndPageinfo(item, pageinfo)
   // console.tron.info('ChaseDriver# -- New Entry:', entry)
