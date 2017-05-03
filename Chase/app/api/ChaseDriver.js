@@ -83,8 +83,7 @@ async function _convertItemToEntry(item) {
     const libra = new Libra(item.url)
     pageinfo = await libra.getData().then(data => data).catch(e => {})
   } else {
-    const endpoint = 'https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod'
-    pageinfo = await fetch(`${endpoint}/?url=${item.url}`, {
+    pageinfo = await fetch(`${CHASE_API_ENDPOINT}/?url=${item.url}`, {
         method: 'GET',
       }).then((response) => {
         if (response.ok) {
