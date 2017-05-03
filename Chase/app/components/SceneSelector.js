@@ -17,28 +17,28 @@ export default class extends Component {
   }
 
   onSelectSceneA() {
-    const { actions, entry } = this.props.outlet
+    const { entry } = this.props.reducers
     this.setState({ tappedA: true })
     this.props.sceneSelected()
-    actions.applyScene(entry.eid, 'a')
+    this.props.actions.applyScene(entry.eid, 'a')
   }
 
   onSelectSceneB() {
-    const { actions, entry } = this.props.outlet
+    const { entry } = this.props.reducers
     this.setState({ tappedB: true })
     this.props.sceneSelected()
-    actions.applyScene(entry.eid, 'b')
+    this.props.actions.applyScene(entry.eid, 'b')
   }
 
   onSelectSceneC() {
-    const { actions, entry } = this.props.outlet
+    const { entry } = this.props.reducers
     this.setState({ tappedC: true })
     this.props.sceneSelected()
-    actions.applyScene(entry.eid, 'c')
+    this.props.actions.applyScene(entry.eid, 'c')
   }
 
   render() {
-    const { entry, work, scene } = this.props.outlet
+    const { entry, work, scene } = this.props.reducers
     const { hidden } = this.props
     if (hidden) return null
     const wk = work || {}

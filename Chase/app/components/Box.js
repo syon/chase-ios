@@ -104,7 +104,8 @@ export default class extends Component {
           </View>
         </TouchableWithoutFeedback>
         <SceneSelector
-          outlet={{ actions, entry, work, scene }}
+          actions={actions}
+          reducers={{ entry, work, scene }}
           sceneSelected={this.sceneSelected}
           hidden={sceneSelectorHidden}
         />
