@@ -22,14 +22,14 @@ export default class extends Component {
     this.state = {
       refreshing: false,
     }
-    this.openWebView = this.openWebView.bind(this)
     this.getCatalogRows = this.getCatalogRows.bind(this)
     this.renderItem = this.renderItem.bind(this)
   }
 
   renderItem({ item }) {
-    const { entries: givenEntries, sceneSelectorHidden: h } = this.props
-    const { navigator, actions, work, scene } = this.props
+    const { entries: givenEntries, work, scene } = this.props.reducers
+    const { sceneSelectorHidden: h } = this.props
+    const { navigator, actions } = this.props
     const entries = givenEntries || {}
     const entry = entries[item.itemId] || {}
     return (
@@ -40,19 +40,6 @@ export default class extends Component {
         sceneSelectorHidden={h}
       />
     )
-  }
-
-  openWebView(item) {
-    this.props.navigator.push({
-      title: '',
-      screen: 'Chase.WebViewScreen',
-      passProps: { item },
-      navigatorStyle: {
-        navBarHideOnScroll: true,
-        statusBarHideWithNavBar: true,
-        tabBarHidden: true,
-      },
-    })
   }
 
   getCatalogRows() {
@@ -71,7 +58,8 @@ export default class extends Component {
   }
 
   render() {
-    const { scene, actions, showSegment, catalogState } = this.props
+    const { scene } = this.props.reducers
+    const { actions, showSegment, catalogState } = this.props
     const segment = showSegment ? (
       <SegmentedControlIOS
         values={scene.allScenes}

@@ -12,13 +12,12 @@ class SceneTab extends Component {
   }
 
   _onRefresh() {
-    console.tron.log('SceneTab#_onRefresh')
     this.setState({ refreshing: true });
     this.props.actions.refreshSceneCatalogs()
   }
 
   render() {
-    const { scene, shelf } = this.props
+    const { actions, entries, scene, work, shelf } = this.props
     let catalog = null
     switch (scene.currentIdx) {
       case 0:
@@ -33,7 +32,8 @@ class SceneTab extends Component {
     }
     return (
       <Catalog
-        {...this.props}
+        actions={actions}
+        reducers={{ entries, scene, work }}
         showSegment={ true }
         catalogState={{
           refreshing: this.state.refreshing,

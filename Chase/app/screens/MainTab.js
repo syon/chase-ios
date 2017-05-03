@@ -16,16 +16,17 @@ class MainTab extends Component {
   }
 
   _onRefresh() {
-    console.tron.log('MainTab#_onRefresh')
     this.setState({ refreshing: true });
     this.props.actions.refreshCatalog('catalogMain')
   }
 
   render() {
-    const catalog = this.props.shelf.catalogMain
+    const { actions, entries, scene, work, shelf } = this.props
+    const catalog = shelf.catalogMain
     return (
       <Catalog
-        {...this.props}
+        actions={actions}
+        reducers={{ entries, scene, work }}
         catalogState={{
           refreshing: this.state.refreshing,
           catalogHash: catalog,

@@ -16,17 +16,17 @@ class TagsTabInner extends Component {
   }
 
   _onRefresh() {
-    console.tron.log('TagsTabInner#_onRefresh')
     this.setState({ refreshing: true })
     this.props.actions.refreshTagCatalog(this.props.tag.name)
   }
 
   render() {
-    const { scene, shelf } = this.props
+    const { actions, entries, scene, work, shelf } = this.props
     let catalog = shelf.catalogTag
     return (
       <Catalog
-        {...this.props}
+        actions={actions}
+        reducers={{ entries, scene, work }}
         catalogState={{
           refreshing: this.state.refreshing,
           catalogHash: catalog,
