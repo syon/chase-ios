@@ -5,36 +5,29 @@ Tasks
 
 - アプリアイコン制作
 
-
 ## Inbox
 
 Done.
-
 
 ## Interlude
 
 - シーンを選ばずにタグ付け
 
-
 ## Scene
 
 Done.
-
 
 ## Tags
 
 Done.
 
-
 ## Config
 
 Done.
 
+## AWS
 
-## S3
-
-Done.
-
+- Lambda#info -- Pocketが持っている情報もマージ
 
 ## Next Features
 
