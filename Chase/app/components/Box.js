@@ -58,7 +58,8 @@ export default class extends Component {
   }
 
   onBoxPressed() {
-    const { item, work, entry, scene, actions } = this.props
+    const { work, entry, scene } = this.props.reducers
+    const { actions } = this.props
     const imgUrl = `${this.state.thumbBaseUrl}/${entry.image}`
     this.props.navigator.push({
       screen: "Chase.Interlude",
@@ -77,14 +78,15 @@ export default class extends Component {
   }
 
   sceneSelected() {
-    const { actions, item } = this.props
+    const { entry } = this.props.reducers
     this.setState({ done: true })
-    actions.archive(item.itemId)
+    this.props.actions.archive(entry.eid)
   }
 
   render() {
-    const { actions, item, work, entry, scene, sceneSelectorHidden } = this.props
-    if (!item) { return null }
+    const { work, entry, scene } = this.props.reducers
+    const { actions, sceneSelectorHidden } = this.props
+    if (!entry) { return null }
     const thumb = this.makeThumb(entry)
     let imageOpcty = this.judgeArchived(entry, work) ? 0.5 : 1
     let archivedBG = this.judgeArchived(entry, work) ? '#aaa' : '#fff'

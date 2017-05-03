@@ -29,10 +29,16 @@ export default class extends Component {
 
   renderItem({ item }) {
     const { entries: givenEntries, sceneSelectorHidden: h } = this.props
+    const { navigator, actions, work, scene } = this.props
     const entries = givenEntries || {}
     const entry = entries[item.itemId] || {}
     return (
-      <Box item={item} entry={entry} {...this.props} sceneSelectorHidden={h} />
+      <Box
+        navigator={navigator}
+        actions={actions}
+        reducers={{ work, entry, scene }}
+        sceneSelectorHidden={h}
+      />
     )
   }
 
