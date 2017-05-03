@@ -60,6 +60,7 @@ export default class extends Component {
     const { work, entry, scene } = this.props.reducers
     const { navigator, actions } = this.props
     const imgUrl = `${this.state.thumbBaseUrl}/${entry.image}`
+    navigator.popToRoot()
     navigator.push({
       screen: "Chase.Interlude",
       passProps: { actions, imgUrl, reducers: { entry, work, scene } },
