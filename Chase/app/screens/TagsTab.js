@@ -26,7 +26,9 @@ class TagsTab extends Component {
     const { login, tags, actions } = this.props
     const tagsArr = []
     Object.keys(tags).forEach((tagKey) => {
-      tagsArr.push(tags[tagKey])
+      let obj = tags[tagKey]
+      obj['key'] = tagKey
+      tagsArr.push(obj)
     })
     return (
       <ScrollView

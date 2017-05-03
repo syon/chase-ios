@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {
   TouchableOpacity,
-  ListView,
+  FlatList,
   StyleSheet,
   View,
   Text,
@@ -13,18 +13,15 @@ import { responsiveFontSize } from 'react-native-responsive-dimensions'
 export default class extends Component {
   constructor(props) {
     super(props)
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
     this.state = {
       refreshing: false,
-      dataSource: ds.cloneWithRows(['row 1', 'row 2']),
     }
-    this._renderRow = this._renderRow.bind(this)
+    this._renderItem = this._renderItem.bind(this)
   }
 
-  _renderRow(rowData) {
-    const tag = rowData
+  _renderItem({ item }) {
+    const tag = item
     const _onPress = () => {
-      console.info('★', rowData.name, this.props)
       this.props.navigator.push({
         title: tag.name,
         screen: 'Chase.TagsTabInnerScreen',
@@ -46,10 +43,10 @@ export default class extends Component {
 
   render() {
     return (
-      <ListView
-        dataSource={this.state.dataSource.cloneWithRows(this.props.tagsArr)}
-        renderRow={this._renderRow}
-        enableEmptySections={true}
+      <FlatList
+        data={this.props.tagsArr}
+        renderItem={this._renderItem}
+        refreshing={this.state.refreshing}
       />
     )
   }

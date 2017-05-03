@@ -21,4 +21,6 @@ $ rm -rf node_modules/
 $ yarn
 
 $ react-native link
+
+$ yarn upgrade-interactive
 ```

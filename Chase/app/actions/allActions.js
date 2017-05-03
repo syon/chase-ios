@@ -128,7 +128,7 @@ export function doAfterRedirect(eventUrl) {
 function updateLoginData(loginData) {
   global.storage.save({
     key: 'loginState',
-    rawData: { 
+    data: { 
       username: loginData.username,
       accessToken: loginData.accessToken,
     },
@@ -156,7 +156,7 @@ export function clearCatalogCache() {
 export function setScenes(scenes) {
   return function(dispatch) {
     dispatch({ type: 'SET_SCENES', scenes })
-    global.storage.save({ key: 'scenes', rawData: scenes, expires: null })
+    global.storage.save({ key: 'scenes', data: scenes, expires: null })
   }
 }
 

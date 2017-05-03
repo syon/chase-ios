@@ -43,7 +43,7 @@ export async function saveCatalogItemsAsEntryToStorage(catalog) {
   await Promise.all(promises).then(values => {
     // console.tron.info('ChaseDriver#Promise.all Done!', values)
     values.forEach(v => { entries[v.eid] = v })
-    global.storage.save({ key: 'entries', rawData: entries, expires: null })
+    global.storage.save({ key: 'entries', data: entries, expires: null })
   })
   return entries
 }

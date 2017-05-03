@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-import {
-  ListView,
-} from 'react-native'
 
 import Catalog from '../components/Catalog'
 
@@ -10,8 +7,6 @@ class TagsTabInner extends Component {
     super(props)
     this.state = {
       refreshing: false,
-      itemsForDS: [],
-      dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
     }
     this._onRefresh = this._onRefresh.bind(this)
   }
