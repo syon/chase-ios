@@ -14,8 +14,6 @@ export function makeCatalog(listFromPocket) {
     const m = listFromPocket[key]
     rawItems[key] = m
     itemId = m.item_id
-    const url = m.resolved_url ? m.resolved_url : m.given_url
-    const fqdn = `${url}/`.match(/\/\/(.*?)\//)[1]
     catalog[key] = {
       key: itemId,
       itemId: itemId,
@@ -26,12 +24,12 @@ export function makeCatalog(listFromPocket) {
   return { catalog, rawItems }
 }
 
-export async function saveCatalogItemsAsEntryToStorage(catalog) {
-  // console.tron.info('ChaseDriver#saveCatalogItemsAsEntryToStorage -- catalog', catalog)
+export async function saveCatalogItemsAsEntryToStorage(rawItems) {
+  // console.tron.info('ChaseDriver#saveCatalogItemsAsEntryToStorage -- rawItems', rawItems)
   let entries = await _loadEntriesFromStorage()
   const promises = []
-  Object.keys(catalog).forEach(itemId => {
-    const item = catalog[itemId]
+  Object.keys(rawItems).forEach(itemId => {
+    const item = rawItems[itemId]
     const existEntry = entries[itemId]
     if (!existEntry) {
       promises.push(_convertItemToEntry(item))
@@ -40,6 +38,7 @@ export async function saveCatalogItemsAsEntryToStorage(catalog) {
   await Promise.all(promises).then(values => {
     // console.tron.info('ChaseDriver#Promise.all Done!', values)
     values.forEach(v => { entries[v.eid] = v })
+    // console.tron.info('ChaseDriver# -- NewEntries:', entries)
     global.storage.save({ key: 'entries', data: entries, expires: null })
   })
   return entries
@@ -71,18 +70,21 @@ async function _loadEntriesFromStorage() {
 }
 
 async function _convertItemToEntry(item) {
-  const isHTTPS = item.url.startsWith('https')
+  const url = item.resolved_url ? item.resolved_url : item.given_url
+  const isHTTPS = url.startsWith('https')
+  const isHTTP  = url.startsWith('http:')
   let pageinfo = {}
   if (isHTTPS) {
-    const libra = new Libra(item.url)
+    const libra = new Libra(url)
     pageinfo = await libra.getData().then(data => data).catch(e => {})
     // console.tron.info('ChaseDriver#Libra', pageinfo)
-  } else {
-    pageinfo = await fetch(`${CHASE_API_ENDPOINT}/info?url=${item.url}`, {
+  }
+  else if (isHTTP) {
+    pageinfo = await fetch(`${CHASE_API_ENDPOINT}/info?url=${url}`, {
         method: 'GET',
       }).then((response) => {
         if (response.ok) {
-          // console.tron.info('ChaseDriver#FetchDone!', item.url)
+          // console.tron.info('ChaseDriver#FetchDone!', url)
           return response.json()
         } else {
           return {}
@@ -92,27 +94,24 @@ async function _convertItemToEntry(item) {
       })
     // console.tron.info('ChaseDriver#[Lambda/info]', pageinfo)
   }
-  const entry = _mergeItemAndPageinfo(item, pageinfo)
+  const entry = _mergeItemAndPageinfo(url, item, pageinfo)
   // console.tron.info('ChaseDriver# -- New Entry:', entry)
   return entry
 }
 
-function _mergeItemAndPageinfo(item, pageinfo) {
-  if (!item) {
-    console.tron.warn('ITEM NOT FOUND', item)
-  }
-  pageinfo = pageinfo || {}
+function _mergeItemAndPageinfo(url, m, pi) {
+  pi = pi || {}
   return {
-    eid: item.itemId,
-    url: item.url,
-    image: _buildImagePath(item.itemId),
-    siteName: pageinfo.site_name,
-    title: _choiceText(item.title, pageinfo.title),
-    description: pageinfo.description,
-    fqdn: item.fqdn,
-    sortId: item.sort_id,
-    tags: item.tags,
-    date: _getDate(item.time_added),
+    eid: m.item_id,
+    url: url,
+    image: _buildImagePath(m.item_id),
+    siteName: pi.site_name,
+    title: _choiceText(m.title, pi.title),
+    description: pi.description,
+    fqdn: `${url}/`.match(/\/\/(.*?)\//)[1],
+    sortId: m.sort_id,
+    tags: m.tags,
+    date: _getDate(m.time_added),
   }
 }
 
