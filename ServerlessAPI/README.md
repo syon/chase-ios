@@ -35,3 +35,13 @@ serverless invoke --function thumb --log --data='{ "url": "http://yutoma233.hate
 ```bash
 curl "https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod/thumb?url=http://yutoma233.hatenablog.com/entry/2017/04/28/073000&pocket_id=1719054137"
 ```
+
+### Deploy (dev)
+
+```bash
+$ serverless deploy
+```
+
+### Deploy (prod)
+
+Edit `serverless.yml` > `stage: prod` temporary, then `serverless deploy`.
