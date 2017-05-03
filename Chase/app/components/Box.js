@@ -21,6 +21,7 @@ export default class extends Component {
     super(props)
     this.state = {
       loadingImage: false,
+      alreadyTryed: false,
       thumbBaseUrl: ChaseDriver.CHASE_THUMBS_CF_PATH,
     }
     this.onBoxPressed = this.onBoxPressed.bind(this)
@@ -29,28 +30,27 @@ export default class extends Component {
   }
 
   makeThumb(entry) {
-    if (!entry.eid) { return null }
-    const imgUrl = `${this.state.thumbBaseUrl}/${entry.image}`
-    if (this.state.loadingImage) {
+    if (!entry.eid || this.state.loadingImage) {
       return (<ActivityIndicator animating={true} style={styles.thumbnail} />)
     }
     return (
       <Image
         style={styles.thumbnail}
-        source={{uri: imgUrl}}
+        source={{ uri: `${this.state.thumbBaseUrl}/${entry.image}` }}
         onError={() => { this.onErrorLoadImage(entry) }}
       />
     )
   }
 
   onErrorLoadImage(entry) {
-    // console.tron.info('Box#onErrorLoadImage', entry)
-    if (!this.state.loadingImage) {
+    // console.tron.info('Box#onErrorLoadImage', { eid: entry.eid, title: entry.title })
+    if (!this.state.alreadyTryed) {
       this.setState({ loadingImage: true })
       const promise = this.props.actions.makeNewThumb(entry)
       promise.then(() => {
         this.setState({
           loadingImage: false,
+          alreadyTryed: true,
           thumbBaseUrl: ChaseDriver.CHASE_THUMBS_S3_PATH,
         })
       })

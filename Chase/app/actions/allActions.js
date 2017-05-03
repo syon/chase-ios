@@ -148,6 +148,7 @@ export function disconnectFromPocket() {
 export function clearCatalogCache() {
   return function(dispatch, getState) {
     global.storage.remove({ key: 'entries' })
+    global.storage.remove({ key: 'thumbs' })
     dispatch({ type: 'CLEAR_ENTRIES' })
   }
 }
@@ -273,9 +274,13 @@ export function refreshTagCatalog(tagNm) {
 
 export function makeNewThumb(entry) {
   return function(dispatch) {
-    const url = entry.url
-    const pocket_id = entry.eid
-    return ChaseDriver.callLambdaThumb(url, pocket_id)
+    return new Promise((resolve, reject) => {
+      const url = entry.url
+      const pocket_id = entry.eid
+      ChaseDriver.callLambdaThumb(url, pocket_id).then(() => {
+        resolve()
+      })
+    })
   }
 }
 
