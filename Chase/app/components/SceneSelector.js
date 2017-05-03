@@ -19,21 +19,18 @@ export default class extends Component {
   onSelectSceneA() {
     const { entry } = this.props.reducers
     this.setState({ tappedA: true })
-    this.props.sceneSelected()
     this.props.actions.applyScene(entry.eid, 'a')
   }
 
   onSelectSceneB() {
     const { entry } = this.props.reducers
     this.setState({ tappedB: true })
-    this.props.sceneSelected()
     this.props.actions.applyScene(entry.eid, 'b')
   }
 
   onSelectSceneC() {
     const { entry } = this.props.reducers
     this.setState({ tappedC: true })
-    this.props.sceneSelected()
     this.props.actions.applyScene(entry.eid, 'c')
   }
 

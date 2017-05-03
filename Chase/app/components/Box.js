@@ -24,7 +24,6 @@ export default class extends Component {
       thumbBaseUrl: ChaseDriver.CHASE_THUMBS_CF_PATH,
     }
     this.onBoxPressed = this.onBoxPressed.bind(this)
-    this.sceneSelected = this.sceneSelected.bind(this)
     this.onErrorLoadImage = this.onErrorLoadImage.bind(this)
   }
 
@@ -70,16 +69,11 @@ export default class extends Component {
     });
   }
 
-  judgeArchived(entry, work) {
+  judged(entry, work) {
     try {
-      return work[entry.eid].archive
+      return !!work[entry.eid]
     } catch(e) {}
     return false
-  }
-
-  sceneSelected() {
-    const { entry } = this.props.reducers
-    this.setState({ done: true })
   }
 
   render() {
@@ -87,8 +81,8 @@ export default class extends Component {
     const { actions, sceneSelectorHidden } = this.props
     if (!entry) { return null }
     const thumb = this.makeThumb(entry)
-    let imageOpcty = this.judgeArchived(entry, work) ? 0.5 : 1
-    let archivedBG = this.judgeArchived(entry, work) ? '#aaa' : '#fff'
+    let imageOpcty = this.judged(entry, work) ? 0.5 : 1
+    let archivedBG = this.judged(entry, work) ? '#aaa' : '#fff'
     return (
       <View style={[styles.box, {backgroundColor: archivedBG}]}>
         <TouchableWithoutFeedback onPress={this.onBoxPressed}>
@@ -105,7 +99,6 @@ export default class extends Component {
         <SceneSelector
           actions={actions}
           reducers={{ entry, work, scene }}
-          sceneSelected={this.sceneSelected}
           hidden={sceneSelectorHidden}
         />
       </View>

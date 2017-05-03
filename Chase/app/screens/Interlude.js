@@ -7,14 +7,9 @@ import SceneSelector from '../components/SceneSelector'
 
 class Interlude extends Component {
   constructor(props) {
-    super(props);
-    this.state = {
-      done: false,
-    }
+    super(props)
     this.openWebView = this.openWebView.bind(this)
-    this.judgeArchived = this.judgeArchived.bind(this)
     this.onPressArchiveBtn = this.onPressArchiveBtn.bind(this)
-    this.sceneSelected = this.sceneSelected.bind(this)
   }
 
   openWebView() {
@@ -31,10 +26,9 @@ class Interlude extends Component {
     })
   }
 
-  judgeArchived(entry, work) {
+  judged(entry, work) {
     try {
-      if (this.state.done) { return true }
-      return work[entry.eid].archive
+      return !!work[entry.eid]
     } catch(e) {}
     return false
   }
@@ -45,16 +39,12 @@ class Interlude extends Component {
     this.props.actions.archive(entry.eid)
   }
 
-  sceneSelected() {
-    this.setState({ done: true })
-  }
-
   render() {
     const { entry, work, scene } = this.props.reducers
     const { actions, imgUrl } = this.props
-    const isDone = this.judgeArchived(entry, work)
-    let imageOpcty = isDone ? 0.5 : 1
-    let archivedBG = isDone ? '#aaa' : '#fff'
+    const hasJudged = this.judged(entry, work)
+    let imageOpcty = hasJudged ? 0.5 : 1
+    let archivedBG = hasJudged ? '#aaa' : '#fff'
     return (
       <ScrollView style={[styles.container, {backgroundColor: archivedBG}]}>
         <TouchableWithoutFeedback onPress={this.openWebView}>
@@ -75,7 +65,7 @@ class Interlude extends Component {
               <Text style={styles.date}>{ entry.date }</Text>
             </View>
             <View style={styles.toolbarRight}>
-              <Button onPress={this.onPressArchiveBtn} disabled={isDone} style={styles.btnArchive}>✓</Button>
+              <Button onPress={this.onPressArchiveBtn} disabled={hasJudged} style={styles.btnArchive}>✓</Button>
             </View>
           </View>
           <View>
@@ -86,7 +76,6 @@ class Interlude extends Component {
           <SceneSelector
             actions={actions}
             reducers={{ entry, work, scene }}
-            sceneSelected={this.sceneSelected}
           />
         </View>
       </ScrollView>
