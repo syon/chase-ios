@@ -8,12 +8,16 @@ import SceneSelector from '../components/SceneSelector'
 class Interlude extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      processing: false,
+    }
     this.openWebView = this.openWebView.bind(this)
     this.onPressArchiveBtn = this.onPressArchiveBtn.bind(this)
   }
 
   openWebView() {
-    const { entry } = this.props
+    const { entry } = this.props.reducers
+    if (!entry || !entry.url) { return }
     this.props.navigator.push({
       title: '',
       screen: 'Chase.WebViewScreen',
@@ -28,6 +32,7 @@ class Interlude extends Component {
 
   judged(entry, work) {
     try {
+      if (this.state.processing) { return true }
       return !!work[entry.eid]
     } catch(e) {}
     return false
@@ -35,8 +40,10 @@ class Interlude extends Component {
 
   onPressArchiveBtn() {
     const { entry } = this.props.reducers
-    this.setState({ done: true })
-    this.props.actions.archive(entry.eid)
+    this.setState({ processing: true })
+    this.props.actions.archive(entry.eid).then(() => {
+      this.setState({ processing: false })
+    })
   }
 
   render() {
@@ -44,7 +51,8 @@ class Interlude extends Component {
     const { actions, imgUrl } = this.props
     const hasJudged = this.judged(entry, work)
     let imageOpcty = hasJudged ? 0.5 : 1
-    let archivedBG = hasJudged ? '#aaa' : '#fff'
+    let archivedBG = hasJudged ? '#eee' : '#fff'
+    const archiveBtnIcon = this.state.processing ? '...' : '✓'
     return (
       <ScrollView style={[styles.container, {backgroundColor: archivedBG}]}>
         <TouchableWithoutFeedback onPress={this.openWebView}>
@@ -65,7 +73,9 @@ class Interlude extends Component {
               <Text style={styles.date}>{ entry.date }</Text>
             </View>
             <View style={styles.toolbarRight}>
-              <Button onPress={this.onPressArchiveBtn} disabled={hasJudged} style={styles.btnArchive}>✓</Button>
+              <Button onPress={this.onPressArchiveBtn} disabled={hasJudged} style={styles.btnArchive}>
+                { archiveBtnIcon }
+              </Button>
             </View>
           </View>
           <View>
@@ -123,7 +133,7 @@ const styles = StyleSheet.create({
     color: '#a3aab1',
   },
   btnArchive: {
-    fontSize: responsiveFontSize(3),
+    fontSize: responsiveFontSize(4),
     padding: 15,
   },
   desc: {
