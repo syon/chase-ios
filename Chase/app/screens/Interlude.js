@@ -85,9 +85,7 @@ class Interlude extends Component {
         </View>
         <View style={{paddingBottom: 80}}>
           <SceneSelector
-            entry={entry}
-            work={work}
-            scene={scene}
+            outlet={{ entry, work, scene }}
             sceneSelected={this.sceneSelected}
           />
         </View>

@@ -38,7 +38,8 @@ export default class extends Component {
   }
 
   render() {
-    const { entry, work, scene, hidden } = this.props
+    const { entry, work, scene } = this.props.outlet
+    const { hidden } = this.props
     if (hidden) return null
     const wk = work || {}
     const d = wk[entry.eid] || {}

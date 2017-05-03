@@ -83,7 +83,7 @@ export default class extends Component {
   }
 
   render() {
-    const { item, work, entry, sceneSelectorHidden } = this.props
+    const { item, work, entry, scene, sceneSelectorHidden } = this.props
     if (!item) { return null }
     const thumb = this.makeThumb(entry)
     let imageOpcty = this.judgeArchived(entry, work) ? 0.5 : 1
@@ -102,7 +102,7 @@ export default class extends Component {
           </View>
         </TouchableWithoutFeedback>
         <SceneSelector
-          {...this.props}
+          outlet={{ entry, work, scene }}
           sceneSelected={this.sceneSelected}
           hidden={sceneSelectorHidden}
         />
