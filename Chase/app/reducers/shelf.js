@@ -8,6 +8,8 @@ const initialState = {
 
 export default function (state = initialState, action = {}) {
   switch (action.type) {
+    case 'CLEAR_ALL_CATALOGS':
+      return initialState
     case 'REFRESH_CATALOG_MAIN':
       return Object.assign({}, state, {
         catalogMain: action.catalog

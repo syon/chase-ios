@@ -150,6 +150,7 @@ export function clearCatalogCache() {
     global.storage.remove({ key: 'entries' })
     global.storage.remove({ key: 'thumbs' })
     dispatch({ type: 'CLEAR_ENTRIES' })
+    dispatch({ type: 'CLEAR_ALL_CATALOGS' })
   }
 }
 
