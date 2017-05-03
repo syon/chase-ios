@@ -333,14 +333,6 @@ export function archive(itemId) {
   }
 }
 
-export function testPocketAdapter() {
-  return function(dispatch, getState) {
-    console.log('testPocketAdapter...');
-    const result = Pocket.getAllTags()
-    console.info('result', result);
-  }
-}
-
 export function changeScene(idx) {
   return function(dispatch, getState) {
     dispatch({ type: 'CHANGE_SCENE', sceneIdx: idx })
