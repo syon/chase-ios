@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   sceneBtn: {
-    fontSize: responsiveFontSize(2),
+    fontSize: responsiveFontSize(2.5),
     padding: 10,
     overflow: 'hidden',
   },
