@@ -6,25 +6,34 @@ import {
   View,
   Text,
   Image,
+  ActivityIndicator,
   TouchableWithoutFeedback,
 } from 'react-native'
 import Button from 'react-native-button'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 
+import * as ChaseDriver from '../api/ChaseDriver'
 import SceneSelector from '../components/SceneSelector'
 
 export default class extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      loadingImage: false,
+      thumbBaseUrl: ChaseDriver.CHASE_THUMBS_CF_PATH,
+    }
     this.onBoxPressed = this.onBoxPressed.bind(this)
     this.sceneSelected = this.sceneSelected.bind(this)
+    this.onErrorLoadImage = this.onErrorLoadImage.bind(this)
   }
 
   makeThumb(entry) {
     if (!entry.eid) { return null }
-    const imgUrl = this.makeImgUrl(entry)
-    if (!imgUrl) { return null }
+    const imgUrl = `${this.state.thumbBaseUrl}/${entry.image}`
+    if (this.state.loadingImage) {
+      return (<ActivityIndicator animating={true} style={styles.thumbnail} />)
+    }
     return (
       <Image
         style={styles.thumbnail}
@@ -35,15 +44,18 @@ export default class extends Component {
   }
 
   onErrorLoadImage(entry) {
-    console.tron.info('Box#onErrorLoadImage', entry)
+    // console.tron.info('Box#onErrorLoadImage', entry)
+    if (!this.state.loadingImage) {
+      this.setState({ loadingImage: true })
+      const promise = this.props.actions.makeNewThumb(entry)
+      promise.then(() => {
+        this.setState({
+          loadingImage: false,
+          thumbBaseUrl: ChaseDriver.CHASE_THUMBS_S3_PATH,
+        })
+      })
+    }
     return
-  }
-
-  makeImgUrl(entry) {
-    const thumbsPath = 'https://d2aed4ktvx51jm.cloudfront.net/items/thumbs'
-    const item10Id = `0000000000${entry.eid}`.substr(-10, 10)
-    const itemId3 = item10Id.slice(0, 3)
-    return `${thumbsPath}/${itemId3}/${item10Id}.jpg`
   }
 
   onBoxPressed() {

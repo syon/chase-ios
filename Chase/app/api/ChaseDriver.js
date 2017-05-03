@@ -2,6 +2,10 @@ let catalogBySort = {}
 
 import Libra from './LibraAPI'
 
+export const CHASE_API_ENDPOINT = 'https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod'
+export const CHASE_THUMBS_CF_PATH = 'https://d2aed4ktvx51jm.cloudfront.net'
+export const CHASE_THUMBS_S3_PATH = 'https://s3.amazonaws.com/syon-chase'
+
 export function makeCatalog(listFromPocket) {
   // console.tron.info('ChaseDriver#makeCatalog -- listFromPocket', listFromPocket)
   let catalog = {}
@@ -37,11 +41,27 @@ export async function saveCatalogItemsAsEntryToStorage(catalog) {
     }
   })
   await Promise.all(promises).then(values => {
-    console.tron.info('ChaseDriver#Promise.all Done!', values)
+    // console.tron.info('ChaseDriver#Promise.all Done!', values)
     values.forEach(v => { entries[v.eid] = v })
     global.storage.save({ key: 'entries', rawData: entries, expires: null })
   })
   return entries
+}
+
+export function callLambdaThumb(url, pocket_id) {
+  return new Promise((resolve, reject) => {
+    let params = new URLSearchParams()
+    params.append('url', url)
+    params.append('pocket_id', pocket_id)
+    fetch(`${CHASE_API_ENDPOINT}/thumb?${params.toString()}`).then(response => {
+      console.tron.info('ChaseDriver#callLambdaThumb', response)
+      if (response.ok) {
+        resolve()
+      }
+    }, err => {
+      reject()
+    })
+  })
 }
 
 async function _loadEntriesFromStorage() {
@@ -90,6 +110,7 @@ function _mergeItemAndPageinfo(item, pageinfo) {
   return {
     eid: item.itemId,
     url: item.url,
+    image: _buildImagePath(item.itemId),
     siteName: pageinfo.site_name,
     title: _choiceText(item.title, pageinfo.title),
     description: pageinfo.description,
@@ -110,4 +131,10 @@ function _getDate(time10) {
   const m = dt.getMonth() + 1
   const d = dt.getDate()
   return `${y}.${m}.${d}`
+}
+
+function _buildImagePath(itemId) {
+  const item10Id = `0000000000${itemId}`.substr(-10, 10)
+  const itemId3 = item10Id.slice(0, 3)
+  return `items/thumbs/${itemId3}/${item10Id}.jpg`
 }

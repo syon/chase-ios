@@ -271,6 +271,14 @@ export function refreshTagCatalog(tagNm) {
   }
 }
 
+export function makeNewThumb(entry) {
+  return function(dispatch) {
+    const url = entry.url
+    const pocket_id = entry.eid
+    return ChaseDriver.callLambdaThumb(url, pocket_id)
+  }
+}
+
 export function applyScene(itemId, abc) {
   return function(dispatch, getState) {
     console.tron.info('allActions#applyScene', {itemId, abc})
