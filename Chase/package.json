@@ -15,7 +15,6 @@
     "react-native-responsive-dimensions": "^1.0.1",
     "react-native-storage": "^0.2.0",
     "react-native-vector-icons": "^4.0.1",
-    "react-native-wkwebview-reborn": "^1.4.0",
     "react-redux": "^5.0.4",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0"

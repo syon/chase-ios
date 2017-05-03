@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
-import WKWebView from 'react-native-wkwebview-reborn'
+import { View, WebView } from 'react-native'
 
 export default class extends Component {
   constructor(props) {
@@ -9,7 +8,7 @@ export default class extends Component {
 
   render() {
     const { url } = this.props
-    const wv = url ? (<WKWebView source={{ uri: url }} />) : null
+    const wv = url ? (<WebView source={{ uri: url }} />) : null
     return (
       <View style={{ flex: 1 }}>
         { wv }

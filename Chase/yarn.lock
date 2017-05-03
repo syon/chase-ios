@@ -1710,7 +1710,7 @@ fbjs-scripts@^0.7.0:
     semver "^5.1.0"
     through2 "^2.0.0"
 
-fbjs@^0.8.3, fbjs@^0.8.9, fbjs@~0.8.9:
+fbjs@^0.8.9, fbjs@~0.8.9:
   version "0.8.9"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.9.tgz#180247fbd347dcc9004517b904f865400a0c8f14"
   dependencies:
@@ -3333,12 +3333,6 @@ react-native-vector-icons@^4.0.1:
   dependencies:
     lodash "^4.0.0"
     yargs "^6.3.0"
-
-react-native-wkwebview-reborn@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-wkwebview-reborn/-/react-native-wkwebview-reborn-1.4.0.tgz#5558ac1f7bc8e7ac30bc6f8b30e5ab4ab64523f8"
-  dependencies:
-    fbjs "^0.8.3"
 
 react-native@^0.44.0, react-native@x:
   version "0.44.0"
