@@ -9,24 +9,21 @@ export const CHASE_THUMBS_S3_PATH = 'https://s3.amazonaws.com/syon-chase'
 export function makeCatalog(listFromPocket) {
   // console.tron.info('ChaseDriver#makeCatalog -- listFromPocket', listFromPocket)
   let catalog = {}
+  let rawItems = {}
   Object.keys(listFromPocket).forEach((key) => {
     const m = listFromPocket[key]
+    rawItems[key] = m
     itemId = m.item_id
     const url = m.resolved_url ? m.resolved_url : m.given_url
     const fqdn = `${url}/`.match(/\/\/(.*?)\//)[1]
     catalog[key] = {
       key: itemId,
       itemId: itemId,
-      title: m.resolved_title ? m.resolved_title : m.given_title,
-      url: url,
-      fqdn: fqdn,
       sortId: m.sort_id,
-      tags: m.tags,
-      time_added: m.time_added
     }
     catalogBySort[m.sort_id] = itemId
   })
-  return catalog
+  return { catalog, rawItems }
 }
 
 export async function saveCatalogItemsAsEntryToStorage(catalog) {

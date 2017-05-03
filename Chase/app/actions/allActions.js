@@ -197,7 +197,7 @@ function _refreshInboxCatalog(dispatch) {
     console.tron.info('allActions#_refreshInboxCatalog')
     dispatch({ type: 'REFRESH_WORK' })
     Pocket.getAllUntaggedItems().then((result) => {
-      const catalog = ChaseDriver.makeCatalog(result.list)
+      const { catalog } = ChaseDriver.makeCatalog(result.list)
       dispatch({ type: 'REFRESH_CATALOG_MAIN', catalog })
       ChaseDriver.saveCatalogItemsAsEntryToStorage(catalog)
         .then(entries => {
@@ -224,7 +224,7 @@ export function refreshSceneCatalogs() {
 
 function _loadSceneCatalogA(dispatch) {
   Pocket.getItemsTaggedBy('chase:a').then((result) => {
-    const catalog = ChaseDriver.makeCatalog(result.list)
+    const { catalog } = ChaseDriver.makeCatalog(result.list)
     console.tron.info('allActions#_loadSceneCatalogA', catalog)
     dispatch({ type: 'REFRESH_CATALOG_SCENE_A', catalog })
     ChaseDriver.saveCatalogItemsAsEntryToStorage(catalog)
@@ -236,7 +236,7 @@ function _loadSceneCatalogA(dispatch) {
 
 function _loadSceneCatalogB(dispatch) {
   Pocket.getItemsTaggedBy('chase:b').then((result) => {
-    const catalog = ChaseDriver.makeCatalog(result.list)
+    const { catalog } = ChaseDriver.makeCatalog(result.list)
     console.tron.info('allActions#_loadSceneCatalogB', catalog)
     dispatch({ type: 'REFRESH_CATALOG_SCENE_B', catalog })
     ChaseDriver.saveCatalogItemsAsEntryToStorage(catalog)
@@ -248,7 +248,7 @@ function _loadSceneCatalogB(dispatch) {
 
 function _loadSceneCatalogC(dispatch) {
   Pocket.getItemsTaggedBy('chase:c').then((result) => {
-    const catalog = ChaseDriver.makeCatalog(result.list)
+    const { catalog } = ChaseDriver.makeCatalog(result.list)
     console.tron.info('allActions#_loadSceneCatalogC', catalog)
     dispatch({ type: 'REFRESH_CATALOG_SCENE_C', catalog })
     ChaseDriver.saveCatalogItemsAsEntryToStorage(catalog)
@@ -264,7 +264,7 @@ export function refreshTagCatalog(tagNm) {
       console.tron.info('allActions#refreshTagCatalog -- start')
       dispatch({ type: 'REFRESH_CATALOG_TAG', catalog: null })
       Pocket.getItemsTaggedBy(tagNm).then((result) => {
-        const catalog = ChaseDriver.makeCatalog(result.list)
+        const { catalog } = ChaseDriver.makeCatalog(result.list)
         dispatch({ type: 'REFRESH_CATALOG_TAG', catalog })
         console.tron.info('allActions#refreshTagCatalog -- catalog:', catalog)
         ChaseDriver.saveCatalogItemsAsEntryToStorage(catalog)
