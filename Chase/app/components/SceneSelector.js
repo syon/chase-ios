@@ -45,9 +45,15 @@ export default class extends Component {
     const sceneC = scene.allScenes[2]
     return (
       <View style={styles.selectScene}>
-        <Button onPress={this.onSelectSceneA} disabled={this.state.tappedA || d["a"]} style={styles.sceneBtn}>{ sceneA }</Button>
-        <Button onPress={this.onSelectSceneB} disabled={this.state.tappedB || d["b"]} style={styles.sceneBtn}>{ sceneB }</Button>
-        <Button onPress={this.onSelectSceneC} disabled={this.state.tappedC || d["c"]} style={styles.sceneBtn}>{ sceneC }</Button>
+        <View style={styles.sceneBtnBox}>
+          <Button onPress={this.onSelectSceneA} disabled={this.state.tappedA || d["a"]} style={styles.sceneBtn}>{ sceneA }</Button>
+        </View>
+        <View style={styles.sceneBtnBox}>
+          <Button onPress={this.onSelectSceneB} disabled={this.state.tappedB || d["b"]} style={styles.sceneBtn}>{ sceneB }</Button>
+        </View>
+        <View style={styles.sceneBtnBox}>
+          <Button onPress={this.onSelectSceneC} disabled={this.state.tappedC || d["c"]} style={styles.sceneBtn}>{ sceneC }</Button>
+        </View>
       </View>
     )
   }
@@ -56,11 +62,17 @@ export default class extends Component {
 const styles = StyleSheet.create({
   selectScene: {
     flexDirection: 'row',
+    alignItems: 'stretch',
     justifyContent: 'space-around',
     paddingBottom: 5,
   },
+  sceneBtnBox: {
+    flex: 1,
+    marginLeft: 5,
+    marginRight: 5,
+  },
   sceneBtn: {
-    fontSize: responsiveFontSize(2),
+    fontSize: responsiveFontSize(2.5),
     padding: 10,
     overflow: 'hidden',
   },
