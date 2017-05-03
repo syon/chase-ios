@@ -36,12 +36,31 @@ serverless invoke --function thumb --log --data='{ "url": "http://yutoma233.hate
 curl "https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod/thumb?url=http://yutoma233.hatenablog.com/entry/2017/04/28/073000&pocket_id=1719054137"
 ```
 
-### Deploy (dev)
+
+## Deploy
+
+#### Note
+
+- http://blog.serverworks.co.jp/tech/2017/02/01/apigateway-lambda-cloudwatchlogs/
+
+- API Gateway
+  - リソースはとある時間の断面、ではない
+  - リソースの作成は REST 的な意味であり、パスを切るのと同義
+  - よくわからないが POST で作ってもうまく呼べなかったので全部 GET にした
+  - ステージに対するデプロイは断面のアップロードではない
+  - ステージはただ場所が違うだけ、それゆえエンドポイント末尾に付加される
+  - リソースの状況を変えると動作中すべてのステージに影響を与える
+  - ステージの名前で呼び出す Lambda を振り分けることができる
+  - 統合リクエストの設定から `chase-${stageVariables.alias}-info` のように指定
+  - これを設定するときダイアログが出現し手動でコマンド実行する必要がある
+
+
+#### dev
 
 ```bash
 $ serverless deploy
 ```
 
-### Deploy (prod)
+#### prod
 
 Edit `serverless.yml` > `stage: prod` temporary, then `serverless deploy`.
