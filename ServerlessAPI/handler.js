@@ -65,5 +65,8 @@ function putImage(s3path, buffer) {
     Bucket: process.env.BUCKET,
     Key: s3path,
     Body: buffer,
+  }, (err, data) => {
+    if (err) { console.log('Error:', err); }
+    if (data) { console.log('Success:', data); }
   });
 }
