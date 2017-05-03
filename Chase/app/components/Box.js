@@ -58,11 +58,11 @@ export default class extends Component {
   }
 
   onBoxPressed() {
-    const { item, work, entry, actions, sceneSelectorHidden } = this.props
+    const { item, work, entry, scene, actions, sceneSelectorHidden } = this.props
     const imgUrl = `${this.state.thumbBaseUrl}/${entry.image}`
     this.props.navigator.push({
       screen: "Chase.Interlude",
-      passProps: {...this.props, imgUrl},
+      passProps: { actions, entry, imgUrl, work, scene },
       navigatorStyle: {
         tabBarHidden: true,
       },

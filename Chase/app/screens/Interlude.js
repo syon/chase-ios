@@ -52,7 +52,7 @@ class Interlude extends Component {
   }
 
   render() {
-    const { actions, entry, imgUrl, work } = this.props
+    const { actions, entry, imgUrl, work, scene } = this.props
     const isDone = this.judgeArchived(entry, work)
     let imageOpcty = isDone ? 0.5 : 1
     let archivedBG = isDone ? '#aaa' : '#fff'
@@ -85,7 +85,9 @@ class Interlude extends Component {
         </View>
         <View style={{paddingBottom: 80}}>
           <SceneSelector
-            {...this.props}
+            entry={entry}
+            work={work}
+            scene={scene}
             sceneSelected={this.sceneSelected}
           />
         </View>
