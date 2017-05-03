@@ -6,3 +6,19 @@
 $ cd Chase
 $ react-native run-ios
 ```
+
+## package upgrade
+
+```bash
+$ brew update
+
+$ brew doctor
+
+$ brew upgrade yarn
+
+$ rm -rf node_modules/
+
+$ yarn
+
+$ react-native link
+```
