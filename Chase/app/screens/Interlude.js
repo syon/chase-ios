@@ -1,5 +1,12 @@
 import React, { Component } from 'react'
-import { View, ScrollView, StyleSheet, Text, Image, TouchableWithoutFeedback } from 'react-native'
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  Image,
+  TextInput,
+  TouchableWithoutFeedback } from 'react-native'
 import Button from 'react-native-button'
 import { responsiveFontSize } from 'react-native-responsive-dimensions'
 
@@ -10,9 +17,12 @@ class Interlude extends Component {
     super(props)
     this.state = {
       processing: false,
+      tagInput: '',
+      tagsRegistered: [],
     }
     this.openWebView = this.openWebView.bind(this)
     this.onPressArchiveBtn = this.onPressArchiveBtn.bind(this)
+    this.onPressTagBtn = this.onPressTagBtn.bind(this)
   }
 
   openWebView() {
@@ -46,6 +56,16 @@ class Interlude extends Component {
     })
   }
 
+  onPressTagBtn() {
+    const { entry } = this.props.reducers
+    const arg = { itemId: entry.eid, tagNm: this.state.tagInput }
+    this.props.actions.addTag(arg).then(tagNm => {
+      let tagsRegistered = this.state.tagsRegistered
+      tagsRegistered.push(tagNm)
+      this.setState({ tagsRegistered, tagInput: '' })
+    })
+  }
+
   render() {
     const { entry, work, scene } = this.props.reducers
     const { actions, imgUrl } = this.props
@@ -53,6 +73,14 @@ class Interlude extends Component {
     let imageOpcty = hasJudged ? 0.5 : 1
     let archivedBG = hasJudged ? '#eee' : '#fff'
     const archiveBtnIcon = this.state.processing ? '...' : '✓'
+    let tags = []
+    this.state.tagsRegistered.map(tag => {
+      tags.push(
+        <View style={styles.tagChip}>
+          <Text style={styles.tagChipText}>{ tag }</Text>
+        </View>
+      )
+    })
     return (
       <ScrollView style={[styles.container, {backgroundColor: archivedBG}]}>
         <TouchableWithoutFeedback onPress={this.openWebView}>
@@ -82,7 +110,17 @@ class Interlude extends Component {
             <Text style={styles.desc}>{ entry.description }</Text>
           </View>
         </View>
-        <View style={{paddingBottom: 80}}>
+        <View style={styles.tagInputBox}>
+          <TextInput
+            value={this.state.tagInput}
+            onChangeText={(text) => this.setState({ tagInput: text })}
+            onSubmitEditing={this.onPressTagBtn}
+            placeholder={'Enter tag name'}
+            style={styles.input}
+          />
+        </View>
+        <View style={styles.tagChipBox}>{ tags }</View>
+        <View style={{paddingBottom: 300}}>
           <SceneSelector
             actions={actions}
             reducers={{ entry, work, scene }}
@@ -145,6 +183,40 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingBottom: 5,
+  },
+  tagInputBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    margin: 20,
+    marginBottom: 0,
+  },
+  input: {
+    flex: 1,
+    height: 40,
+    padding: 5,
+    fontSize: responsiveFontSize(2),
+    borderColor: '#ddd',
+    borderWidth: 1,
+    backgroundColor: '#fff',
+  },
+  tagChipBox: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    flexWrap: 'wrap',
+    margin: 20,
+    marginTop: 5,
+  },
+  tagChip: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 5,
+    backgroundColor: '#bbb',
+    marginRight: 5,
+    marginBottom: 5,
+  },
+  tagChipText: {
+    color: '#fff',
+    padding: 4,
   },
 })
 

@@ -13,10 +13,21 @@ class MyTron {
   }
 
   static start(label, obj) {
-    console.info(label, obj)
+    console.log(`>>>>>>>> ${label} >>>>>>>>>>>>>>>>>>>>>>>>>>>>`)
+    console.info(obj)
     Reactotron.display({
       name: label,
       preview: 'START',
+      value: obj,
+    })
+  }
+
+  static end(label, obj) {
+    console.info(obj)
+    console.log(`<<<<<<<<<<<<<<<<<<<<<<<<<<<< ${label} <<<<<<<<`)
+    Reactotron.display({
+      name: label,
+      preview: 'END',
       value: obj,
     })
   }

@@ -307,20 +307,10 @@ export function applyScene(itemId, abc) {
   }
 }
 
-export function addTag(itemId, tagNm) {
-  return function(dispatch, getState) {
-    console.log('タグ付けします...', itemId);
-    const at = memAccessToken
-    const promise = PocketAPI.tags_add(CONSUMER_KEY, at, itemId, tagNm)
-    promise.then((result) => {
-      if (result.action_results) {
-        console.tron.log('allActions#addTag - Success')
-        console.info('Success: Add Tag', itemId);
-      }
-    }).catch(err => {
-      console.tron.error('allActions#addTag - Error')
-      console.error(err)
-    })
+export function addTag({ itemId, tagNm }) {
+  return async function(dispatch, getState) {
+    await Pocket.addTag(itemId, tagNm)
+    return tagNm
   }
 }
 

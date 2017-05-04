@@ -160,7 +160,7 @@ export function tags_add(consumerKey, accessToken, itemId, tag) {
         throw response
       }
     }).then((result) => {
-      console.tron.info('API#tags_add', result)
+      console.tron.end('API#tags_add', result)
       resolve(result)
     }).catch((error) => {
       console.tron.error('API#tags_add', error)

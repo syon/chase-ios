@@ -63,3 +63,11 @@ export async function getAllTags() {
   console.tron.info('Adapter#getAllTags - end', tags)
   return tags
 }
+
+export async function addTag(itemId, tagNm) {
+  console.tron.start('Adapter#addTag', { itemId, tagNm })
+  const answer = await PocketAPI.tags_add(CONSUMER_KEY, memAccessToken, itemId, tagNm)
+  const result = (answer.status === 1) ? tagNm : ''
+  console.tron.end('Adapter#addTag', result)
+  return result
+}
