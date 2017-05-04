@@ -46,7 +46,7 @@ class ConfigTab extends Component {
         </View>
         <View>
           <Button onPress={actions.clearCatalogCache} style={styles.btn}>Clear Cache</Button>
-          <Button onPress={actions.debugInfo} style={styles.btn}>Debug Info</Button>
+          {/*<Button onPress={actions.debugInfo} style={styles.btn}>Debug Info</Button>*/}
         </View>
       </View>
     )
