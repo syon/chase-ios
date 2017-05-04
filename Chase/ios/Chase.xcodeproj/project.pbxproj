@@ -56,7 +56,6 @@
 		AF8B933B1E717B410049C1A5 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AF8B93311E717B410049C1A5 /* Zocial.ttf */; };
 		AF8B93D31E7184200049C1A5 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF8B939D1E7181810049C1A5 /* libRNVectorIcons.a */; };
 		B107106CA3DF4830A39A48E8 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1B181CC10C2437AB54E2396 /* Zocial.ttf */; };
-		B8928BDD05774AC5857CB0F7 /* libRCTWKWebView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DFF1B43100CF43B1A4E3BC06 /* libRCTWKWebView.a */; };
 		C4C3595F5A6E48A1904C7DFC /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D769AA225AD34B3D922DEC7C /* libReactNativeNavigation.a */; };
 		CD840AF179F04A6795187623 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 17C42777BD384C1F97167738 /* Ionicons.ttf */; };
 /* End PBXBuildFile section */
@@ -321,7 +320,6 @@
 		D59BCD56356D43AEA72B5F8C /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		D769AA225AD34B3D922DEC7C /* libReactNativeNavigation.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeNavigation.a; sourceTree = "<group>"; };
 		DE1FCE9243654B35A7CA6767 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
-		DFF1B43100CF43B1A4E3BC06 /* libRCTWKWebView.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTWKWebView.a; sourceTree = "<group>"; };
 		E843D6F59ADD495592B1FDE9 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		FA5990FE628648B78D3A8148 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -351,7 +349,6 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				B8928BDD05774AC5857CB0F7 /* libRCTWKWebView.a in Frameworks */,
 				C4C3595F5A6E48A1904C7DFC /* libReactNativeNavigation.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -709,7 +706,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 8G346ZDW69;
+						DevelopmentTeam = 3464576EJ5;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1221,7 +1218,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 8G346ZDW69;
+				DEVELOPMENT_TEAM = 3464576EJ5;
+				ENABLE_BITCODE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
@@ -1236,6 +1234,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.flrflr.chase;
 				PRODUCT_NAME = Chase;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1246,7 +1245,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8G346ZDW69;
+				DEVELOPMENT_TEAM = 3464576EJ5;
+				ENABLE_BITCODE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
@@ -1261,6 +1261,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.flrflr.chase;
 				PRODUCT_NAME = Chase;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
