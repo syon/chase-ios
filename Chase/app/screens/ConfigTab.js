@@ -37,16 +37,16 @@ class ConfigTab extends Component {
             Disconnect
           </Button>
         </View>
-        <View>
-          <Button onPress={actions.clearCatalogCache} style={styles.btn}>Clear Cache</Button>
-          <Button onPress={actions.debugInfo} style={styles.btn}>Debug Info</Button>
-        </View>
         <View style={styles.selectSceneBox}>
           <View style={styles.selectScene}>
             <Button onPress={this._onSelectSceneEdit} style={styles.sceneBtn}>{ sceneA }</Button>
             <Button onPress={this._onSelectSceneEdit} style={styles.sceneBtn}>{ sceneB }</Button>
             <Button onPress={this._onSelectSceneEdit} style={styles.sceneBtn}>{ sceneC }</Button>
           </View>
+        </View>
+        <View>
+          <Button onPress={actions.clearCatalogCache} style={styles.btn}>Clear Cache</Button>
+          <Button onPress={actions.debugInfo} style={styles.btn}>Debug Info</Button>
         </View>
       </View>
     )
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     margin: 10,
     marginTop: 30,
+    marginBottom: 30,
     backgroundColor: '#fff',
     borderRadius: 2,
     shadowColor: '#000000',
