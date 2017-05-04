@@ -46,7 +46,8 @@ export async function saveCatalogItemsAsEntryToStorage(rawItems) {
 
 export function callLambdaThumb(url, pocket_id) {
   return new Promise((resolve, reject) => {
-    fetch(`${CHASE_API_ENDPOINT}/thumb?url=${url}&pocket_id=${pocket_id}`).then(response => {
+    const qs = `url=${url}&pocket_id=${pocket_id}&suggested=${image_suggested}`
+    fetch(`${CHASE_API_ENDPOINT}/thumb?${qs}`).then(response => {
       console.tron.info('ChaseDriver#callLambdaThumb', `${response.status} (${pocket_id})`)
       if (response.ok) {
         resolve()

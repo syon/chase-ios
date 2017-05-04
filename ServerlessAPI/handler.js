@@ -18,6 +18,7 @@ module.exports.info = (event, context, callback) => {
 
 module.exports.thumb = (event, context, callback) => {
   const itemId = event.pocket_id;
+  const suggested = event.suggested
   const item10Id = `0000000000${itemId}`.substr(-10, 10);
   const itemId3 = item10Id.slice(0, 3);
   const s3path = `items/thumbs/${itemId3}/${item10Id}.jpg`;
@@ -25,7 +26,7 @@ module.exports.thumb = (event, context, callback) => {
   try {
     const libra = new Libra(event.url);
     libra.getData().then(data => {
-      const imageUrl = data.image;
+      let imageUrl = suggested ? suggested : data.image;
       console.log('Detected image URL --', imageUrl);
       fetch(imageUrl)
         .then(response => {
