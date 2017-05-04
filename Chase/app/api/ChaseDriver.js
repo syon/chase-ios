@@ -38,7 +38,7 @@ export async function saveCatalogItemsAsEntryToStorage(rawItems) {
   await Promise.all(promises).then(values => {
     // console.tron.info('ChaseDriver#Promise.all Done!', values)
     values.forEach(v => { entries[v.eid] = v })
-    // console.tron.info('ChaseDriver# -- NewEntries:', entries)
+    console.tron.info('ChaseDriver# -- NewEntries:', entries)
     global.storage.save({ key: 'entries', data: entries, expires: null })
   })
   return entries
@@ -105,6 +105,7 @@ function _mergeItemAndPageinfo(url, m, pi) {
     eid: m.item_id,
     url: url,
     image: _buildImagePath(m.item_id),
+    image_suggested: (m.has_image === '1') ? m.image.src : '',
     siteName: pi.site_name,
     title: _choiceText(m.title, pi.title),
     description: pi.description,
