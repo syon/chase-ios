@@ -44,7 +44,7 @@ export async function saveCatalogItemsAsEntryToStorage(rawItems) {
   return entries
 }
 
-export function callLambdaThumb(url, pocket_id) {
+export function callLambdaThumb(url, pocket_id, image_suggested) {
   return new Promise((resolve, reject) => {
     const qs = `url=${url}&pocket_id=${pocket_id}&suggested=${image_suggested}`
     fetch(`${CHASE_API_ENDPOINT}/thumb?${qs}`).then(response => {

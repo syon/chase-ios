@@ -283,7 +283,8 @@ export function makeNewThumb(entry) {
     return new Promise((resolve, reject) => {
       const url = entry.url
       const pocket_id = entry.eid
-      ChaseDriver.callLambdaThumb(url, pocket_id).then(() => {
+      const suggested = entry.suggested
+      ChaseDriver.callLambdaThumb(url, pocket_id, suggested).then(() => {
         resolve()
       })
     })
