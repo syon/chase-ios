@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import Catalog from '../components/Catalog'
 
-class SceneTab extends Component {
+class ThisClass extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -17,7 +17,8 @@ class SceneTab extends Component {
   }
 
   render() {
-    const { navigator, actions, entries, scene, work, shelf } = this.props
+    const { entries, scene, work, shelf } = this.props.reducers
+    const { navigator, actions } = this.props
     let catalog = null
     switch (scene.currentIdx) {
       case 0:
@@ -33,8 +34,6 @@ class SceneTab extends Component {
     return (
       <Catalog
         navigator={navigator}
-        actions={actions}
-        reducers={{ entries, scene, work }}
         showSegment={ true }
         catalogState={{
           refreshing: this.state.refreshing,
@@ -54,15 +53,15 @@ import * as allActions from '../actions/allActions'
 
 export default connect(
   (state, ownProps) => ({
-    phase: state.phase,
-    login: state.login,
-    items: state.items,
-    shelf: state.shelf,
-    scene: state.scene,
-    work: state.work,
-    entries: state.entries,
+    reducers: {
+      phase: state.phase,
+      shelf: state.shelf,
+      scene: state.scene,
+      work: state.work,
+      entries: state.entries,
+    }
   }),
   (dispatch) => ({
     actions: bindActionCreators(allActions, dispatch)
   })
-)(SceneTab)
+)(ThisClass)

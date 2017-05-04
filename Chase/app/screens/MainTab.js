@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import Catalog from '../components/Catalog'
 
-class MainTab extends Component {
+class ThisClass extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -21,13 +21,12 @@ class MainTab extends Component {
   }
 
   render() {
-    const { navigator, actions, entries, scene, work, shelf } = this.props
+    const { entries, scene, work, shelf } = this.props.reducers
+    const { navigator, actions } = this.props
     const catalog = shelf.catalogMain
     return (
       <Catalog
         navigator={navigator}
-        actions={actions}
-        reducers={{ entries, scene, work }}
         catalogState={{
           refreshing: this.state.refreshing,
           catalogHash: catalog,
@@ -45,13 +44,15 @@ import * as allActions from '../actions/allActions'
 
 export default connect(
   (state, ownProps) => ({
-    phase: state.phase,
-    shelf: state.shelf,
-    scene: state.scene,
-    work: state.work,
-    entries: state.entries,
+    reducers: {
+      phase: state.phase,
+      shelf: state.shelf,
+      scene: state.scene,
+      work: state.work,
+      entries: state.entries,
+    }
   }),
   (dispatch) => ({
     actions: bindActionCreators(allActions, dispatch)
   })
-)(MainTab)
+)(ThisClass)

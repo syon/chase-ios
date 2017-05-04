@@ -12,7 +12,7 @@ import { responsiveFontSize } from 'react-native-responsive-dimensions'
 
 import SceneSelector from '../components/SceneSelector'
 
-class Interlude extends Component {
+class ThisClass extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -67,8 +67,8 @@ class Interlude extends Component {
   }
 
   render() {
-    const { entry, work, scene } = this.props.reducers
-    const { actions, imgUrl } = this.props
+    const { work, scene } = this.props.reducers
+    const { entry, actions, imgUrl } = this.props
     const hasJudged = this.judged(entry, work)
     let imageOpcty = hasJudged ? 0.5 : 1
     let archivedBG = hasJudged ? '#eee' : '#fff'
@@ -227,4 +227,21 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Interlude
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as allActions from '../actions/allActions'
+
+export default connect(
+  (state, ownProps) => ({
+    reducers: {
+      phase: state.phase,
+      shelf: state.shelf,
+      scene: state.scene,
+      work: state.work,
+      entries: state.entries,
+    }
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators(allActions, dispatch)
+  })
+)(ThisClass)

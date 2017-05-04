@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from 'react-native'
 import Button from 'react-native-button'
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 
-export default class extends Component {
+class ThisClass extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -77,3 +77,20 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
 })
+
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as allActions from '../actions/allActions'
+
+export default connect(
+  (state, ownProps) => ({
+    phase: state.phase,
+    shelf: state.shelf,
+    scene: state.scene,
+    work: state.work,
+    entries: state.entries,
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators(allActions, dispatch)
+  })
+)(ThisClass)

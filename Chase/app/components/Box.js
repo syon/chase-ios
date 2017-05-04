@@ -15,7 +15,7 @@ import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import * as ChaseDriver from '../api/ChaseDriver'
 import SceneSelector from '../components/SceneSelector'
 
-export default class extends Component {
+class ThisClass extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -57,12 +57,11 @@ export default class extends Component {
   }
 
   onBoxPressed() {
-    const { work, entry, scene } = this.props.reducers
-    const { navigator, actions } = this.props
+    const { navigator, entry } = this.props
     const imgUrl = `${this.state.thumbBaseUrl}/${entry.image}`
     navigator.push({
       screen: "Chase.Interlude",
-      passProps: { actions, imgUrl, reducers: { entry, work, scene } },
+      passProps: { imgUrl, entry },
       navigatorStyle: {
         tabBarHidden: true,
       },
@@ -77,8 +76,8 @@ export default class extends Component {
   }
 
   render() {
-    const { work, entry, scene } = this.props.reducers
-    const { actions, sceneSelectorHidden } = this.props
+    const { work, scene } = this.props.reducers
+    const { entry, actions, sceneSelectorHidden } = this.props
     if (!entry) { return null }
     const thumb = this.makeThumb(entry)
     let imageOpcty = this.judged(entry, work) ? 0.5 : 1
@@ -152,3 +151,22 @@ let styles = StyleSheet.create({
     overflow: 'hidden',
   },
 })
+
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as allActions from '../actions/allActions'
+
+export default connect(
+  (state, ownProps) => ({
+    reducers: {
+      phase: state.phase,
+      shelf: state.shelf,
+      scene: state.scene,
+      work: state.work,
+      entries: state.entries,
+    }
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators(allActions, dispatch)
+  })
+)(ThisClass)

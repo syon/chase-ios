@@ -16,7 +16,7 @@ import Box from './Box'
 const AS_BTN_TAGS = ['chase:a', 'chase:b', 'chase:c']
 const AS_BTNS_CIDX = 3
 
-export default class extends Component {
+class ThisClass extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -27,16 +27,14 @@ export default class extends Component {
   }
 
   renderItem({ item }) {
-    const { entries: givenEntries, work, scene } = this.props.reducers
-    const { sceneSelectorHidden: h } = this.props
-    const { navigator, actions } = this.props
+    const { entries: givenEntries } = this.props.reducers
+    const { navigator, sceneSelectorHidden: h } = this.props
     const entries = givenEntries || {}
     const entry = entries[item.itemId] || {}
     return (
       <Box
         navigator={navigator}
-        actions={actions}
-        reducers={{ work, entry, scene }}
+        entry={entry}
         sceneSelectorHidden={h}
       />
     )
@@ -139,3 +137,22 @@ const styles = StyleSheet.create({
     height: 60,
   },
 })
+
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as allActions from '../actions/allActions'
+
+export default connect(
+  (state, ownProps) => ({
+    reducers: {
+      phase: state.phase,
+      shelf: state.shelf,
+      scene: state.scene,
+      work: state.work,
+      entries: state.entries,
+    }
+  }),
+  (dispatch) => ({
+    actions: bindActionCreators(allActions, dispatch)
+  })
+)(ThisClass)
