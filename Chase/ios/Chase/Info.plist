@@ -29,7 +29,7 @@
 			<string>com.getpocket.sdk</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>pocketapp63654</string>
+				<string>pocketapp66650</string>
 			</array>
 		</dict>
 	</array>
@@ -51,7 +51,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>
