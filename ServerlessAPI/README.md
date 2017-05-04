@@ -58,8 +58,9 @@ curl "https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod/thumb?url=http
   - ステージに対するデプロイは断面のアップロードではない
   - ステージはただ場所が違うだけ、それゆえエンドポイント末尾に付加される
   - リソースの状況を変えると動作中すべてのステージに影響を与える
-  - ステージの名前で呼び出す Lambda を振り分けることができる
-  - 統合リクエストの設定から `chase-${stageVariables.alias}-info` のように指定
+  - ステージ変数を使って呼び出す Lambda を振り分けることができる
+  - 統合リクエストの設定から `chase-${stageVariables.stage}-info:${stageVariables.alias}` のように指定
+  - ARNに従い"関数名:エイリアス"で呼び出す関数のバージョン指定ができる
   - これを設定するときダイアログが出現し手動でコマンド実行する必要がある
 
 
