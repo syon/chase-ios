@@ -24,35 +24,42 @@ module.exports.thumb = (event, context, callback) => {
   const s3path = `items/thumbs/${itemId3}/${item10Id}.jpg`;
   console.log('S3 Path --', s3path);
   try {
-    const libra = new Libra(event.url);
-    libra.getData().then(data => {
-      let imageUrl = suggested ? suggested : data.image;
-      console.log('Detected image URL --', imageUrl);
-      fetch(imageUrl)
-        .then(response => {
-          if (response.ok) {
-            response.buffer().then(buffer => {
-              gm(buffer)
-                .resize(420)
-                .background('#fff')
-                .flatten()
-                .toBuffer('jpg', (err, buf) => {
-                  console.log('Resized Buffer --', buf);
-                  putImage(s3path, buf).promise()
-                    .then(v => callback(null, v));
-                });
-            })
-          }
-        }, err => {
-          putBlankImage(s3path);
-          callback(null, 'Done.');
-        });
-    })
+    if (suggested) {
+      fetchAndConvertAndPut(s3path, suggested, callback);
+    } else {
+      const libra = new Libra(event.url);
+      libra.getData().then(data => {
+        fetchAndConvertAndPut(s3path, data.image, callback);
+      });
+    }
   } catch (e) {
     putBlankImage(s3path);
     callback(null, 'Done.');
   }
 };
+
+function fetchAndConvertAndPut(s3path, imageUrl, callback) {
+  console.log('Detected image URL --', imageUrl);
+  fetch(imageUrl)
+    .then(response => {
+      if (response.ok) {
+        response.buffer().then(buffer => {
+          gm(buffer)
+            .resize(420)
+            .background('#fff')
+            .flatten()
+            .toBuffer('jpg', (err, buf) => {
+              console.log('Resized Buffer --', buf);
+              putImage(s3path, buf).promise()
+                .then(v => callback(null, v));
+            });
+        })
+      }
+    }, err => {
+      putBlankImage(s3path);
+      callback(null, 'Done.');
+    });
+}
 
 function putBlankImage(s3path) {
   console.log('Fetch failed. Using blank image.');
