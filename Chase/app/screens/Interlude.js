@@ -74,6 +74,13 @@ class Interlude extends Component {
     let archivedBG = hasJudged ? '#eee' : '#fff'
     const archiveBtnIcon = this.state.processing ? '...' : '✓'
     let tags = []
+    Object.keys(entry.tags || []).map(tag => {
+      tags.push(
+        <View style={styles.tagChip}>
+          <Text style={styles.tagChipText}>{ tag }</Text>
+        </View>
+      )
+    })
     this.state.tagsRegistered.map(tag => {
       tags.push(
         <View style={styles.tagChip}>
