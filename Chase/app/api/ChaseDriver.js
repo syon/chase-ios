@@ -31,9 +31,7 @@ export async function saveCatalogItemsAsEntryToStorage(rawItems) {
   Object.keys(rawItems).forEach(itemId => {
     const item = rawItems[itemId]
     const existEntry = entries[itemId]
-    if (!existEntry) {
-      promises.push(_convertItemToEntry(item))
-    }
+    promises.push(_convertItemToEntry(item, existEntry))
   })
   await Promise.all(promises).then(values => {
     // console.tron.info('ChaseDriver#Promise.all Done!', values)
@@ -70,50 +68,58 @@ async function _loadEntriesFromStorage() {
   return entries
 }
 
-async function _convertItemToEntry(item) {
+async function _convertItemToEntry(item, existEntry) {
   const url = item.resolved_url ? item.resolved_url : item.given_url
   const isHTTPS = url.startsWith('https')
   const isHTTP  = url.startsWith('http:')
   let pageinfo = {}
-  if (isHTTPS) {
-    const libra = new Libra(url)
-    pageinfo = await libra.getData().then(data => data).catch(e => {})
-    // console.tron.info('ChaseDriver#Libra', pageinfo)
-  }
-  else if (isHTTP) {
-    pageinfo = await fetch(`${CHASE_API_ENDPOINT}/info?url=${url}`, {
-        method: 'GET',
-      }).then((response) => {
-        if (response.ok) {
-          // console.tron.info('ChaseDriver#FetchDone!', url)
-          return response.json()
-        } else {
+  if (!existEntry) {
+    if (isHTTPS) {
+      const libra = new Libra(url)
+      pageinfo = await libra.getData().then(data => data).catch(e => {})
+      // console.tron.info('ChaseDriver#Libra', pageinfo)
+    }
+    else if (isHTTP) {
+      pageinfo = await fetch(`${CHASE_API_ENDPOINT}/info?url=${url}`, {
+          method: 'GET',
+        }).then((response) => {
+          if (response.ok) {
+            // console.tron.info('ChaseDriver#FetchDone!', url)
+            return response.json()
+          } else {
+            return {}
+          }
+        }).catch(e => {
           return {}
-        }
-      }).catch(e => {
-        return {}
-      })
-    // console.tron.info('ChaseDriver#[Lambda/info]', {url, pageinfo})
+        })
+      // console.tron.info('ChaseDriver#[Lambda/info]', {url, pageinfo})
+    }
   }
-  const entry = _mergeItemAndPageinfo(url, item, pageinfo)
+  const entry = _mergeItemAndPageinfo(existEntry, url, item, pageinfo)
   // console.tron.info('ChaseDriver# -- New Entry:', entry)
   return entry
 }
 
-function _mergeItemAndPageinfo(url, m, pi) {
+function _mergeItemAndPageinfo(existEntry, url, m, pi) {
   pi = pi || {}
-  return {
-    eid: m.item_id,
-    url: url,
-    image: _buildImagePath(m.item_id),
-    image_suggested: (m.has_image === '1') ? m.image.src : '',
-    siteName: pi.site_name,
-    title: _choiceText(m.title, pi.title),
-    description: pi.description,
-    fqdn: `${url}/`.match(/\/\/(.*?)\//)[1],
-    sortId: m.sort_id,
-    tags: m.tags,
-    date: _getDate(m.time_added),
+  if (existEntry) {
+    existEntry['sortId'] = m.sort_id
+    existEntry['tags'] = m.tags
+    return existEntry
+  } else {
+    return {
+      eid: m.item_id,
+      url: url,
+      image: _buildImagePath(m.item_id),
+      image_suggested: (m.has_image === '1') ? m.image.src : '',
+      siteName: pi.site_name,
+      title: _choiceText(m.title, pi.title),
+      description: pi.description,
+      fqdn: `${url}/`.match(/\/\/(.*?)\//)[1],
+      sortId: m.sort_id,
+      tags: m.tags,
+      date: _getDate(m.time_added),
+    }
   }
 }
 
