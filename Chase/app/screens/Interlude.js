@@ -49,7 +49,7 @@ class ThisClass extends Component {
   }
 
   onPressArchiveBtn() {
-    const { entry } = this.props.reducers
+    const { entry } = this.props
     this.setState({ processing: true })
     this.props.actions.archive(entry.eid).then(() => {
       this.setState({ processing: false })
