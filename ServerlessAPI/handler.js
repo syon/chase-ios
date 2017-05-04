@@ -38,15 +38,15 @@ module.exports.thumb = (event, context, callback) => {
                 .flatten()
                 .toBuffer('jpg', (err, buf) => {
                   console.log('Resized Buffer --', buf);
-                  putImage(s3path, buf).promise();
+                  putImage(s3path, buf).promise()
+                    .then(v => callback(null, v));
                 });
             })
           }
         }, err => {
           putBlankImage(s3path);
           callback(null, 'Done.');
-        })
-        .then(v => callback(null, v), callback);
+        });
     })
   } catch (e) {
     putBlankImage(s3path);
