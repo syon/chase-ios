@@ -13,6 +13,8 @@ export default function scene(state = initialState, action = {}) {
       return Object.assign({}, state, {
         currentIdx: action.sceneIdx
       })
+    case 'LOGOUT_DONE':
+      return initialState
     default:
       return state
   }

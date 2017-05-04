@@ -23,6 +23,8 @@ export default function work(state = initialState, action = {}) {
         [itemId]: new_item
       })
     }
+    case 'LOGOUT_DONE':
+      return initialState
     default:
       return state
   }
