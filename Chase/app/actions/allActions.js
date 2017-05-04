@@ -292,18 +292,9 @@ export function makeNewThumb(entry) {
 }
 
 export function applyScene(itemId, abc) {
-  return function(dispatch, getState) {
-    console.tron.info('allActions#applyScene', {itemId, abc})
-    const at = memAccessToken
-    const promise = PocketAPI.tags_add(CONSUMER_KEY, at, itemId, `chase:${abc}`)
-    promise.then((result) => {
-      if (result.action_results) {
-        console.tron.info('allActions#applyScene', result)
-        dispatch({ type: 'SET_WORK_SCENE', itemId, abc })
-      }
-    }).catch(err => {
-      console.tron.error('allActions#applyScene', err)
-    })
+  return async function(dispatch, getState) {
+    await Pocket.addTag(itemId, `chase:${abc}`)
+    dispatch({ type: 'SET_WORK_SCENE', itemId, abc })
   }
 }
 
