@@ -37,6 +37,10 @@ serverless invoke --function thumb --log --data='{ "url": "http://qiita.com/cloc
 ```
 
 ```bash
+serverless invoke --function thumb --log --data='{ "url": "http://qiita.com/szk3/items/298dfc8bb86ba802617f", "pocket_id": "1184649995", "suggested": "https://cdn.qiita.com/emoji/twemoji/unicode/1f617.png"}'
+```
+
+```bash
 curl "https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod/thumb?url=http://yutoma233.hatenablog.com/entry/2017/04/28/073000&pocket_id=1719054137"
 ```
 
