@@ -57,7 +57,7 @@ class ThisClass extends Component {
   }
 
   onPressTagBtn() {
-    const { entry } = this.props.reducers
+    const { entry } = this.props
     const arg = { itemId: entry.eid, tagNm: this.state.tagInput }
     this.props.actions.addTag(arg).then(tagNm => {
       let tagsRegistered = this.state.tagsRegistered
