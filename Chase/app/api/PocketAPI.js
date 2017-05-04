@@ -63,6 +63,7 @@ export function openAuthorizePage(requestToken, redirectUri) {
 
 export function add(consumerKey, accessToken, url) {
   return new Promise((resolve, reject) => {
+    if (!(consumerKey && accessToken)) { reject() }
     fetch('https://getpocket.com/v3/add', {
       method: 'POST',
       headers: {
@@ -89,13 +90,14 @@ export function add(consumerKey, accessToken, url) {
 }
 
 export function get(consumerKey, accessToken, options) {
+  console.tron.start('PocketAPI#get')
   const defaultParams = {
     consumer_key: consumerKey,
     access_token: accessToken,
   }
   const params = Object.assign({}, defaultParams, options)
-  console.tron.display({ name: 'PocketAPI#get', preview: 'Calling...', value: params })
   return new Promise((resolve, reject) => {
+    if (!(consumerKey && accessToken)) { reject() }
     fetch('https://getpocket.com/v3/get', {
       method: 'POST',
       headers: {
@@ -110,10 +112,10 @@ export function get(consumerKey, accessToken, options) {
         throw response
       }
     }).then((result) => {
-      console.tron.display({ name: 'PocketAPI#get', preview: 'Done.', value: result })
+      console.tron.end('PocketAPI#get', result)
       resolve(result)
     }).catch((error) => {
-      console.error('PocketAPI#get', error)
+      console.tron.error('PocketAPI#get', error)
       reject(error)
     })
   })
@@ -121,6 +123,7 @@ export function get(consumerKey, accessToken, options) {
 
 export function archive(consumerKey, accessToken, itemId) {
   return new Promise((resolve, reject) => {
+    if (!(consumerKey && accessToken)) { reject() }
     console.tron.start('API#archive', {consumerKey, accessToken, itemId})
     let params = new URLSearchParams()
     params.append('consumer_key', consumerKey)
@@ -146,6 +149,7 @@ export function archive(consumerKey, accessToken, itemId) {
 
 export function tags_add(consumerKey, accessToken, itemId, tag) {
   return new Promise((resolve, reject) => {
+    if (!(consumerKey && accessToken)) { reject() }
     console.tron.start('API#tags_add', {consumerKey, accessToken, itemId, tag})
     let params = new URLSearchParams()
     params.append('consumer_key', consumerKey)

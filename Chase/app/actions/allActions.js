@@ -14,7 +14,7 @@ export function ready() {
 }
 
 async function _initialize(dispatch) {
-  console.tron.log('Loading UserInfo...')
+  console.tron.start('allActions#_initialize')
   try {
     await _loadUserInfo(dispatch)
   } catch (e) {
@@ -29,27 +29,22 @@ async function _initialize(dispatch) {
     _loadSceneCatalogC(dispatch)
     _loadSceneText(dispatch)
   } catch (e) {
-    console.tron.error('allActions#_initialize', e)
-    throw e
+    console.tron.warn('allActions#_initialize', e)
   }
+  console.tron.end('allActions#_initialize')
 }
 
 async function _loadUserInfo(dispatch) {
   console.info('allActions#_loadUserInfo')
   await global.storage.load({ key: 'loginState' }).then(user => {
-    console.tron.display({ name: 'user', value: user })
+    console.tron.info('user', user )
     memAccessToken = user.accessToken
     Pocket.setAccessToken(user.accessToken)
     dispatch({ type: 'LOGIN_SUCCESS', data: user })
     return
   }).catch(e => {
-    switch (e.name) {
-      case 'NotFoundError':
-        break
-      default:
-        console.tron.error('#_loadUserInfo', e)
-        throw e
-    }
+    console.tron.info('allActions#_loadUserInfo', 'NEEDS_AUTH')
+    throw e
   })
 }
 

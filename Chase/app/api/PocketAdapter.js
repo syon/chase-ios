@@ -10,7 +10,7 @@ export function hasAccessToken() {
 
 export function setAccessToken(at) {
   memAccessToken = at
-  console.tron.display({ name: 'AccessToken has set.', value: at })
+  console.tron.info('AccessToken has set.', at)
 }
 
 export async function getAllUntaggedItems() {
