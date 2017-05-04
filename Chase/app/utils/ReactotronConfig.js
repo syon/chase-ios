@@ -32,6 +32,17 @@ class MyTron {
     })
   }
 
+  static tmp(label, obj) {
+    console.log(`★★ ${label} ★★★★★★★★★★★★★★★★★★★★★★★★★★★★`)
+    console.log(obj)
+    console.log(`★★★★★★★★★★★★★★★★★★★★★★★★★★★★ ${label} ★★`)
+    Reactotron.display({
+      name: label,
+      preview: 'TMP',
+      value: obj,
+    })
+  }
+
   static info(label, obj) {
     console.info(label, obj)
     Reactotron.display({
