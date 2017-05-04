@@ -306,21 +306,10 @@ export function addTag({ itemId, tagNm }) {
 }
 
 export function archive(itemId) {
-  return function(dispatch, getState) {
-    return new Promise((resolve, reject) => {
-      dispatch({ type: 'SET_WORK_ARCHIVE', itemId })
-      const at = memAccessToken
-      const promise = PocketAPI.archive(CONSUMER_KEY, at, itemId)
-      promise.then((result) => {
-        if (result.action_results) {
-          console.tron.log('allActions#archive - Success')
-          resolve()
-        }
-      }).catch(err => {
-        console.tron.error('allActions#archive - Error', err)
-        reject(err)
-      })
-    })
+  return async function(dispatch, getState) {
+    dispatch({ type: 'SET_WORK_ARCHIVE', itemId })
+    await Pocket.archive(itemId)
+    return itemId
   }
 }
 
