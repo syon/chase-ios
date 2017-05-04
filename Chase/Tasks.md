@@ -27,7 +27,7 @@ Done.
 
 ## AWS
 
-- Lambda#info -- Pocketが持っている情報もマージ
+Done.
 
 ## Next Features
 
