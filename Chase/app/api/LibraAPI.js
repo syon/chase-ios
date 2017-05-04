@@ -6,13 +6,17 @@ export default class Libra {
   }
 
   getData() {
-    return this.getMetaProps(this.url).then(metaProps => {
-      const site_name = this.resolveSiteName(metaProps)
-      const title = this.resolveTitle(metaProps)
-      const description = this.resolveDesc(metaProps)
-      const image = this.resolveImageUrl(metaProps)
-      return { site_name, title, description, image }
-    })
+    return fetch(this.url).then(res => {
+        if (res.ok) { return res.text() }
+      }).then(html => {
+        const standardProps = this.extractStandardProps(html)
+        const metaProps = this.extractMetaProps(html)
+        const site_name = this.resolveSiteName(metaProps)
+        const title = this.resolveTitle(standardProps, metaProps)
+        const description = this.resolveDesc(standardProps, metaProps)
+        const image = this.resolveImageUrl(metaProps)
+        return　{ site_name, title, description, image }
+      });
   }
 
   resolveSiteName(metaProps) {
@@ -21,16 +25,16 @@ export default class Libra {
     return ''
   }
 
-  resolveTitle(metaProps) {
+  resolveTitle(standardProps, metaProps) {
     const ogTitle = this.getMetaPropContent(metaProps, 'og:title')
     if (ogTitle) return ogTitle
-    return ''
+    return standardProps.title
   }
 
-  resolveDesc(metaProps) {
+  resolveDesc(standardProps, metaProps) {
     const ogDesc = this.getMetaPropContent(metaProps, 'og:description')
     if (ogDesc) return ogDesc
-    return ''
+    return standardProps.description
   }
 
   resolveImageUrl(metaProps) {
@@ -74,6 +78,13 @@ export default class Libra {
       return 0
     })
     return results
+  }
+
+  extractStandardProps(html) {
+    const $ = cheerio.load(html)
+    const title = $('head title').text()
+    const description = $('head meta[name="description"]').attr('content')
+    return { title, description }
   }
 
 }

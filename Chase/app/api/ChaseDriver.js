@@ -92,7 +92,7 @@ async function _convertItemToEntry(item) {
       }).catch(e => {
         return {}
       })
-    // console.tron.info('ChaseDriver#[Lambda/info]', pageinfo)
+    // console.tron.info('ChaseDriver#[Lambda/info]', {url, pageinfo})
   }
   const entry = _mergeItemAndPageinfo(url, item, pageinfo)
   // console.tron.info('ChaseDriver# -- New Entry:', entry)
