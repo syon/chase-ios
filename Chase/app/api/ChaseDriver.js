@@ -7,7 +7,7 @@ export const CHASE_THUMBS_CF_PATH = 'https://d2aed4ktvx51jm.cloudfront.net'
 export const CHASE_THUMBS_S3_PATH = 'https://s3.amazonaws.com/syon-chase'
 
 export function makeCatalog(listFromPocket) {
-  // console.tron.info('ChaseDriver#makeCatalog -- listFromPocket', listFromPocket)
+  console.tron.start('ChaseDriver#makeCatalog -- listFromPocket:', listFromPocket)
   let catalog = {}
   let rawItems = {}
   Object.keys(listFromPocket).forEach((key) => {
@@ -21,7 +21,53 @@ export function makeCatalog(listFromPocket) {
     }
     catalogBySort[m.sort_id] = itemId
   })
+  console.tron.end('ChaseDriver#makeCatalog -- catalog:', catalog)
   return { catalog, rawItems }
+}
+
+export function makeSceneCatalog(listFromPocket) {
+  console.tron.start('ChaseDriver#makeSceneCatalog -- listFromPocket:', listFromPocket)
+  let catalog = {}
+  let rawItems = {}
+  let arr = convertHashToArray(listFromPocket)
+  arr = arr.filter(d => {
+    const userTags = Object.keys(d.tags).filter(t => {
+      return !t.match(/chase:(a|b|c)/)
+    })
+    return !userTags.length
+  })
+  const hash = convertArrayToHash(arr, 'item_id')
+  Object.keys(hash).forEach((key) => {
+    const m = listFromPocket[key]
+    rawItems[key] = m
+    itemId = m.item_id
+    catalog[key] = {
+      key: itemId,
+      itemId: itemId,
+      sortId: m.sort_id,
+    }
+    catalogBySort[m.sort_id] = itemId
+  })
+  console.tron.end('ChaseDriver#makeSceneCatalog -- catalog:', catalog)
+  return { catalog, rawItems }
+}
+
+function convertHashToArray(hash) {
+  let array = []
+  if (!hash) { return array }
+  Object.keys(hash).forEach((key) => {
+    array.push(hash[key])
+  })
+  return array
+}
+
+function convertArrayToHash(array, key) {
+  let hash = {}
+  if (!array) { return hash }
+  array.forEach(d => {
+    hash[d[key]] = d
+  })
+  return hash
 }
 
 export async function saveCatalogItemsAsEntryToStorage(rawItems) {
