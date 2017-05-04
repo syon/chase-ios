@@ -29,6 +29,10 @@ root@b679c821674a:/# node try-libra.js
 ### Test
 
 ```bash
+serverless invoke --function info --log --data='{ "url": "https://wix.github.io/react-native-navigation/#/screen-api?id=poptorootparams-" }'
+```
+
+```bash
 serverless invoke --function thumb --log --data='{ "url": "http://yutoma233.hatenablog.com/entry/2017/04/28/073000", "pocket_id": "1719054137"}'
 ```
 
