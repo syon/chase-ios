@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { AsyncStorage } from 'react-native'
 import Storage from 'react-native-storage'
 import { Navigation } from 'react-native-navigation'
 
-import './utils/ReactotronConfig'
+import './utils/Tron'
 import { iconsMap, iconsLoaded } from './utils/AppIcons'
-
 import * as screens from './screens'
+
 screens.register()
 
 global.storage = new Storage({
@@ -30,14 +30,8 @@ const navigatorStyle = {
 }
 
 export default class App extends Component {
-  constructor(props) {
-    super(props)
-    iconsLoaded.then(() => {
-      this.startApp()
-    })
-  }
 
-  startApp() {
+  static startApp() {
     Navigation.startTabBasedApp({
       tabs: [
         {
@@ -75,4 +69,12 @@ export default class App extends Component {
       ],
     })
   }
+
+  constructor(props) {
+    super(props)
+    iconsLoaded.then(() => {
+      App.startApp()
+    })
+  }
+
 }
