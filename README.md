@@ -39,4 +39,6 @@ $ react-native run-ios
 $ rm -rf node_modules/
 
 $ yarn
+
+$ react-native link
 ```
