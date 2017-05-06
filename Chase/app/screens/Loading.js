@@ -1,9 +1,9 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import {
   ActivityIndicator,
   StyleSheet,
   View,
-} from 'react-native';
+} from 'react-native'
 
 export default class Loading extends Component {
   render() {
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     backgroundColor: '#F5FCFF',
   },
-});
+})

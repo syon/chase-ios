@@ -22,7 +22,7 @@ class TagsTabInner extends Component {
 
   render() {
     const { navigator, actions, entries, scene, work, shelf } = this.props
-    let catalog = shelf.catalogTag
+    const catalog = shelf.catalogTag
     return (
       <Catalog
         navigator={navigator}
@@ -32,8 +32,8 @@ class TagsTabInner extends Component {
           refreshing: this.state.refreshing,
           catalogHash: catalog,
         }}
-        onRefresh={ this._onRefresh }
-        style={{flex: 1}}
+        onRefresh={this._onRefresh}
+        style={{ flex: 1 }}
       />
     )
   }
@@ -44,7 +44,7 @@ import { connect } from 'react-redux'
 import * as allActions from '../actions/allActions'
 
 export default connect(
-  (state, ownProps) => ({
+  (state) => ({
     phase: state.phase,
     login: state.login,
     items: state.items,
@@ -54,6 +54,6 @@ export default connect(
     entries: state.entries,
   }),
   (dispatch) => ({
-    actions: bindActionCreators(allActions, dispatch)
+    actions: bindActionCreators(allActions, dispatch),
   })
 )(TagsTabInner)
