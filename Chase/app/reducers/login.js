@@ -1,5 +1,3 @@
-import { CONSUMER_KEY, REDIRECT_URI } from 'react-native-dotenv'
-
 const initialState = {
   requestToken: null,
   username: null,
