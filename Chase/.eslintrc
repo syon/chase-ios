@@ -23,6 +23,7 @@
   },
   "rules": {
     "no-console": 0,
-    "semi": ["error", "never"]
+    "semi": ["error", "never"],
+    "arrow-parens": 0
   }
 }
