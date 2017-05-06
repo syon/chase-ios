@@ -41,4 +41,6 @@ $ rm -rf node_modules/
 $ yarn
 
 $ react-native link
+
+# Edit AppDelegate.m for wix/react-native-navigation
 ```

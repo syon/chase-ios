@@ -3275,7 +3275,7 @@ react-native-dotenv@0.0.4:
   dependencies:
     babel-plugin-dotenv "~0.0.2"
 
-react-native-navigation@next:
+react-native-navigation@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.1.tgz#1f647e80bc9f96e9bc831f736711b6ebbfdb2dc0"
   dependencies:
