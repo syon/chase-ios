@@ -43,4 +43,6 @@ $ yarn
 $ react-native link
 
 # Edit AppDelegate.m for wix/react-native-navigation
+
+# Edit AppDelegate.m for URL Scheme
 ```
