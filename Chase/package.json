@@ -13,8 +13,8 @@
     "react-native-button": "^1.8.2",
     "react-native-navigation": "next",
     "react-native-responsive-dimensions": "^1.0.1",
-    "react-native-storage": "^0.2.0",
-    "react-native-vector-icons": "^4.0.1",
+    "react-native-storage": "^0.2.1",
+    "react-native-vector-icons": "^4.1.0",
     "react-redux": "^5.0.4",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0"
