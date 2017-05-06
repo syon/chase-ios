@@ -29,4 +29,8 @@ $ yarn upgrade-interactive
 
 ```bash
 $ react-native init Chase
+
+$ cd Chase/
+
+$ react-native run-ios
 ```
