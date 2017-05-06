@@ -33,4 +33,10 @@ $ react-native init Chase
 $ cd Chase/
 
 $ react-native run-ios
+
+# Restore package.json
+
+$ rm -rf node_modules/
+
+$ yarn
 ```
