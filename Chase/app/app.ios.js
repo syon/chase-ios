@@ -1,18 +1,18 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { AsyncStorage } from 'react-native'
 import Storage from 'react-native-storage'
 import { Navigation } from 'react-native-navigation'
 
-import './utils/ReactotronConfig'
+import './utils/Tron'
 import { iconsMap, iconsLoaded } from './utils/AppIcons'
-
 import * as screens from './screens'
+
 screens.register()
 
 global.storage = new Storage({
   storageBackend: AsyncStorage,
 })
-console.tron.display({ name: 'Storage', value: global.storage })
+console.tron.info('Storage', global.storage)
 
 const navigatorStyle = {
   /* Statusbar */
@@ -30,14 +30,15 @@ const navigatorStyle = {
 }
 
 export default class App extends Component {
+
   constructor(props) {
     super(props)
     iconsLoaded.then(() => {
-      this.startApp()
+      App.startApp()
     })
   }
 
-  startApp() {
+  static startApp() {
     Navigation.startTabBasedApp({
       tabs: [
         {
@@ -45,7 +46,7 @@ export default class App extends Component {
           screen: 'Chase.MainTabScreen',
           icon: iconsMap['ios-filing-outline'],
           selectedIcon: iconsMap['ios-filing'],
-          // title: 'Inbox',
+          title: 'Inbox',
           navigatorStyle,
         },
         {
@@ -75,4 +76,5 @@ export default class App extends Component {
       ],
     })
   }
+
 }

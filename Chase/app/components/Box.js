@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {
-  TouchableOpacity,
   StyleSheet,
   View,
   Text,
@@ -8,9 +7,7 @@ import {
   ActivityIndicator,
   TouchableWithoutFeedback,
 } from 'react-native'
-import Button from 'react-native-button'
-import Icon from 'react-native-vector-icons/Ionicons'
-import { responsiveFontSize } from 'react-native-responsive-dimensions';
+import { responsiveFontSize } from 'react-native-responsive-dimensions'
 
 import * as ChaseDriver from '../api/ChaseDriver'
 import SceneSelector from '../components/SceneSelector'
@@ -53,19 +50,18 @@ class ThisClass extends Component {
         })
       })
     }
-    return
   }
 
   onBoxPressed() {
     const { navigator, entry } = this.props
     const imgUrl = `${this.state.thumbBaseUrl}/${entry.image}`
     navigator.push({
-      screen: "Chase.Interlude",
+      screen: 'Chase.Interlude',
       passProps: { imgUrl, entry },
       navigatorStyle: {
         tabBarHidden: true,
       },
-    });
+    })
   }
 
   judged(entry, work) {
@@ -80,13 +76,13 @@ class ThisClass extends Component {
     const { entry, actions, sceneSelectorHidden } = this.props
     if (!entry) { return null }
     const thumb = this.makeThumb(entry)
-    let imageOpcty = this.judged(entry, work) ? 0.5 : 1
-    let archivedBG = this.judged(entry, work) ? '#aaa' : '#fff'
+    const imageOpcty = this.judged(entry, work) ? 0.5 : 1
+    const archivedBG = this.judged(entry, work) ? '#aaa' : '#fff'
     return (
-      <View style={[styles.box, {backgroundColor: archivedBG}]}>
+      <View style={[styles.box, { backgroundColor: archivedBG }]}>
         <TouchableWithoutFeedback onPress={this.onBoxPressed}>
           <View>
-            <View style={[styles.thumbWrap, {opacity: imageOpcty}]}>
+            <View style={[styles.thumbWrap, { opacity: imageOpcty }]}>
               { thumb }
             </View>
             <View style={styles.boxBody}>
@@ -113,7 +109,7 @@ let styles = StyleSheet.create({
     shadowColor: '#000000',
     shadowOffset: {
       width: 0,
-      height: 1
+      height: 1,
     },
     shadowRadius: 1,
     shadowOpacity: 0.2,
@@ -157,16 +153,16 @@ import { connect } from 'react-redux'
 import * as allActions from '../actions/allActions'
 
 export default connect(
-  (state, ownProps) => ({
+  (state) => ({
     reducers: {
       phase: state.phase,
       shelf: state.shelf,
       scene: state.scene,
       work: state.work,
       entries: state.entries,
-    }
+    },
   }),
   (dispatch) => ({
-    actions: bindActionCreators(allActions, dispatch)
+    actions: bindActionCreators(allActions, dispatch),
   })
 )(ThisClass)

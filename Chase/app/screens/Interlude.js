@@ -26,7 +26,7 @@ class ThisClass extends Component {
   }
 
   openWebView() {
-    const { entry } = this.props.reducers
+    const { entry } = this.props
     if (!entry || !entry.url) { return }
     this.props.navigator.push({
       title: '',

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import Button from 'react-native-button'
-import { responsiveFontSize } from 'react-native-responsive-dimensions';
+import { responsiveFontSize } from 'react-native-responsive-dimensions'
 
 class ConfigTab extends Component {
   constructor(props) {
@@ -12,13 +12,12 @@ class ConfigTab extends Component {
   _onSelectSceneEdit() {
     const { navigator, scene } = this.props
     navigator.showModal({
-      screen: "Chase.ScenesEditor",
+      screen: 'Chase.ScenesEditor',
       passProps: { scene },
       navigatorStyle: {},
       navigatorButtons: {},
-      animationType: 'slide-up'
+      animationType: 'slide-up',
     })
-    return
   }
 
   render() {
@@ -46,7 +45,7 @@ class ConfigTab extends Component {
         </View>
         <View>
           <Button onPress={actions.clearCatalogCache} style={styles.btn}>Clear Cache</Button>
-          {/*<Button onPress={actions.debugInfo} style={styles.btn}>Debug Info</Button>*/}
+          {/* <Button onPress={actions.debugInfo} style={styles.btn}>Debug Info</Button> */}
         </View>
       </View>
     )
@@ -81,7 +80,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000000',
     shadowOffset: {
       width: 0,
-      height: 1
+      height: 1,
     },
     shadowRadius: 1,
     shadowOpacity: 0.2,
@@ -103,12 +102,12 @@ import { connect } from 'react-redux'
 import * as allActions from '../actions/allActions'
 
 export default connect(
-  (state, ownProps) => ({
+  (state) => ({
     login: state.login,
     scene: state.scene,
-    allStates: state
+    allStates: state,
   }),
   (dispatch) => ({
-    actions: bindActionCreators(allActions, dispatch)
+    actions: bindActionCreators(allActions, dispatch),
   })
 )(ConfigTab)

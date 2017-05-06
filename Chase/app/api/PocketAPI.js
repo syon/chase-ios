@@ -1,4 +1,4 @@
-import { Linking } from 'react-native';
+import { Linking } from 'react-native'
 
 export function getRequestToken(consumerKey, redirectUri) {
   return new Promise((resolve, reject) => {
@@ -17,7 +17,7 @@ export function getRequestToken(consumerKey, redirectUri) {
     }).then((json) => {
       resolve(json.code)
     }).catch((error) => {
-      console.log(error)
+      reject(error)
     })
   })
 }
@@ -33,25 +33,25 @@ export function checkPocketApiAuth(consumerKey, redirectUri, requestToken) {
       body: JSON.stringify({
         consumer_key: consumerKey,
         code: requestToken,
-      })
+      }),
     }).then((response) => {
       console.log('Pocket API Response', response)
       if (response.ok) {
         return response.json()
       } else {
-        reject(response)
+        throw response
       }
     }).then((result) => {
       resolve(result)
     }).catch((error) => {
-      console.log("authorize error", error)
+      reject(error)
     })
   })
 }
 
 export function openAuthorizePage(requestToken, redirectUri) {
   const apiUrl = 'https://getpocket.com/auth/authorize'
-  const url = `${apiUrl}?request_token=${requestToken}&redirect_uri=${redirectUri}`;
+  const url = `${apiUrl}?request_token=${requestToken}&redirect_uri=${redirectUri}`
   Linking.canOpenURL(url).then(supported => {
     if (supported) {
       Linking.openURL(url)

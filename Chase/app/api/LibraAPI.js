@@ -16,7 +16,7 @@ export default class Libra {
         const description = this.resolveDesc(standardProps, metaProps)
         const image = this.resolveImageUrl(metaProps)
         return　{ site_name, title, description, image }
-      });
+      })
   }
 
   resolveSiteName(metaProps) {
@@ -64,7 +64,7 @@ export default class Libra {
 
   extractMetaProps(html) {
     const $ = cheerio.load(html)
-    let results = []
+    const results = []
     $('head meta').each((i, el) => {
       const property = $(el).attr('property')
       const content = $(el).attr('content')
@@ -72,7 +72,7 @@ export default class Libra {
         results.push({ [property]: content })
       }
     })
-    results.sort((a,b) => {
+    results.sort((a, b) => {
       if (Object.keys(a)[0] < Object.keys(b)[0]) return -1
       if (Object.keys(a)[0] > Object.keys(b)[0]) return 1
       return 0

@@ -1,7 +1,7 @@
-import { Provider } from 'react-redux';
-import { Navigation } from 'react-native-navigation';
+import { Provider } from 'react-redux'
+import { Navigation } from 'react-native-navigation'
 
-import configureStore from '../store/configureStore';
+import configureStore from '../store/configureStore'
 import MainTab from './MainTab'
 import SceneTab from './SceneTab'
 import TagsTab from './TagsTab'
@@ -12,10 +12,7 @@ import Login from './Login'
 import Interlude from './Interlude'
 import MyWebView from '../components/MyWebView'
 
-const store = configureStore();
-let unsubscribe = store.subscribe(() => {
-  // console.log('[App.js] getState', store.getState())
-})
+const store = configureStore()
 
 export function register() {
   Navigation.registerComponent('Chase.MainTabScreen', () => MainTab, store, Provider)

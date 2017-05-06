@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   StyleSheet,
   View,
   Text,
   TextInput,
-} from 'react-native';
+} from 'react-native'
 import Button from 'react-native-button'
-import { responsiveFontSize } from 'react-native-responsive-dimensions';
+import { responsiveFontSize } from 'react-native-responsive-dimensions'
 
 class ScenesEditor extends Component {
   constructor(props) {
@@ -101,16 +101,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: '#fff',
   },
-});
+})
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as allActions from '../actions/allActions'
 
 export default connect(
-  (state, ownProps) => ({
+  (state) => ({
   }),
   (dispatch) => ({
-    actions: bindActionCreators(allActions, dispatch)
+    actions: bindActionCreators(allActions, dispatch),
   })
 )(ScenesEditor)

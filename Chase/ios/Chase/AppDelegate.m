@@ -14,7 +14,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
-#import <React/RCTLinkingManager.h>
+#import <React/RCTLinkingManager.h> /** URL Scheme */
 
 @implementation AppDelegate
 

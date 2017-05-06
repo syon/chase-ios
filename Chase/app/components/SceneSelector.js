@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import Button from 'react-native-button'
-import { responsiveFontSize } from 'react-native-responsive-dimensions';
+import { responsiveFontSize } from 'react-native-responsive-dimensions'
 
 class ThisClass extends Component {
   constructor(props) {
@@ -46,13 +46,13 @@ class ThisClass extends Component {
     return (
       <View style={styles.selectScene}>
         <View style={styles.sceneBtnBox}>
-          <Button onPress={this.onSelectSceneA} disabled={this.state.tappedA || d["a"]} style={styles.sceneBtn}>{ sceneA }</Button>
+          <Button onPress={this.onSelectSceneA} disabled={this.state.tappedA || d.a} style={styles.sceneBtn}>{ sceneA }</Button>
         </View>
         <View style={styles.sceneBtnBox}>
-          <Button onPress={this.onSelectSceneB} disabled={this.state.tappedB || d["b"]} style={styles.sceneBtn}>{ sceneB }</Button>
+          <Button onPress={this.onSelectSceneB} disabled={this.state.tappedB || d.b} style={styles.sceneBtn}>{ sceneB }</Button>
         </View>
         <View style={styles.sceneBtnBox}>
-          <Button onPress={this.onSelectSceneC} disabled={this.state.tappedC || d["c"]} style={styles.sceneBtn}>{ sceneC }</Button>
+          <Button onPress={this.onSelectSceneC} disabled={this.state.tappedC || d.c} style={styles.sceneBtn}>{ sceneC }</Button>
         </View>
       </View>
     )
@@ -83,7 +83,7 @@ import { connect } from 'react-redux'
 import * as allActions from '../actions/allActions'
 
 export default connect(
-  (state, ownProps) => ({
+  (state) => ({
     phase: state.phase,
     shelf: state.shelf,
     scene: state.scene,
@@ -91,6 +91,6 @@ export default connect(
     entries: state.entries,
   }),
   (dispatch) => ({
-    actions: bindActionCreators(allActions, dispatch)
+    actions: bindActionCreators(allActions, dispatch),
   })
 )(ThisClass)

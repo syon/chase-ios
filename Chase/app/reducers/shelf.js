@@ -12,23 +12,23 @@ export default function (state = initialState, action = {}) {
       return initialState
     case 'REFRESH_CATALOG_MAIN':
       return Object.assign({}, state, {
-        catalogMain: action.catalog
+        catalogMain: action.catalog,
       })
     case 'REFRESH_CATALOG_SCENE_A':
       return Object.assign({}, state, {
-        catalogSceneA: action.catalog
+        catalogSceneA: action.catalog,
       })
     case 'REFRESH_CATALOG_SCENE_B':
       return Object.assign({}, state, {
-        catalogSceneB: action.catalog
+        catalogSceneB: action.catalog,
       })
     case 'REFRESH_CATALOG_SCENE_C':
       return Object.assign({}, state, {
-        catalogSceneC: action.catalog
+        catalogSceneC: action.catalog,
       })
     case 'REFRESH_CATALOG_TAG':
       return Object.assign({}, state, {
-        catalogTag: action.catalog
+        catalogTag: action.catalog,
       })
     case 'LOGOUT_DONE':
       return initialState

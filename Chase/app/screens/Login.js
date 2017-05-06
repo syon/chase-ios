@@ -1,24 +1,24 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   StyleSheet,
   View,
-  Linking
-} from 'react-native';
+  Linking,
+} from 'react-native'
 import Button from 'react-native-button'
-import { responsiveFontSize } from 'react-native-responsive-dimensions';
+import { responsiveFontSize } from 'react-native-responsive-dimensions'
 
 class Login extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this._handleOpenURL = this._handleOpenURL.bind(this)
   }
 
   componentDidMount() {
-    Linking.addEventListener('url', this._handleOpenURL);
+    Linking.addEventListener('url', this._handleOpenURL)
   }
 
   componentWillUnmount() {
-    Linking.removeEventListener('url', this._handleOpenURL);
+    Linking.removeEventListener('url', this._handleOpenURL)
   }
 
   _handleOpenURL(event) {
@@ -26,7 +26,7 @@ class Login extends Component {
   }
 
   render() {
-    const { actions } = this.props;
+    const { actions } = this.props
     return (
       <View style={styles.container}>
         <Button
@@ -49,17 +49,17 @@ const styles = StyleSheet.create({
   },
   btn: {
     fontSize: responsiveFontSize(3),
-  }
-});
+  },
+})
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as allActions from '../actions/allActions'
 
 export default connect(
-  (state, ownProps) => ({
+  (state) => ({
   }),
   (dispatch) => ({
-    actions: bindActionCreators(allActions, dispatch)
+    actions: bindActionCreators(allActions, dispatch),
   })
 )(Login)

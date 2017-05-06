@@ -24,3 +24,23 @@ $ react-native link
 
 $ yarn upgrade-interactive
 ```
+
+## Re:Install Xcode Project
+
+```bash
+$ react-native init Chase
+
+$ cd Chase/
+
+$ react-native run-ios
+
+# Restore package.json
+
+$ rm -rf node_modules/
+
+$ yarn
+
+$ react-native link
+
+# Edit AppDelegate.m for wix/react-native-navigation
+```

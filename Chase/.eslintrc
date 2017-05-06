@@ -1,0 +1,38 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "ecmaVersion": 2017,
+      "impliedStrict": true,
+      "jsx": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "plugins": [
+    "react",
+    "react-native",
+    "babel"
+  ],
+  "globals": {
+    "__DEV__": false
+  },
+  "rules": {
+    "import/first": 0,
+    "no-console": 0,
+    "semi": ["error", "never"],
+    "comma-dangle": ["error", "always-multiline"],
+    "no-use-before-define": 0,
+    "react/sort-comp": 0,
+    "react/jsx-filename-extension": 0,
+    "react/prop-types": 0,
+    "react/jsx-boolean-value": ["error", "always"],
+    "arrow-parens": 0,
+    "no-underscore-dangle": 0,
+  }
+}

@@ -3,18 +3,10 @@ import {
   View,
   FlatList,
   SegmentedControlIOS,
-  TouchableWithoutFeedback,
-  Image,
   StyleSheet,
-  Text,
-  RefreshControl,
-  ActionSheetIOS,
 } from 'react-native'
 
 import Box from './Box'
-
-const AS_BTN_TAGS = ['chase:a', 'chase:b', 'chase:c']
-const AS_BTNS_CIDX = 3
 
 class ThisClass extends Component {
   constructor(props) {
@@ -44,10 +36,10 @@ class ThisClass extends Component {
     const cHash = this.props.catalogState.catalogHash
     if (!cHash) { return [{}] }
     let rows = []
-    Object.keys(cHash).forEach(function(key) {
+    Object.keys(cHash).forEach(key => {
       rows.push(cHash[key])
     })
-    rows = rows.sort((a,b) => {
+    rows = rows.sort((a, b) => {
       if (a.sortId < b.sortId) return -1
       if (a.sortId > b.sortId) return 1
       return 0
@@ -57,7 +49,7 @@ class ThisClass extends Component {
 
   render() {
     const { scene } = this.props.reducers
-    const { actions, showSegment, catalogState } = this.props
+    const { actions, showSegment } = this.props
     const segment = showSegment ? (
       <SegmentedControlIOS
         values={scene.allScenes}
@@ -77,7 +69,7 @@ class ThisClass extends Component {
           renderItem={this.renderItem}
           onRefresh={this.props.onRefresh.bind(this)}
           refreshing={this.state.refreshing}
-          contentInset={{top: 0, left: 0, bottom: 50, right: 0}}
+          contentInset={{ top: 0, left: 0, bottom: 50, right: 0 }}
           style={styles.itemList}
         />
       </View>
@@ -143,16 +135,16 @@ import { connect } from 'react-redux'
 import * as allActions from '../actions/allActions'
 
 export default connect(
-  (state, ownProps) => ({
+  (state) => ({
     reducers: {
       phase: state.phase,
       shelf: state.shelf,
       scene: state.scene,
       work: state.work,
       entries: state.entries,
-    }
+    },
   }),
   (dispatch) => ({
-    actions: bindActionCreators(allActions, dispatch)
+    actions: bindActionCreators(allActions, dispatch),
   })
 )(ThisClass)
