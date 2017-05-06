@@ -46,3 +46,10 @@ $ react-native link
 
 # Edit AppDelegate.m for URL Scheme
 ```
+
+## `.env`
+
+```bash
+CONSUMER_KEY=66650-xxxxxxxxxxxxxxxxxxxxxxxx
+REDIRECT_URI=pocketapp66650:authorizationFinished
+```
