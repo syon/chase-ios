@@ -1,0 +1,28 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "impliedStrict": true,
+      "jsx": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "plugins": [
+    "react",
+    "react-native",
+    "babel"
+  ],
+  "globals": {
+    "__DEV__": false
+  },
+  "rules": {
+    "no-console": 0,
+    "semi": ["error", "never"]
+  }
+}
