@@ -33,7 +33,7 @@ export default class extends Component {
       })
     }
     return (
-      <TouchableOpacity onPress={ _onPress } style={styles.row}>
+      <TouchableOpacity onPress={_onPress} style={styles.row}>
         <View style={styles.rowLeft}>
           <Icon style={styles.tagIcon} name="ios-pricetag" size={20} />
           <Text style={styles.tagName}>{ tag.name }</Text>
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    color: '#ddd'
+    color: '#ddd',
   },
   tagName: {
     fontSize: responsiveFontSize(2.5),
@@ -88,10 +88,10 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    color: '#ddd'
+    color: '#ddd',
   },
   badge: {
     padding: 10,
-    color: 'rgb(51, 123, 246)'
+    color: 'rgb(51, 123, 246)',
   },
 })
