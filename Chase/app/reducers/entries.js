@@ -9,8 +9,8 @@ export default function entries(state = initialState, action = {}) {
       const newEntries = Object.assign({}, state, action.entries)
       return newEntries
     }
-  case 'LOGOUT_DONE':
-    return initialState
+    case 'LOGOUT_DONE':
+      return initialState
     default:
       return state
   }

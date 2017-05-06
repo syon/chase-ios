@@ -5,7 +5,6 @@ const initialState = {
 }
 
 export default function login(state = initialState, action = {}) {
-  // console.log('Login Reducer called.', action)
   switch (action.type) {
     case 'GOT_REQUEST_TOKEN':
       return Object.assign({}, state, {

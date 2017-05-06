@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux'
 
 import phase from './phase'
 import login from './login'
