@@ -31,6 +31,13 @@ const navigatorStyle = {
 
 export default class App extends Component {
 
+  constructor(props) {
+    super(props)
+    iconsLoaded.then(() => {
+      App.startApp()
+    })
+  }
+
   static startApp() {
     Navigation.startTabBasedApp({
       tabs: [
@@ -67,13 +74,6 @@ export default class App extends Component {
           navigatorStyle,
         },
       ],
-    })
-  }
-
-  constructor(props) {
-    super(props)
-    iconsLoaded.then(() => {
-      App.startApp()
     })
   }
 
