@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
+import { AsyncStorage } from 'react-native'
+import Storage from 'react-native-storage'
 import { Navigation } from 'react-native-navigation';
 
+import './utils/ReactotronConfig'
 import { iconsMap, iconsLoaded } from './utils/AppIcons'
+
+global.storage = new Storage({
+  storageBackend: AsyncStorage,
+})
+console.tron.info('Storage', global.storage)
 
 class Welcome extends Component {
   render() {
