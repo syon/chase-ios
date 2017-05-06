@@ -24,3 +24,9 @@ $ react-native link
 
 $ yarn upgrade-interactive
 ```
+
+## Re:Install Xcode Project
+
+```bash
+$ react-native init Chase
+```
