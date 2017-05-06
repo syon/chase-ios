@@ -12,13 +12,13 @@ class ThisClass extends Component {
   }
 
   _onRefresh() {
-    this.setState({ refreshing: true });
+    this.setState({ refreshing: true })
     this.props.actions.refreshSceneCatalogs()
   }
 
   render() {
-    const { entries, scene, work, shelf } = this.props.reducers
-    const { navigator, actions } = this.props
+    const { scene, shelf } = this.props.reducers
+    const { navigator } = this.props
     let catalog = null
     switch (scene.currentIdx) {
       case 0:
@@ -30,18 +30,19 @@ class ThisClass extends Component {
       case 2:
         catalog = shelf.catalogSceneC
         break
+      default:
     }
     return (
       <Catalog
         navigator={navigator}
-        showSegment={ true }
+        showSegment={true}
         catalogState={{
           refreshing: this.state.refreshing,
           catalogHash: catalog,
         }}
-        onRefresh={ this._onRefresh }
-        sceneSelectorHidden={ true }
-        style={{flex: 1}}
+        onRefresh={this._onRefresh}
+        sceneSelectorHidden={true}
+        style={{ flex: 1 }}
       />
     )
   }
@@ -52,16 +53,16 @@ import { connect } from 'react-redux'
 import * as allActions from '../actions/allActions'
 
 export default connect(
-  (state, ownProps) => ({
+  (state) => ({
     reducers: {
       phase: state.phase,
       shelf: state.shelf,
       scene: state.scene,
       work: state.work,
       entries: state.entries,
-    }
+    },
   }),
   (dispatch) => ({
-    actions: bindActionCreators(allActions, dispatch)
+    actions: bindActionCreators(allActions, dispatch),
   })
 )(ThisClass)
