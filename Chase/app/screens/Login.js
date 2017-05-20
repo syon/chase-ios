@@ -48,7 +48,8 @@ class Login extends Component {
     console.tron.tmp('authUrl', authUrl)
     SafariView.isAvailable()
       .then(SafariView.show({
-        url: authUrl
+        url: authUrl,
+        fromBottom: true
       }))
       .catch(err => {
         // Fallback WebView code for iOS 8 and earlier
