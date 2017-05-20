@@ -13,6 +13,10 @@ export function setAccessToken(at) {
   console.tron.info('AccessToken has set.', at)
 }
 
+export async function checkPocketApiAuth(requestToken) {
+  return await PocketAPI.authorize(CONSUMER_KEY, requestToken)
+}
+
 export async function getAllUntaggedItems() {
   const params = {
     state: 'unread',

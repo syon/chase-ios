@@ -107,14 +107,14 @@ export function doAfterRedirect(eventUrl) {
       console.tron.info('#doAfterRedirect - Dismiss', eventUrl)
       SafariView.dismiss()
       const rt = getState().login.requestToken
-      const promise = PocketAPI.checkPocketApiAuth(CONSUMER_KEY, REDIRECT_URI, rt)
-      promise.then((result) => {
-        const loginData = { username: result.username, accessToken: result.access_token }
-        updateLoginData(loginData)
-        _initialize(dispatch)
-      }).catch(result => {
-        console.tron.info('#doAfterRedirect - Declined', result)
-      })
+      Pocket.checkPocketApiAuth(rt)
+        .then(res => {
+          const loginData = { username: res.username, accessToken: res.access_token }
+          updateLoginData(loginData)
+          _initialize(dispatch)
+        }).catch(err => {
+          console.tron.info('#doAfterRedirect - Declined', err)
+        })
     } else {
       console.tron.error('#doAfterRedirect - Unexpected', eventUrl)
     }
@@ -170,17 +170,6 @@ function _loadSceneText(dispatch) {
       default:
     }
   })
-}
-
-export function savePage(url) {
-  return function(dispatch, getState) {
-    const at = getState().pocket.accessToken
-    const promise = PocketAPI.add(CONSUMER_KEY, at, url)
-    promise.then((result) => {
-      console.log(result)
-      dispatch({ type: 'SAVE_PAGE', data: `SAVED! ${url}` })
-    })
-  }
 }
 
 export function refreshCatalog(catalogId) {

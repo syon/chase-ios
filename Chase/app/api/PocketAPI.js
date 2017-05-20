@@ -22,7 +22,7 @@ export function getRequestToken(consumerKey, redirectUri) {
   })
 }
 
-export function checkPocketApiAuth(consumerKey, redirectUri, requestToken) {
+export function authorize(consumerKey, requestToken) {
   return new Promise((resolve, reject) => {
     fetch('https://getpocket.com/v3/oauth/authorize', {
       method: 'POST',
@@ -35,7 +35,7 @@ export function checkPocketApiAuth(consumerKey, redirectUri, requestToken) {
         code: requestToken,
       }),
     }).then((response) => {
-      console.log('Pocket API Response', response)
+      console.tron.info('Pocket API Response', response)
       if (response.ok) {
         return response.json()
       } else {
