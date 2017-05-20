@@ -36,7 +36,6 @@ class Login extends Component {
   }
 
   onNavigatorEvent(event) {
-    console.tron.tmp('onNavigatorEvent this:', this)
     // After this modal has disappeared, open Pocket auth page.
     switch(event.id) {
       case 'willDisappear':

@@ -90,21 +90,21 @@ function showLoginScreen(dispatch) {
 export function getPocketAuthUrl() {
   return function(dispatch) {
     return new Promise((resolve, reject) => {
-      const promise = PocketAPI.getRequestToken(CONSUMER_KEY, REDIRECT_URI)
-      promise.then((token) => {
-        dispatch({ type: 'GOT_REQUEST_TOKEN', requestToken: token })
-        const authUrl = PocketAPI.getAuthorizePageUrl(token, REDIRECT_URI)
-        resolve(authUrl)
-      })
+      Pocket.getRequestToken()
+        .then(token => {
+          // Request token will be used on Pocket.checkPocketApiAuth
+          dispatch({ type: 'GOT_REQUEST_TOKEN', requestToken: token })
+          return Pocket.getAuthorizePageUrl(token)
+        })
+        .then(authUrl => resolve(authUrl))
     })
   }
 }
 
 export function doAfterRedirect(eventUrl) {
-  console.log('doAfterRedirect', eventUrl)
   return function(dispatch, getState) {
+    console.tron.start('#doAfterRedirect', eventUrl)
     if (eventUrl.match(/authorizationFinished/)) {
-      console.tron.info('#doAfterRedirect - Dismiss', eventUrl)
       SafariView.dismiss()
       const rt = getState().login.requestToken
       Pocket.checkPocketApiAuth(rt)
@@ -113,7 +113,7 @@ export function doAfterRedirect(eventUrl) {
           updateLoginData(loginData)
           _initialize(dispatch)
         }).catch(err => {
-          console.tron.info('#doAfterRedirect - Declined', err)
+          console.tron.warn('#doAfterRedirect - Declined', err)
         })
     } else {
       console.tron.error('#doAfterRedirect - Unexpected', eventUrl)

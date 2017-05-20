@@ -13,6 +13,14 @@ export function setAccessToken(at) {
   console.tron.info('AccessToken has set.', at)
 }
 
+export async function getRequestToken() {
+  return await PocketAPI.getRequestToken(CONSUMER_KEY, REDIRECT_URI)
+}
+
+export async function getAuthorizePageUrl(requestToken) {
+  return PocketAPI.getAuthorizePageUrl(requestToken, REDIRECT_URI)
+}
+
 export async function checkPocketApiAuth(requestToken) {
   return await PocketAPI.authorize(CONSUMER_KEY, requestToken)
 }
