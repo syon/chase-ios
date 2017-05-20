@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   Linking,
+  ActivityIndicator,
 } from 'react-native'
 import Button from 'react-native-button'
 import { responsiveFontSize } from 'react-native-responsive-dimensions'
@@ -12,6 +13,10 @@ import { Navigation } from 'react-native-navigation'
 class Login extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      loading: false,
+      authUrl: '',
+    }
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this))
     this._handleOpenURL = this._handleOpenURL.bind(this)
     this._connectToPocket = this._connectToPocket.bind(this)
@@ -31,21 +36,13 @@ class Login extends Component {
   }
 
   onNavigatorEvent(event) {
+    console.tron.tmp('onNavigatorEvent this:', this)
     // After this modal has disappeared, open Pocket auth page.
     switch(event.id) {
       case 'willDisappear':
-        this.props.actions.connectToPocket()
-          .then(authUrl => this._safari(authUrl))
-        break;
+        this._safari(this.state.authUrl)
+        break
     }
-  }
-
-  _connectToPocket() {
-    // Trigger NavigatorEvent.
-    // because SafariView is not working on Modal.
-    Navigation.dismissAllModals({
-      animationType: 'slide-down'
-    })
   }
 
   _safari(authUrl) {
@@ -60,16 +57,30 @@ class Login extends Component {
       });
   }
 
+  async _connectToPocket() {
+    this.setState({ loading: true })
+    const authUrl = await this.props.actions.getPocketAuthUrl()
+    this.setState({ authUrl })
+    // Trigger NavigatorEvent.
+    // because SafariView is not working on Modal.
+    Navigation.dismissAllModals({
+      animationType: 'slide-down'
+    })
+  }
+
   render() {
     const { actions } = this.props
+    const indicator = this.state.loading ? <ActivityIndicator /> : null
     return (
       <View style={styles.container}>
         <Button
           onPress={this._connectToPocket}
           style={styles.btn}
+          disabled={this.state.loading}
         >
           Connect to Pocket
         </Button>
+        { indicator }
      </View>
     )
   }
@@ -83,6 +94,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   btn: {
+    padding: 10,
     fontSize: responsiveFontSize(3),
   },
 })

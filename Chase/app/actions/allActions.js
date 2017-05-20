@@ -87,7 +87,7 @@ function showLoginScreen(dispatch) {
   })
 }
 
-export function connectToPocket() {
+export function getPocketAuthUrl() {
   return function(dispatch) {
     return new Promise((resolve, reject) => {
       const promise = PocketAPI.getRequestToken(CONSUMER_KEY, REDIRECT_URI)
