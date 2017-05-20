@@ -1,12 +1,8 @@
-import { CONSUMER_KEY, REDIRECT_URI } from 'react-native-dotenv'
 import { Navigation } from 'react-native-navigation'
 import SafariView from 'react-native-safari-view'
 
-import * as PocketAPI from '../api/PocketAPI'
 import * as Pocket from '../api/PocketAdapter'
 import * as ChaseDriver from '../api/ChaseDriver'
-
-let memAccessToken = null
 
 export function ready() {
   return async function(dispatch, getState) {
@@ -39,7 +35,6 @@ async function _loadUserInfo(dispatch) {
   console.info('allActions#_loadUserInfo')
   await global.storage.load({ key: 'loginState' }).then(user => {
     console.tron.info('user', user )
-    memAccessToken = user.accessToken
     Pocket.setAccessToken(user.accessToken)
     dispatch({ type: 'LOGIN_SUCCESS', data: user })
     return
@@ -59,7 +54,6 @@ export function loginFromStorage() {
       global.storage.load({
         key: 'loginState',
       }).then(ret => {
-        memAccessToken = ret.accessToken
         dispatch({ type: 'LOGIN_SUCCESS', data: ret })
         resolve()
       }).catch(err => {
