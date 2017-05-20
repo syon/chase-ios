@@ -3645,6 +3645,10 @@ react-native-responsive-dimensions@1.0.1:
   dependencies:
     react-native x
 
+react-native-safari-view@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-safari-view/-/react-native-safari-view-2.0.0.tgz#3aeb40693b0765df16b9beaf8654b60c7ff1d7ed"
+
 react-native-storage@0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/react-native-storage/-/react-native-storage-0.2.1.tgz#6b1cbd5da79ecdb7422d330b798d31b4e240df64"
