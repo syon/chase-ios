@@ -10,7 +10,6 @@ import ConfigTab from './ConfigTab'
 import ScenesEditor from './ScenesEditor'
 import Login from './Login'
 import Interlude from './Interlude'
-import MyWebView from '../components/MyWebView'
 
 const store = configureStore()
 
@@ -23,5 +22,4 @@ export function register() {
   Navigation.registerComponent('Chase.ScenesEditor', () => ScenesEditor, store, Provider)
   Navigation.registerComponent('Chase.LoginScreen', () => Login, store, Provider)
   Navigation.registerComponent('Chase.Interlude', () => Interlude, store, Provider)
-  Navigation.registerComponent('Chase.WebViewScreen', () => MyWebView, store, Provider)
 }

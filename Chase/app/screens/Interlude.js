@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback } from 'react-native'
 import Button from 'react-native-button'
 import { responsiveFontSize } from 'react-native-responsive-dimensions'
+import SafariView from 'react-native-safari-view'
 
 import SceneSelector from '../components/SceneSelector'
 
@@ -28,16 +29,14 @@ class ThisClass extends Component {
   openWebView() {
     const { entry } = this.props
     if (!entry || !entry.url) { return }
-    this.props.navigator.push({
-      title: '',
-      screen: 'Chase.WebViewScreen',
-      passProps: { url: entry.url },
-      navigatorStyle: {
-        navBarHideOnScroll: true,
-        statusBarHideWithNavBar: true,
-        tabBarHidden: true,
-      },
-    })
+    SafariView.isAvailable()
+      .then(SafariView.show({
+        url: entry.url
+      }))
+      .catch(err => {
+        // Fallback WebView code for iOS 8 and earlier
+        console.tron.error(err)
+      });
   }
 
   judged(entry, work) {
