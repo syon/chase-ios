@@ -81,6 +81,9 @@ function showLoginScreen(dispatch) {
   Navigation.showModal({
     screen: 'Chase.LoginScreen',
     animationType: 'slide-up',
+    navigatorStyle: {
+      navBarHidden: true,
+    },
   })
 }
 
