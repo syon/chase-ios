@@ -49,16 +49,9 @@ export function checkPocketApiAuth(consumerKey, redirectUri, requestToken) {
   })
 }
 
-export function openAuthorizePage(requestToken, redirectUri) {
+export function getAuthorizePageUrl(requestToken, redirectUri) {
   const apiUrl = 'https://getpocket.com/auth/authorize'
-  const url = `${apiUrl}?request_token=${requestToken}&redirect_uri=${redirectUri}`
-  Linking.canOpenURL(url).then(supported => {
-    if (supported) {
-      Linking.openURL(url)
-    } else {
-      console.log('Don\'t know how to open URI: ' + url)
-    }
-  })
+  return `${apiUrl}?request_token=${requestToken}&redirect_uri=${redirectUri}`
 }
 
 export function add(consumerKey, accessToken, url) {

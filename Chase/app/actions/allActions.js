@@ -1,5 +1,6 @@
 import { CONSUMER_KEY, REDIRECT_URI } from 'react-native-dotenv'
 import { Navigation } from 'react-native-navigation'
+import SafariView from 'react-native-safari-view'
 
 import * as PocketAPI from '../api/PocketAPI'
 import * as Pocket from '../api/PocketAdapter'
@@ -85,10 +86,13 @@ function showLoginScreen(dispatch) {
 
 export function connectToPocket() {
   return function(dispatch) {
-    const promise = PocketAPI.getRequestToken(CONSUMER_KEY, REDIRECT_URI)
-    promise.then((token) => {
-      dispatch({ type: 'GOT_REQUEST_TOKEN', requestToken: token })
-      PocketAPI.openAuthorizePage(token, REDIRECT_URI)
+    return new Promise((resolve, reject) => {
+      const promise = PocketAPI.getRequestToken(CONSUMER_KEY, REDIRECT_URI)
+      promise.then((token) => {
+        dispatch({ type: 'GOT_REQUEST_TOKEN', requestToken: token })
+        const authUrl = PocketAPI.getAuthorizePageUrl(token, REDIRECT_URI)
+        resolve(authUrl)
+      })
     })
   }
 }
@@ -98,9 +102,7 @@ export function doAfterRedirect(eventUrl) {
   return function(dispatch, getState) {
     if (eventUrl.match(/authorizationFinished/)) {
       console.tron.info('#doAfterRedirect - Dismiss', eventUrl)
-      Navigation.dismissAllModals({
-        animationType: 'slide-down'
-      })
+      SafariView.dismiss()
       const rt = getState().login.requestToken
       const promise = PocketAPI.checkPocketApiAuth(CONSUMER_KEY, REDIRECT_URI, rt)
       promise.then((result) => {
