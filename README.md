@@ -2,10 +2,7 @@
 
 ## dev
 
-```bash
-$ cd Chase
-$ react-native run-ios
-```
+- Open `Chase/ios/Chase.xcodeproj` and Run
 
 ## package upgrade
 
@@ -25,7 +22,7 @@ $ react-native link
 $ yarn upgrade-interactive
 ```
 
-## Re:Install Xcode Project
+## Re-Install Xcode Project
 
 ```bash
 $ react-native init Chase
@@ -51,5 +48,5 @@ $ react-native link
 
 ```bash
 CONSUMER_KEY=66650-xxxxxxxxxxxxxxxxxxxxxxxx
-REDIRECT_URI=pocketapp66650:authorizationFinished
+REDIRECT_URI=pocketapp66650://authorizationFinished
 ```
