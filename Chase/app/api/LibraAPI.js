@@ -15,7 +15,7 @@ export default class Libra {
         const title = this.resolveTitle(standardProps, metaProps)
         const description = this.resolveDesc(standardProps, metaProps)
         const image = this.resolveImageUrl(metaProps)
-        return　{ site_name, title, description, image }
+        return { site_name, title, description, image }
       })
   }
 
