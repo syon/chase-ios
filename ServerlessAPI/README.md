@@ -33,6 +33,10 @@ serverless invoke --function info --log --data='{ "url": "https://wix.github.io/
 ```
 
 ```bash
+serverless invoke --function info --log --data='{ "url": "https://syon.github.io/refills/rid/1495884/" }'
+```
+
+```bash
 serverless invoke --function thumb --log --data='{ "url": "http://qiita.com/clockmaker/items/2a6ba69ef6e452844adf", "pocket_id": "1698793461", "suggested": "https://qiita-image-store.s3.amazonaws.com/0/2544/8ecf3c51-3ee4-3d81-3666-8f421b2ea12a.jpeg"}'
 ```
 
@@ -41,7 +45,7 @@ serverless invoke --function thumb --log --data='{ "url": "http://qiita.com/szk3
 ```
 
 ```bash
-serverless invoke --function thumb --log --data='{ "url": "https://syon.github.io/refills/refills/pocket/1495884/", "pocket_id": "1761611352", "suggested": "undefined"}'
+serverless invoke --function thumb --log --data='{ "url": "https://syon.github.io/refills/rid/1495884/", "pocket_id": "1761611357", "suggested": "undefined"}'
 ```
 
 ```bash
