@@ -124,14 +124,14 @@ async function _convertItemToEntry(item, existEntry) {
     if (isHTTPS) {
       const libra = new Libra(url)
       pageinfo = await libra.getData().then(data => data).catch(e => {})
-      console.tron.info('ChaseDriver#Libra', pageinfo)
+      console.tron.info('ChaseDriver@Libra', pageinfo)
     }
     else if (isHTTP) {
       pageinfo = await fetch(`${CHASE_API_ENDPOINT}/info?url=${url}`, {
           method: 'GET',
         }).then((response) => {
           if (response.ok) {
-            console.tron.info('ChaseDriver#FetchDone!', url)
+            console.tron.info('ChaseDriver@Lambda/info', url)
             return response.json()
           } else {
             return {}

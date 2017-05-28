@@ -6,6 +6,7 @@ export default class Libra {
   }
 
   getData() {
+    console.tron.info('LibraAPI#getData - fetching...', this.url)
     return fetch(this.url).then(res => {
         if (res.ok) { return res.text() }
       }).then(html => {
