@@ -18,14 +18,15 @@ module.exports.info = (event, context, callback) => {
 
 module.exports.thumb = (event, context, callback) => {
   const itemId = event.pocket_id;
-  const suggested = event.suggested
+  const suggested = event.suggested;
   const item10Id = `0000000000${itemId}`.substr(-10, 10);
   const itemId3 = item10Id.slice(0, 3);
   const s3path = `items/thumbs/${itemId3}/${item10Id}.jpg`;
   console.log('S3 Path --', s3path);
   try {
     if (suggested) {
-      fetchAndConvertAndPut(s3path, suggested, callback);
+      suggUrl = parseSuggested(suggested);
+      fetchAndConvertAndPut(s3path, suggUrl, callback);
     } else {
       const libra = new Libra(event.url);
       libra.getData().then(data => {
@@ -37,6 +38,15 @@ module.exports.thumb = (event, context, callback) => {
     callback(null, 'Done.');
   }
 };
+
+function parseSuggested(suggestedUrl) {
+  if (suggestedUrl === 'undefined') {
+    const msg = 'Suggested URL is Undefined.';
+    console.log(msg);
+    throw { msg };
+  }
+  return suggestedUrl;
+}
 
 function fetchAndConvertAndPut(s3path, imageUrl, callback) {
   console.log('Detected image URL --', imageUrl);

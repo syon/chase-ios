@@ -41,9 +41,12 @@ serverless invoke --function thumb --log --data='{ "url": "http://qiita.com/szk3
 ```
 
 ```bash
-curl "https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod/thumb?url=http://yutoma233.hatenablog.com/entry/2017/04/28/073000&pocket_id=1719054137"
+serverless invoke --function thumb --log --data='{ "url": "https://syon.github.io/refills/refills/pocket/1495884/", "pocket_id": "1761611352", "suggested": "undefined"}'
 ```
 
+```bash
+curl "https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod/thumb?url=http://yutoma233.hatenablog.com/entry/2017/04/28/073000&pocket_id=1719054137"
+```
 
 ## Deploy
 
