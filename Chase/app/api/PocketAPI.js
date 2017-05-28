@@ -105,7 +105,7 @@ export function get(consumerKey, accessToken, options) {
         throw response
       }
     }).then((result) => {
-      console.tron.end('PocketAPI#get', result)
+      console.tron.end('PocketAPI#get')
       resolve(result)
     }).catch((error) => {
       console.tron.error('PocketAPI#get', error)

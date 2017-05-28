@@ -7,7 +7,7 @@ export const CHASE_THUMBS_CF_PATH = 'https://d2aed4ktvx51jm.cloudfront.net'
 export const CHASE_THUMBS_S3_PATH = 'https://s3.amazonaws.com/syon-chase'
 
 export function makeCatalog(listFromPocket) {
-  console.tron.start('ChaseDriver#makeCatalog -- listFromPocket:', listFromPocket)
+  // console.tron.start('ChaseDriver#makeCatalog -- listFromPocket:', listFromPocket)
   let catalog = {}
   let rawItems = {}
   Object.keys(listFromPocket).forEach((key) => {
@@ -21,12 +21,12 @@ export function makeCatalog(listFromPocket) {
     }
     catalogBySort[m.sort_id] = itemId
   })
-  console.tron.end('ChaseDriver#makeCatalog -- catalog:', catalog)
+  // console.tron.end('ChaseDriver#makeCatalog -- catalog:', catalog)
   return { catalog, rawItems }
 }
 
 export function makeSceneCatalog(listFromPocket) {
-  console.tron.start('ChaseDriver#makeSceneCatalog -- listFromPocket:', listFromPocket)
+  // console.tron.start('ChaseDriver#makeSceneCatalog -- listFromPocket:', listFromPocket)
   let catalog = {}
   let rawItems = {}
   let arr = convertHashToArray(listFromPocket)
@@ -48,7 +48,7 @@ export function makeSceneCatalog(listFromPocket) {
     }
     catalogBySort[m.sort_id] = itemId
   })
-  console.tron.end('ChaseDriver#makeSceneCatalog -- catalog:', catalog)
+  // console.tron.end('ChaseDriver#makeSceneCatalog -- catalog:', catalog)
   return { catalog, rawItems }
 }
 
@@ -82,7 +82,7 @@ export async function saveCatalogItemsAsEntryToStorage(rawItems) {
   await Promise.all(promises).then(values => {
     // console.tron.info('ChaseDriver#Promise.all Done!', values)
     values.forEach(v => { entries[v.eid] = v })
-    console.tron.info('ChaseDriver# -- NewEntries:', entries)
+    // console.tron.info('ChaseDriver# -- NewEntries:', entries)
     global.storage.save({ key: 'entries', data: entries, expires: null })
   })
   return entries

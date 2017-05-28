@@ -205,7 +205,7 @@ export function refreshSceneCatalogs() {
 function _loadSceneCatalogA(dispatch) {
   Pocket.getItemsTaggedBy('chase:a').then((result) => {
     const { catalog, rawItems } = ChaseDriver.makeSceneCatalog(result.list)
-    console.tron.info('allActions#_loadSceneCatalogA', catalog)
+    // console.tron.info('allActions#_loadSceneCatalogA', catalog)
     dispatch({ type: 'REFRESH_WORK' })
     dispatch({ type: 'REFRESH_CATALOG_SCENE_A', catalog })
     ChaseDriver.saveCatalogItemsAsEntryToStorage(rawItems)
@@ -218,7 +218,7 @@ function _loadSceneCatalogA(dispatch) {
 function _loadSceneCatalogB(dispatch) {
   Pocket.getItemsTaggedBy('chase:b').then((result) => {
     const { catalog, rawItems } = ChaseDriver.makeSceneCatalog(result.list)
-    console.tron.info('allActions#_loadSceneCatalogB', catalog)
+    // console.tron.info('allActions#_loadSceneCatalogB', catalog)
     dispatch({ type: 'REFRESH_WORK' })
     dispatch({ type: 'REFRESH_CATALOG_SCENE_B', catalog })
     ChaseDriver.saveCatalogItemsAsEntryToStorage(rawItems)
@@ -231,7 +231,7 @@ function _loadSceneCatalogB(dispatch) {
 function _loadSceneCatalogC(dispatch) {
   Pocket.getItemsTaggedBy('chase:c').then((result) => {
     const { catalog, rawItems } = ChaseDriver.makeSceneCatalog(result.list)
-    console.tron.info('allActions#_loadSceneCatalogC', catalog)
+    // console.tron.info('allActions#_loadSceneCatalogC', catalog)
     dispatch({ type: 'REFRESH_WORK' })
     dispatch({ type: 'REFRESH_CATALOG_SCENE_C', catalog })
     ChaseDriver.saveCatalogItemsAsEntryToStorage(rawItems)
