@@ -45,7 +45,7 @@ serverless invoke --function thumb --log --data='{ "url": "http://qiita.com/szk3
 ```
 
 ```bash
-serverless invoke --function thumb --log --data='{ "url": "https://syon.github.io/refills/rid/1495884/", "pocket_id": "1761611357", "suggested": "undefined"}'
+serverless invoke --function thumb --log --data='{ "url": "https://syon.github.io/refills/rid/1495884/", "pocket_id": "1761611352", "suggested": "undefined"}'
 ```
 
 ```bash

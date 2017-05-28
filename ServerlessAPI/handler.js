@@ -24,8 +24,7 @@ module.exports.thumb = (event, context, callback) => {
   const s3path = `items/thumbs/${itemId3}/${item10Id}.jpg`;
   console.log('S3 Path --', s3path);
   try {
-    if (suggested) {
-      suggUrl = parseSuggested(suggested);
+    if (isValidSuggestedUrl(suggested)) {
       fetchAndConvertAndPut(s3path, suggUrl, callback);
     } else {
       const libra = new Libra(event.url);
@@ -39,13 +38,13 @@ module.exports.thumb = (event, context, callback) => {
   }
 };
 
-function parseSuggested(suggestedUrl) {
+function isValidSuggestedUrl(suggestedUrl) {
   if (suggestedUrl === 'undefined') {
     const msg = 'Suggested URL is Undefined.';
     console.log(msg);
-    throw { msg };
+    return false;
   }
-  return suggestedUrl;
+  return true;
 }
 
 function fetchAndConvertAndPut(s3path, imageUrl, callback) {
