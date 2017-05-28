@@ -91,8 +91,9 @@ export async function saveCatalogItemsAsEntryToStorage(rawItems) {
 export function callLambdaThumb(url, pocket_id, image_suggested) {
   return new Promise((resolve, reject) => {
     const qs = `url=${url}&pocket_id=${pocket_id}&suggested=${image_suggested}`
+    console.tron.start('ChaseDriver#callLambdaThumb request qs:', qs)
     fetch(`${CHASE_API_ENDPOINT}/thumb?${qs}`).then(response => {
-      console.tron.info('ChaseDriver#callLambdaThumb', `${response.status} (${pocket_id})`)
+      console.tron.end('ChaseDriver#callLambdaThumb response:', `${response.status} (${pocket_id})`)
       if (response.ok) {
         resolve()
       }
@@ -123,14 +124,14 @@ async function _convertItemToEntry(item, existEntry) {
     if (isHTTPS) {
       const libra = new Libra(url)
       pageinfo = await libra.getData().then(data => data).catch(e => {})
-      // console.tron.info('ChaseDriver#Libra', pageinfo)
+      console.tron.info('ChaseDriver#Libra', pageinfo)
     }
     else if (isHTTP) {
       pageinfo = await fetch(`${CHASE_API_ENDPOINT}/info?url=${url}`, {
           method: 'GET',
         }).then((response) => {
           if (response.ok) {
-            // console.tron.info('ChaseDriver#FetchDone!', url)
+            console.tron.info('ChaseDriver#FetchDone!', url)
             return response.json()
           } else {
             return {}
