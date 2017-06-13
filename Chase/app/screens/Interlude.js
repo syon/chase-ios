@@ -82,7 +82,7 @@ class ThisClass extends Component {
     })
     this.state.tagsRegistered.map(tag => {
       tags.push(
-        <View style={styles.tagChip}>
+        <View key={tag} style={styles.tagChip}>
           <Text style={styles.tagChipText}>{ tag }</Text>
         </View>
       )
