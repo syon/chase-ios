@@ -75,7 +75,7 @@ class ThisClass extends Component {
     let tags = []
     Object.keys(entry.tags || []).map(tag => {
       tags.push(
-        <View style={styles.tagChip}>
+        <View key={tag} style={styles.tagChip}>
           <Text style={styles.tagChipText}>{ tag }</Text>
         </View>
       )
