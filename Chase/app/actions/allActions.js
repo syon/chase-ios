@@ -279,6 +279,14 @@ export function applyScene(itemId, abc) {
   return async function(dispatch, getState) {
     await Pocket.addTag(itemId, `chase:${abc}`)
     dispatch({ type: 'SET_WORK_SCENE', itemId, abc })
+
+    /* update one entry with new tag */
+    const tagName = `chase:${abc}`
+    let entries = Object.assign({}, getState().entries)
+    let entry = Object.assign({}, entries[itemId])
+    entry.tags = Object.assign({}, entry.tags, { [tagName]: {tag: tagName} })
+    entries[itemId] = entry
+    dispatch({ type: 'REFRESH_ENTRIES', entries })
   }
 }
 

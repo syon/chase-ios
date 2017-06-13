@@ -91,11 +91,7 @@ class ThisClass extends Component {
             </View>
           </View>
         </TouchableWithoutFeedback>
-        <SceneSelector
-          actions={actions}
-          reducers={{ entry, work, scene }}
-          hidden={sceneSelectorHidden}
-        />
+        <SceneSelector eid={entry.eid} hidden={sceneSelectorHidden} />
       </View>
     )
   }

@@ -6,8 +6,7 @@ export default function entries(state = initialState, action = {}) {
       return initialState
     }
     case 'REFRESH_ENTRIES': {
-      const newEntries = Object.assign({}, state, action.entries)
-      return newEntries
+      return Object.assign({}, state, action.entries)
     }
     case 'LOGOUT_DONE':
       return initialState

@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native'
 import Button from 'react-native-button'
 import { responsiveFontSize } from 'react-native-responsive-dimensions'
 
-class ThisClass extends Component {
+class SceneSelector extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -14,45 +14,60 @@ class ThisClass extends Component {
     this.onSelectSceneA = this.onSelectSceneA.bind(this)
     this.onSelectSceneB = this.onSelectSceneB.bind(this)
     this.onSelectSceneC = this.onSelectSceneC.bind(this)
+    this._hasTag = this._hasTag.bind(this)
   }
 
-  onSelectSceneA() {
-    const { entry } = this.props.reducers
+  onSelectSceneA(entry) {
     this.setState({ tappedA: true })
-    this.props.actions.applyScene(entry.eid, 'a')
+    this.props.actions.applyScene(entry.eid, 'a').then(() => {
+      if (!entry.tags) { entry.tags = [] }
+      entry.tags['chase:a'] = 'chase:a'
+    })
   }
 
-  onSelectSceneB() {
-    const { entry } = this.props.reducers
+  onSelectSceneB(entry) {
     this.setState({ tappedB: true })
-    this.props.actions.applyScene(entry.eid, 'b')
+    this.props.actions.applyScene(entry.eid, 'b').then(() => {
+      if (!entry.tags) { entry.tags = [] }
+      entry.tags['chase:b'] = 'chase:b'
+    })
   }
 
-  onSelectSceneC() {
-    const { entry } = this.props.reducers
+  onSelectSceneC(entry) {
     this.setState({ tappedC: true })
-    this.props.actions.applyScene(entry.eid, 'c')
+    this.props.actions.applyScene(entry.eid, 'c').then(() => {
+      if (!entry.tags) { entry.tags = [] }
+      entry.tags['chase:c'] = 'chase:c'
+    })
+  }
+
+  _hasTag(entry, tagName) {
+    if (entry && entry.tags && entry.tags[tagName]) {
+      return true
+    }
+    return false
   }
 
   render() {
-    const { entry, work, scene } = this.props.reducers
-    const { hidden } = this.props
+    const { entries, work, scene } = this.props.reducers
+    const { eid, hidden } = this.props
+    const entry = entries ? entries[eid] : {}
     if (hidden) return null
     const wk = work || {}
-    const d = wk[entry.eid] || {}
+    const d = wk[eid] || {}
     const sceneA = scene.allScenes[0]
     const sceneB = scene.allScenes[1]
     const sceneC = scene.allScenes[2]
     return (
       <View style={styles.selectScene}>
         <View style={styles.sceneBtnBox}>
-          <Button onPress={this.onSelectSceneA} disabled={this.state.tappedA || d.a} style={styles.sceneBtn}>{ sceneA }</Button>
+          <Button onPress={() => this.onSelectSceneA(entry)} disabled={this._hasTag(entry, 'chase:a')} style={styles.sceneBtn}>{ sceneA }</Button>
         </View>
         <View style={styles.sceneBtnBox}>
-          <Button onPress={this.onSelectSceneB} disabled={this.state.tappedB || d.b} style={styles.sceneBtn}>{ sceneB }</Button>
+          <Button onPress={() => this.onSelectSceneB(entry)} disabled={this._hasTag(entry, 'chase:b')} style={styles.sceneBtn}>{ sceneB }</Button>
         </View>
         <View style={styles.sceneBtnBox}>
-          <Button onPress={this.onSelectSceneC} disabled={this.state.tappedC || d.c} style={styles.sceneBtn}>{ sceneC }</Button>
+          <Button onPress={() => this.onSelectSceneC(entry)} disabled={this._hasTag(entry, 'chase:c')} style={styles.sceneBtn}>{ sceneC }</Button>
         </View>
       </View>
     )
@@ -84,13 +99,15 @@ import * as allActions from '../actions/allActions'
 
 export default connect(
   (state) => ({
-    phase: state.phase,
-    shelf: state.shelf,
-    scene: state.scene,
-    work: state.work,
-    entries: state.entries,
+    reducers: {
+      phase: state.phase,
+      shelf: state.shelf,
+      scene: state.scene,
+      work: state.work,
+      entries: state.entries,
+    },
   }),
   (dispatch) => ({
     actions: bindActionCreators(allActions, dispatch),
   })
-)(ThisClass)
+)(SceneSelector)

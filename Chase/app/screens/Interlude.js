@@ -127,10 +127,7 @@ class ThisClass extends Component {
         </View>
         <View style={styles.tagChipBox}>{ tags }</View>
         <View style={{paddingBottom: 300}}>
-          <SceneSelector
-            actions={actions}
-            reducers={{ entry, work, scene }}
-          />
+          <SceneSelector eid={entry.eid} />
         </View>
       </ScrollView>
     )
