@@ -262,12 +262,19 @@
 			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
 			remoteInfo = RNVectorIcons;
 		};
-		AFB3041F1EBD979700AC67ED /* PBXContainerItemProxy */ = {
+		AFE147CE1EF1602300334193 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = AFDEB59C06754418BBE16ADF /* RNVectorIcons.xcodeproj */;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = A39873CE1EA65EE60051E01A;
-			remoteInfo = "RNVectorIcons-tvOS";
+			remoteGlobalIDString = 139D7ECE1E25DB7D00323FB7;
+			remoteInfo = "third-party";
+		};
+		AFE147D01EF1602300334193 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 139D7E881E25C6D100323FB7;
+			remoteInfo = "double-conversion";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -488,6 +495,8 @@
 				3DAD3EAB1DF850E9000B6D8A /* libcxxreact.a */,
 				3DAD3EAD1DF850E9000B6D8A /* libjschelpers.a */,
 				3DAD3EAF1DF850E9000B6D8A /* libjschelpers.a */,
+				AFE147CF1EF1602300334193 /* libthird-party.a */,
+				AFE147D11EF1602300334193 /* libdouble-conversion.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -584,7 +593,6 @@
 			isa = PBXGroup;
 			children = (
 				AFB3041E1EBD979700AC67ED /* libRNVectorIcons.a */,
-				AFB304201EBD979700AC67ED /* libRNVectorIcons-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -967,11 +975,18 @@
 			remoteRef = AFB3041D1EBD979700AC67ED /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		AFB304201EBD979700AC67ED /* libRNVectorIcons-tvOS.a */ = {
+		AFE147CF1EF1602300334193 /* libthird-party.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libRNVectorIcons-tvOS.a";
-			remoteRef = AFB3041F1EBD979700AC67ED /* PBXContainerItemProxy */;
+			path = "libthird-party.a";
+			remoteRef = AFE147CE1EF1602300334193 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AFE147D11EF1602300334193 /* libdouble-conversion.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libdouble-conversion.a";
+			remoteRef = AFE147D01EF1602300334193 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
