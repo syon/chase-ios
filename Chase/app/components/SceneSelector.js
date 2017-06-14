@@ -20,24 +20,24 @@ class SceneSelector extends Component {
   onSelectSceneA(entry) {
     this.setState({ tappedA: true })
     this.props.actions.applyScene(entry.eid, 'a').then(() => {
-      if (!entry.tags) { entry.tags = [] }
-      entry.tags['chase:a'] = 'chase:a'
+      if (!entry.tags) { entry.tags = {} }
+      entry.tags['chase:a'] = { tag: 'chase:a' }
     })
   }
 
   onSelectSceneB(entry) {
     this.setState({ tappedB: true })
     this.props.actions.applyScene(entry.eid, 'b').then(() => {
-      if (!entry.tags) { entry.tags = [] }
-      entry.tags['chase:b'] = 'chase:b'
+      if (!entry.tags) { entry.tags = {} }
+      entry.tags['chase:b'] = { tag: 'chase:b' }
     })
   }
 
   onSelectSceneC(entry) {
     this.setState({ tappedC: true })
     this.props.actions.applyScene(entry.eid, 'c').then(() => {
-      if (!entry.tags) { entry.tags = [] }
-      entry.tags['chase:c'] = 'chase:c'
+      if (!entry.tags) { entry.tags = {} }
+      entry.tags['chase:c'] = { tag: 'chase:c' }
     })
   }
 
