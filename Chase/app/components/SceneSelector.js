@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
 import Button from 'react-native-button'
 import { responsiveFontSize } from 'react-native-responsive-dimensions'
+import LSO from 'react-native-smart-loading-spinner-overlay'
 
 class SceneSelector extends Component {
   constructor(props) {
@@ -18,24 +19,30 @@ class SceneSelector extends Component {
   }
 
   onSelectSceneA(entry) {
+    this._lsoCompo.show()
     this.setState({ tappedA: true })
     this.props.actions.applyScene(entry.eid, 'a').then(() => {
+      this._lsoCompo.hide()
       if (!entry.tags) { entry.tags = {} }
       entry.tags['chase:a'] = { tag: 'chase:a' }
     })
   }
 
   onSelectSceneB(entry) {
+    this._lsoCompo.show()
     this.setState({ tappedB: true })
     this.props.actions.applyScene(entry.eid, 'b').then(() => {
+      this._lsoCompo.hide()
       if (!entry.tags) { entry.tags = {} }
       entry.tags['chase:b'] = { tag: 'chase:b' }
     })
   }
 
   onSelectSceneC(entry) {
+    this._lsoCompo.show()
     this.setState({ tappedC: true })
     this.props.actions.applyScene(entry.eid, 'c').then(() => {
+      this._lsoCompo.hide()
       if (!entry.tags) { entry.tags = {} }
       entry.tags['chase:c'] = { tag: 'chase:c' }
     })
@@ -69,6 +76,7 @@ class SceneSelector extends Component {
         <View style={styles.sceneBtnBox}>
           <Button onPress={() => this.onSelectSceneC(entry)} disabled={this._hasTag(entry, 'chase:c')} style={styles.sceneBtn}>{ sceneC }</Button>
         </View>
+        <LSO ref={ component => this._lsoCompo = component } />
       </View>
     )
   }

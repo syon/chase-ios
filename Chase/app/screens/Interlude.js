@@ -10,6 +10,7 @@ import {
 import Button from 'react-native-button'
 import { responsiveFontSize } from 'react-native-responsive-dimensions'
 import SafariView from 'react-native-safari-view'
+import LSO from 'react-native-smart-loading-spinner-overlay'
 
 import SceneSelector from '../components/SceneSelector'
 
@@ -48,17 +49,21 @@ class ThisClass extends Component {
   }
 
   onPressArchiveBtn() {
+    this._lsoCompo.show()
     const { entry } = this.props
     this.setState({ processing: true })
     this.props.actions.archive(entry.eid).then(() => {
+      this._lsoCompo.hide()
       this.setState({ processing: false })
     })
   }
 
   onPressTagBtn() {
+    this._lsoCompo.show()
     const { entry } = this.props
     const arg = { itemId: entry.eid, tagNm: this.state.tagInput }
     this.props.actions.addTag(arg).then(tagNm => {
+      this._lsoCompo.hide()
       let tagsRegistered = this.state.tagsRegistered
       tagsRegistered.push(tagNm)
       this.setState({ tagsRegistered, tagInput: '' })
@@ -129,6 +134,7 @@ class ThisClass extends Component {
         <View style={{paddingBottom: 300}}>
           <SceneSelector eid={entry.eid} />
         </View>
+        <LSO ref={ component => this._lsoCompo = component } />
       </ScrollView>
     )
   }
