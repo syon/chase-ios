@@ -7,19 +7,30 @@
 ## package upgrade
 
 ```bash
-$ brew update
+$ npm ls --depth=0 -g
 
-$ brew doctor
+$ npm update yarn -g
 
-$ brew upgrade yarn
+$ npm update react-native-cli -g
+```
+
+```bash
+$ cd /path/to/rn-temp
+
+$ react-native init hello
+
+# see the official default installed versions
+$ cat package.json
+```
+
+```bash
+$ yarn upgrade-interactive
 
 $ rm -rf node_modules/
 
 $ yarn
 
 $ react-native link
-
-$ yarn upgrade-interactive
 ```
 
 ## Re-Install Xcode Project
