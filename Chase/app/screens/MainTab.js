@@ -3,21 +3,19 @@ import React, { Component } from 'react'
 import Catalog from '../components/Catalog'
 
 class ThisClass extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      refreshing: false,
-    }
-    this._onRefresh = this._onRefresh.bind(this)
+
+  state = {
+    refreshing: false,
   }
 
   componentDidMount = async () => {
     await this.props.actions.ready()
   }
 
-  _onRefresh() {
-    this.setState({ refreshing: true });
-    this.props.actions.refreshCatalog('catalogMain')
+  _onRefresh = async () => {
+    this.setState({ refreshing: true })
+    await this.props.actions.refreshCatalog('catalogMain')
+    this.setState({ refreshing: false })
   }
 
   render() {
@@ -31,7 +29,7 @@ class ThisClass extends Component {
           refreshing: this.state.refreshing,
           catalogHash: catalog,
         }}
-        onRefresh={ this._onRefresh }
+        onRefresh={ this._onRefresh.bind(this) }
         style={{flex: 1}}
       />
     )

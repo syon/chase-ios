@@ -11,9 +11,6 @@ import Box from './Box'
 class ThisClass extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      refreshing: false,
-    }
     this.getCatalogRows = this.getCatalogRows.bind(this)
     this.renderItem = this.renderItem.bind(this)
   }
@@ -68,7 +65,7 @@ class ThisClass extends Component {
           data={this.getCatalogRows()}
           renderItem={this.renderItem}
           onRefresh={this.props.onRefresh.bind(this)}
-          refreshing={this.state.refreshing}
+          refreshing={this.props.catalogState.refreshing}
           contentInset={{ top: 0, left: 0, bottom: 50, right: 0 }}
           style={styles.itemList}
         />

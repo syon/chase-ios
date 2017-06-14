@@ -3,17 +3,15 @@ import React, { Component } from 'react'
 import Catalog from '../components/Catalog'
 
 class ThisClass extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      refreshing: false,
-    }
-    this._onRefresh = this._onRefresh.bind(this)
+
+  state = {
+    refreshing: false,
   }
 
-  _onRefresh() {
+  _onRefresh = async () => {
     this.setState({ refreshing: true })
-    this.props.actions.refreshSceneCatalogs()
+    await this.props.actions.refreshSceneCatalogs()
+    this.setState({ refreshing: false })
   }
 
   render() {
@@ -40,7 +38,7 @@ class ThisClass extends Component {
           refreshing: this.state.refreshing,
           catalogHash: catalog,
         }}
-        onRefresh={this._onRefresh}
+        onRefresh={this._onRefresh.bind(this)}
         sceneSelectorHidden={true}
         style={{ flex: 1 }}
       />
