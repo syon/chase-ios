@@ -151,7 +151,7 @@ function _mergeItemAndPageinfo(existEntry, url, m, pi) {
   pi = pi || {}
   if (existEntry) {
     existEntry['sortId'] = m.sort_id
-    existEntry['tags'] = m.tags
+    existEntry['tags'] = m.tags || {}
     return existEntry
   } else {
     return {
@@ -164,7 +164,7 @@ function _mergeItemAndPageinfo(existEntry, url, m, pi) {
       description: pi.description,
       fqdn: `${url}/`.match(/\/\/(.*?)\//)[1],
       sortId: m.sort_id,
-      tags: m.tags,
+      tags: m.tags || {},
       date: _getDate(m.time_added),
     }
   }

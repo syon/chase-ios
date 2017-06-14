@@ -23,7 +23,6 @@ class SceneSelector extends Component {
     this.setState({ tappedA: true })
     this.props.actions.applyScene(entry.eid, 'a').then(() => {
       this._lsoCompo.hide()
-      if (!entry.tags) { entry.tags = {} }
       entry.tags['chase:a'] = { tag: 'chase:a' }
     })
   }
@@ -33,7 +32,6 @@ class SceneSelector extends Component {
     this.setState({ tappedB: true })
     this.props.actions.applyScene(entry.eid, 'b').then(() => {
       this._lsoCompo.hide()
-      if (!entry.tags) { entry.tags = {} }
       entry.tags['chase:b'] = { tag: 'chase:b' }
     })
   }
@@ -43,7 +41,6 @@ class SceneSelector extends Component {
     this.setState({ tappedC: true })
     this.props.actions.applyScene(entry.eid, 'c').then(() => {
       this._lsoCompo.hide()
-      if (!entry.tags) { entry.tags = {} }
       entry.tags['chase:c'] = { tag: 'chase:c' }
     })
   }
