@@ -1,3 +1,4 @@
+import 'url-search-params-polyfill'
 import { Linking } from 'react-native'
 
 export function getRequestToken(consumerKey, redirectUri) {
