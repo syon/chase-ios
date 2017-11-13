@@ -66,9 +66,11 @@ curl "https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod/thumb?url=http
   - ステージはただ場所が違うだけ、それゆえエンドポイント末尾に付加される
   - リソースの状況を変えると動作中すべてのステージに影響を与える
   - ステージ変数を使って呼び出す Lambda を振り分けることができる
-  - 統合リクエストの設定から `chase-${stageVariables.stage}-info:${stageVariables.alias}` のように指定
+  - ステージ変数はメニューの「ステージ」から設定
   - ARNに従い"関数名:エイリアス"で呼び出す関数のバージョン指定ができる
+  - 統合リクエストの設定から `chase-${stageVariables.stage}-info:${stageVariables.alias}` のように指定
   - これを設定するときダイアログが出現し手動でコマンド実行する必要がある
+  - ダイアログ内のコマンドをすべてコピーし、`${stageVariables.〜〜}`を実際に使用するものに書き換えて bash で実行
 
 
 #### dev
