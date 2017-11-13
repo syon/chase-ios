@@ -75,6 +75,12 @@ curl "https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod/thumb?url=http
 
 #### dev
 
+- [Serverless Framework Commands \- AWS Lambda \- Invoke Local](https://serverless.com/framework/docs/providers/aws/cli-reference/invoke-local/)
+
+```bash
+$ serverless invoke local --function functionName
+```
+
 ```bash
 $ serverless deploy
 ```
