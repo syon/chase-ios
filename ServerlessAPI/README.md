@@ -71,7 +71,9 @@ curl "https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod/thumb?url=http
   - 統合リクエストの設定から `chase-${stageVariables.stage}-info:${stageVariables.alias}` のように指定
   - これを設定するときダイアログが出現し手動でコマンド実行する必要がある
   - ダイアログ内のコマンドをすべてコピーし、`${stageVariables.〜〜}`を実際に使用するものに書き換えて bash で実行
-
+- Serverless Framework
+  - `$ sls deploy` コマンドでエラー `Invalid Resource identifier specified.`  
+    が発生して困った時は `$ sls remove` でリセットした。このとき関数名の変更など行っていたためと予想。
 
 #### dev
 
