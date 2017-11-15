@@ -69,6 +69,7 @@ curl "https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod/thumb?url=http
 - 統合リクエストの設定から `chase-${stageVariables.stage}-info:${stageVariables.alias}` のように指定
 - これを設定するときダイアログが出現し手動でコマンド実行する必要がある
 - ダイアログ内のコマンドをすべてコピーし、`${stageVariables.〜〜}`を実際に使用するものに書き換えて bash で実行
+- CORSの有効化は GET などのメソッドを作ってから実施する必要がある？プリフライトの OPTIONS メソッドのレスポンスヘッダーに関連の設定がされていても GET のそれに設定されていなければ Ajax で失敗する。
 
 ### Serverless Framework
 
