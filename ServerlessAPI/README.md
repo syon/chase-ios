@@ -54,30 +54,27 @@ curl "https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod/thumb?url=http
 
 ## Deploy
 
-#### Note
+### API Gateway
 
-- http://blog.serverworks.co.jp/tech/2017/02/01/apigateway-lambda-cloudwatchlogs/
+- [API Gateway＋Lambdaでのステージ管理やCloudWatch Logsのログ運用のはなし – サーバーワークスエンジニアブログ](http://blog.serverworks.co.jp/tech/2017/02/01/apigateway-lambda-cloudwatchlogs/)
+- リソースはとある時間の断面、ではない
+- リソースの作成は REST 的な意味であり、パスを切るのと同義
+- よくわからないが POST で作ってもうまく呼べなかったので全部 GET にした
+- ステージに対するデプロイは断面のアップロードではない
+- ステージはただ場所が違うだけ、それゆえエンドポイント末尾に付加される
+- リソースの状況を変えると動作中すべてのステージに影響を与える
+- ステージ変数を使って呼び出す Lambda を振り分けることができる
+- ステージ変数はメニューの「ステージ」から設定
+- ARNに従い"関数名:エイリアス"で呼び出す関数のバージョン指定ができる
+- 統合リクエストの設定から `chase-${stageVariables.stage}-info:${stageVariables.alias}` のように指定
+- これを設定するときダイアログが出現し手動でコマンド実行する必要がある
+- ダイアログ内のコマンドをすべてコピーし、`${stageVariables.〜〜}`を実際に使用するものに書き換えて bash で実行
 
-- API Gateway
-  - リソースはとある時間の断面、ではない
-  - リソースの作成は REST 的な意味であり、パスを切るのと同義
-  - よくわからないが POST で作ってもうまく呼べなかったので全部 GET にした
-  - ステージに対するデプロイは断面のアップロードではない
-  - ステージはただ場所が違うだけ、それゆえエンドポイント末尾に付加される
-  - リソースの状況を変えると動作中すべてのステージに影響を与える
-  - ステージ変数を使って呼び出す Lambda を振り分けることができる
-  - ステージ変数はメニューの「ステージ」から設定
-  - ARNに従い"関数名:エイリアス"で呼び出す関数のバージョン指定ができる
-  - 統合リクエストの設定から `chase-${stageVariables.stage}-info:${stageVariables.alias}` のように指定
-  - これを設定するときダイアログが出現し手動でコマンド実行する必要がある
-  - ダイアログ内のコマンドをすべてコピーし、`${stageVariables.〜〜}`を実際に使用するものに書き換えて bash で実行
-- Serverless Framework
-  - `$ sls deploy` コマンドでエラー `Invalid Resource identifier specified.`  
-    が発生して困った時は `$ sls remove` でリセットした。このとき関数名の変更など行っていたためと予想。
+### Serverless Framework
 
-#### dev
-
-- [Serverless Framework Commands \- AWS Lambda \- Invoke Local](https://serverless.com/framework/docs/providers/aws/cli-reference/invoke-local/)
+- `$ sls deploy` コマンドでエラー `Invalid Resource identifier specified.`
+  が発生して困った時は `$ sls remove` でリセットした。直前に関数名の変更などを行っていたためと予想。
+- 開発中の関数のローカル実行 :: [Serverless Framework Commands \- AWS Lambda \- Invoke Local](https://serverless.com/framework/docs/providers/aws/cli-reference/invoke-local/)
 
 ```bash
 $ serverless invoke local --function functionName
