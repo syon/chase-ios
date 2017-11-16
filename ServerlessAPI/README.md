@@ -52,14 +52,14 @@ serverless invoke --function thumb --log --data='{ "url": "https://syon.github.i
 curl "https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod/thumb?url=http://yutoma233.hatenablog.com/entry/2017/04/28/073000&pocket_id=1719054137"
 ```
 
-## Deploy
 
-### API Gateway
+## API Gateway
+
+以下のメモは Serverless Framework を使用しない場合を含むメモ。
 
 - [API Gateway＋Lambdaでのステージ管理やCloudWatch Logsのログ運用のはなし – サーバーワークスエンジニアブログ](http://blog.serverworks.co.jp/tech/2017/02/01/apigateway-lambda-cloudwatchlogs/)
 - リソースはとある時間の断面、ではない
 - リソースの作成は REST 的な意味であり、パスを切るのと同義
-- よくわからないが POST で作ってもうまく呼べなかったので全部 GET にした
 - ステージに対するデプロイは断面のアップロードではない
 - ステージはただ場所が違うだけ、それゆえエンドポイント末尾に付加される
 - リソースの状況を変えると動作中すべてのステージに影響を与える
@@ -70,12 +70,15 @@ curl "https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod/thumb?url=http
 - これを設定するときダイアログが出現し手動でコマンド実行する必要がある
 - ダイアログ内のコマンドをすべてコピーし、`${stageVariables.〜〜}`を実際に使用するものに書き換えて bash で実行
 - CORSの有効化は GET などのメソッドを作ってから実施する必要がある？プリフライトの OPTIONS メソッドのレスポンスヘッダーに関連の設定がされていても GET のそれに設定されていなければ Ajax で失敗する。
+- 統合リクエストの LAMBDA_PROXY とはツールチップに表示の通り: “リクエストは Lambda にプロキシされ、リクエストの詳細がハンドラー関数の「イベント」で利用できるようになります。” → Lambda 関数の `event` 引数が通常の仕様と異なる。リクエスト送信時の本文は `event.body` から取得できるように変わる。
 
-### Serverless Framework
+
+## Serverless Framework
+
+Serverless Framework を使ってデプロイすると Lambda と API Gateway の両方に反映される。
 
 - `$ sls deploy` コマンドでエラー `Invalid Resource identifier specified.`
-  が発生して困った時は `$ sls remove` でリセットした。直前に関数名の変更などを行っていたためと予想。
-  - remove でリセットした後は API Gateway からの Lambda 関数に対する実行権限が失われる模様なので、再度「統合リクエスト」の画面から Lambda 関数の設定を何も変更せずに編集・確定しコマンドのダイアログを表示させ bash で実行し直す。
+  が発生して困った時は `$ sls remove` でリセットした。ブラウザから API Gateway 上の API を削除したため、ローカルにあるものが取り残された。
 - 開発中の関数のローカル実行 :: [Serverless Framework Commands \- AWS Lambda \- Invoke Local](https://serverless.com/framework/docs/providers/aws/cli-reference/invoke-local/)
 
 ```bash
