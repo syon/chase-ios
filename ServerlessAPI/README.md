@@ -75,6 +75,7 @@ curl "https://uysa8o7cq6.execute-api.us-east-1.amazonaws.com/prod/thumb?url=http
 
 - `$ sls deploy` コマンドでエラー `Invalid Resource identifier specified.`
   が発生して困った時は `$ sls remove` でリセットした。直前に関数名の変更などを行っていたためと予想。
+  - remove でリセットした後は API Gateway からの Lambda 関数に対する実行権限が失われる模様なので、再度「統合リクエスト」の画面から Lambda 関数の設定を何も変更せずに編集・確定しコマンドのダイアログを表示させ bash で実行し直す。
 - 開発中の関数のローカル実行 :: [Serverless Framework Commands \- AWS Lambda \- Invoke Local](https://serverless.com/framework/docs/providers/aws/cli-reference/invoke-local/)
 
 ```bash
