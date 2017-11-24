@@ -80,13 +80,24 @@ Serverless Framework を使ってデプロイすると Lambda と API Gateway �
 - `$ sls deploy` コマンドでエラー `Invalid Resource identifier specified.`
   が発生して困った時は `$ sls remove` でリセットした。ブラウザから API Gateway 上の API を削除したため、ローカルにあるものが取り残された。
 - 開発中の関数のローカル実行 :: [Serverless Framework Commands \- AWS Lambda \- Invoke Local](https://serverless.com/framework/docs/providers/aws/cli-reference/invoke-local/)
+- 本フレームワークはデフォルトで LAMBDA-PROXY を介して実行されることが前提となるため `event` オブジェクトに対するパラメータの参照方法が通常と異なる。
+- ローカル実行時のパラメータ引き渡しは `--path` オプションを使用する。
 
 ```bash
-$ serverless invoke local --function functionName
+$ serverless invoke local --function function_name --path testdata.json
+```
+
+__testdata.json__
+```json
+{
+  "queryStringParameters": {
+    "greet": "Hello"
+  }
+}
 ```
 
 ```bash
-$ serverless deploy
+$ serverless deploy --verbose
 ```
 
 #### prod
