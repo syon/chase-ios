@@ -82,6 +82,7 @@ Serverless Framework を使ってデプロイすると Lambda と API Gateway �
 - 開発中の関数のローカル実行 :: [Serverless Framework Commands \- AWS Lambda \- Invoke Local](https://serverless.com/framework/docs/providers/aws/cli-reference/invoke-local/)
 - 本フレームワークはデフォルトで LAMBDA-PROXY を介して実行されることが前提となるため `event` オブジェクトに対するパラメータの参照方法が通常と異なる。
 - ローカル実行時のパラメータ引き渡しは `--path` オプションを使用する。
+- > Lambda only allows you to write to the /tmp directory.
 
 ```bash
 $ serverless invoke local --function function_name --path testdata.json
@@ -103,3 +104,15 @@ $ serverless deploy --verbose
 #### prod
 
 Edit `serverless.yml` > `stage: prod` temporary, then `serverless deploy`.
+
+
+## Memo
+
+- API Gateway: Chase for iOS (uysa8o7cq6) は手作業で作られた
+- Serverless Framework は使っていなかった
+- 連携している Lambda は`chase-${stageVariables.stage}-thumb:${stageVariables.alias}`
+- Lambda のエイリアス `:release` を参照している
+- これらを Chase for iOS が使っている
+- 2020年1月に Node.js v6 を EoL に伴いメンテして v12 に移行
+- Serverless Framework は使った
+- API Gateway: prod-chase (4qjumflqu3) は不使用、Lambda だけ使っている

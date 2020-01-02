@@ -7,8 +7,7 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs6.10
-  stage: dev
+  runtime: nodejs12.x
   region: us-east-1
   iamRoleStatements:
     - Effect: Allow
@@ -16,10 +15,22 @@ provider:
         - s3:PutObject
       Resource: "arn:aws:s3:::${self:custom.bucket}/*"
 
+package:
+  exclude:
+    - spec/**
+
 functions:
   info:
     handler: handler.info
+    events:
+      - http:
+          path: info
+          method: get
   thumb:
     handler: handler.thumb
+    events:
+      - http:
+          path: thumb
+          method: get
     environment:
       BUCKET: ${self:custom.bucket}

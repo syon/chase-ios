@@ -5,11 +5,25 @@
   "version": "1.0.0",
   "author": "syon",
   "license": "MIT",
-  "dependencies": {
-    "aws-sdk": "^2.7.9",
-    "cheerio": "^0.22.0",
-    "gm": "^1.23.0",
-    "node-fetch": "^1.6.3"
+  "scripts": {
+    "spec.dev": "jest spec/dev",
+    "spec.local": "jest spec/local",
+    "sls.deploy.dev": "sls deploy --stage dev",
+    "sls.deploy.prod": "sls deploy --stage prod"
   },
-  "devDependencies": {}
+  "dependencies": {
+    "aws-sdk": "^2.596.0",
+    "axios": "^0.19.0",
+    "cheerio": "^0.22.0",
+    "gm": "^1.23.1",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "jest": "^24.9.0",
+    "prettier": "^1.19.1",
+    "serverless": "^1.60.4"
+  }
 }

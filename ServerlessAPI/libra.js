@@ -1,5 +1,5 @@
-const fetch = require('node-fetch');
-const cheerio = require('cheerio');
+const fetch = require('node-fetch')
+const cheerio = require('cheerio')
 
 module.exports = class Libra {
   constructor(url) {
@@ -7,9 +7,13 @@ module.exports = class Libra {
   }
 
   getData() {
-    return fetch(this.url).then(res => {
-        if (res.ok) { return res.text() }
-      }).then(html => {
+    return fetch(this.url)
+      .then((res) => {
+        if (res.ok) {
+          return res.text()
+        }
+      })
+      .then((html) => {
         const standardProps = this.extractStandardProps(html)
         const metaProps = this.extractMetaProps(html)
         const site_name = this.resolveSiteName(metaProps)
@@ -17,7 +21,7 @@ module.exports = class Libra {
         const description = this.resolveDesc(standardProps, metaProps)
         const image = this.resolveImageUrl(metaProps)
         return { site_name, title, description, image }
-      });
+      })
   }
 
   resolveSiteName(metaProps) {
@@ -53,12 +57,17 @@ module.exports = class Libra {
   }
 
   getMetaProps(url) {
-    return fetch(url).then(res => {
-        if (res.ok) { return res.text() }
-      }).then(html => {
+    return fetch(url)
+      .then((res) => {
+        if (res.ok) {
+          return res.text()
+        }
+      })
+      .then((html) => {
         const metaProps = this.extractMetaProps(html)
         return metaProps
-      }).catch(e => {
+      })
+      .catch((e) => {
         throw e
       })
   }
@@ -73,7 +82,7 @@ module.exports = class Libra {
         results.push({ [property]: content })
       }
     })
-    results.sort((a,b) => {
+    results.sort((a, b) => {
       if (Object.keys(a)[0] < Object.keys(b)[0]) return -1
       if (Object.keys(a)[0] > Object.keys(b)[0]) return 1
       return 0
@@ -87,5 +96,4 @@ module.exports = class Libra {
     const description = $('head meta[name="description"]').attr('content')
     return { title, description }
   }
-
 }

@@ -1,10 +1,11 @@
-const AWS = require('aws-sdk');
-const gm = require('gm').subClass({ imageMagick: true });
+const AWS = require('aws-sdk')
+const gm = require('gm').subClass({ imageMagick: true })
 const fs = require('fs')
-const fetch = require('node-fetch');
+const fetch = require('node-fetch')
 
-const s3 = new AWS.S3();
-const imageUrl = 'https://assets-cdn.github.com/images/modules/open_graph/github-mark.png'
+const s3 = new AWS.S3()
+const imageUrl =
+  'https://assets-cdn.github.com/images/modules/open_graph/github-mark.png'
 
 // fetch(imageUrl)
 //   .then((response) => {
@@ -55,20 +56,27 @@ function png2jpg() {
     .background('#fff')
     .flatten()
     .toBuffer('jpg', (err, buf) => {
-      putImageFile(buf);
-    });
+      putImageFile(buf)
+    })
 }
 
 function putImage(s3path, buffer) {
-  console.log(`Putting image on S3 (${s3path}):`, buffer);
-  const res = s3.putObject({
-    Bucket: 'syon-chase',
-    Key: s3path,
-    Body: buffer,
-  }, (err, data) => {
-    if (err) { console.log('Error:', err); }
-    if (data) { console.log('Success:', data); }
-  });
+  console.log(`Putting image on S3 (${s3path}):`, buffer)
+  const res = s3.putObject(
+    {
+      Bucket: 'syon-chase',
+      Key: s3path,
+      Body: buffer
+    },
+    (err, data) => {
+      if (err) {
+        console.log('Error:', err)
+      }
+      if (data) {
+        console.log('Success:', data)
+      }
+    }
+  )
 }
 
-png2jpg();
+png2jpg()
